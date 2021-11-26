@@ -5,7 +5,6 @@
 #ifndef METRICS_METRIC_H
 #define METRICS_METRIC_H
 
-#include <iostream>
 #include <string>
 #include "utils/LRUCache.h"
 
