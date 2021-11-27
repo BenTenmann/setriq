@@ -178,7 +178,6 @@ cython_debug/
 
 # scripts
 scripts
-CMakeLists.txt
 
 ### IDE
 .idea
