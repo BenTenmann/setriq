@@ -131,3 +131,14 @@ IndexTuple SmithWaterman::tracebackStep(const doubleMatrix &scoringMatrix, const
 
     return {iMax, jMax};
 }
+
+double SmithWaterman::identityScore(const std::string &inputString) {
+    size_t N {inputString.size()};
+
+    double score {0};
+    for (size_t i = 0; i < N; i++) {
+        double elem = this->substitutionMatrix(inputString.substr(i, 1), inputString.substr(i, 1));
+        score += (double) (N - i) * elem;
+    }
+    return score;
+}

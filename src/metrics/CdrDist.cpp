@@ -15,8 +15,8 @@ metric::CdrDist::CdrDist(const doubleMatrix& matrix, const stringIndexMap& index
 
 double metric::CdrDist::forward(const std::string &a, const std::string &b) {
     double abScore = this->algorithm(a, b);
-    double aaScore = this->algorithm(a, a);
-    double bbScore = this->algorithm(b, b);
+    double aaScore = this->algorithm.identityScore(a);
+    double bbScore = this->algorithm.identityScore(b);
 
     return 1 - std::sqrt((abScore * abScore) / (aaScore * bbScore));
 }

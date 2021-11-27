@@ -52,5 +52,6 @@ setup(
     license='MIT',
     requires=[],
     python_requires='>=3.7,<3.10',
-    packages=find_packages(exclude=['tests'])
+    packages=find_packages(exclude=['tests']),
+    data_files=[('data', ['data/blosum-62.json'])]
 )

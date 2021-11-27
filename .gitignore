@@ -176,5 +176,9 @@ dmypy.json
 # Cython debug symbols
 cython_debug/
 
+# scripts
+scripts
+CMakeLists.txt
+
 ### IDE
 .idea

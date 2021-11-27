@@ -48,6 +48,9 @@ public:
         this->cache.put(a + b, out);
         return out;
     };
+
+    // special case: identity score
+    double identityScore(const std::string&);
 };
 
 

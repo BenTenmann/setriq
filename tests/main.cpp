@@ -10,6 +10,7 @@ int main() {
     stringIndexMap index;
     for (size_t i = 0; i < N; i++) {
         index[aminoAcids.substr(i, 1)] = i;
+        matrix[i][i] = 1;
     }
 
     metric::CdrDist metric {matrix, index};
