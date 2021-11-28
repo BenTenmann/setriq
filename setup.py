@@ -64,7 +64,7 @@ setup(
     license='MIT',
     requires=[],
     python_requires='>=3.7,<3.10',
-    packages=find_packages(exclude=['tests']),
+    packages=find_packages(exclude=['tests', 'scripts']),
     package_data={f'{SOURCE_DIR}': sorted(glob(f'data/*.json'))},
     include_package_data=True
 )
