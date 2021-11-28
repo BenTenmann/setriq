@@ -7,4 +7,5 @@ __all__ = [
     'BLOSUM62',
     'BLOSUM90',
     'CdrDist',
+    'TcrDist',
 ]

@@ -10,6 +10,8 @@ from ._substitution import *
 
 __all__ = [
     'CdrDist',
+    'TcrDist',
+    'TcrDistComponent',
 ]
 
 
