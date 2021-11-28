@@ -49,6 +49,13 @@ class SubstitutionMatrix(abc.ABC):
     def keys(self):
         return self._required_keys
 
+    def __call__(self, a: str, b: str) -> float:
+        i = self.index[a]
+        j = self.index[b]
+
+        out = self.substitution_matrix[i][j]
+        return out
+
 
 PKG_NAME = __name__.split('.')[0]
 DATA_DIR = pathlib.Path(pkg.resource_filename(PKG_NAME, 'data/'))
