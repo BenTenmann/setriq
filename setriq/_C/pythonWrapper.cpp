@@ -35,7 +35,7 @@ py::list tcr_dist_component(const stringVector& sequences,
     return py::cast(out);
 }
 
-PYBIND11_MODULE(setriq, m) {
+PYBIND11_MODULE(_C, m) {
     m.doc() = "Python module written in C++ for pairwise distance computation for sequences.";
 
     m.def("cdr_dist", &cdr_dist, "Compute the pairwise CDR-dist metric for a set of CDR3 sequences.",

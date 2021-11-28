@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.17)
 set(PROJECT_NAME setriq)
-set(PROJECT_SOURCE_DIR src/setriq)
+set(PROJECT_SOURCE_DIR setriq/_C)
 set(PROJECT_TEST_DIR tests)
 
 file(

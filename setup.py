@@ -37,10 +37,13 @@ except (FileNotFoundError, ValueError) as ex:
     logging.error(traceback.print_exc())
     logging.warning(f'Unable to get semantic release version. Setting version to {__version__}.')
 
+PROJECT_NAME = 'setriq'
+SOURCE_DIR = 'setriq'
+
 extensions = [
     Pybind11Extension(
-        'setriq',
-        sources=sorted(glob('src/setriq/**/*.cpp', recursive=True)),
+        f'{PROJECT_NAME}._C',
+        sources=sorted(glob(f'{SOURCE_DIR}/_C/**/*.cpp', recursive=True)),
         cxx_std=14,
         define_macros=[('VERSION_INFO', __version__)],
         include_dirs=['include/setriq'],
@@ -49,7 +52,7 @@ extensions = [
 ]
 
 setup(
-    name='setriq',
+    name=PROJECT_NAME,
     version=__version__,
     description='Python package written in C++ for pairwise distance computation for sequences.',
     long_description=long_description,
@@ -62,5 +65,6 @@ setup(
     requires=[],
     python_requires='>=3.7,<3.10',
     packages=find_packages(exclude=['tests']),
-    data_files=[('data', ['data/blosum-62.json'])]
+    package_data={f'{SOURCE_DIR}': sorted(glob(f'data/*.json'))},
+    include_package_data=True
 )
