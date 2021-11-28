@@ -8,7 +8,6 @@ if sys.platform == 'win32' and sys.maxsize.bit_length() == 31:
     sys.exit(-1)
 
 import logging
-import os
 import pathlib
 import re
 import traceback
@@ -22,8 +21,6 @@ logging.basicConfig(
     format='%(name)s - %(asctime)s.%(msecs)03d - %(levelname)s - %(module)s.%(funcName)s: %(message)s',
     datefmt='%Y-%m-%d %H:%M:%S'
 )
-
-url = os.environ.get('URL', '')
 
 dirname = pathlib.Path(__file__).parent
 long_description = (dirname / 'README.md').read_text()
@@ -59,7 +56,7 @@ setup(
     long_description_content_type='text/markdown',
     author='benjamin-tenmann',
     author_email='b.tenmann@me.com',
-    url=url,
+    url='https://github.com/BenTenmann/setriq',
     ext_modules=extensions,
     license='MIT',
     requires=[],
