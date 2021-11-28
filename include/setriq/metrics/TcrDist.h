@@ -1,4 +1,3 @@
-#include <__bit_reference>
 //
 // Created by Benjamin Tenmann on 19/11/2021.
 //
@@ -11,13 +10,20 @@
 #include "metrics/Metric.h"
 #include "alignment/SubstitutionMatrix.h"
 
-class TcrDist : public Metric {
-private:
-    __unused SubstitutionMatrix substitutionMatrix;
+namespace metric {
+    class TcrDist : public Metric {
+    private:
+        SubstitutionMatrix substitutionMatrix;
+        double gapPenalty;
+        char gapSymbol;
+        double distanceWeight;
 
-public:
-    double forward(const std::string&, const std::string&) override;
-};
+    public:
+        TcrDist() : substitutionMatrix(), gapPenalty(), gapSymbol(), distanceWeight() {};
+        TcrDist(const doubleMatrix &subMat, const stringIndexMap &, double gapPen, char gapSym, double weight);
 
+        double forward(const std::string &, const std::string &) override;
+    };
+}
 
 #endif //METRICS_TCRDIST_H

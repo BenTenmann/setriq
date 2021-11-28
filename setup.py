@@ -1,3 +1,12 @@
+from __future__ import print_function
+import sys
+if sys.version_info < (3,):
+    print('Python 2 has reached end-of-life and is not supported by setriq.')
+    sys.exit(-1)
+if sys.platform == 'win32' and sys.maxsize.bit_length() == 31:
+    print('32-bit Windows Python runtime is not supported. Please switch to 64-bit Python.')
+    sys.exit(-1)
+
 import logging
 import os
 import pathlib
@@ -31,7 +40,7 @@ except (FileNotFoundError, ValueError) as ex:
 extensions = [
     Pybind11Extension(
         'setriq',
-        sources=sorted(glob('src/**/*.cpp', recursive=True)),
+        sources=sorted(glob('src/setriq/**/*.cpp', recursive=True)),
         cxx_std=14,
         define_macros=[('VERSION_INFO', __version__)],
         include_dirs=['include/setriq'],

@@ -25,14 +25,12 @@ private:
 
     // scoring matrix creation
     double calculateGapPenalty(const doubleMatrix&, const size_t&, const size_t&, const size_t&) const;
-    void fillScoringMatrix(doubleMatrix&, const std::string&, const std::string&);
-    static doubleMatrix initialiseScoringMatrix(const size_t&, const size_t&);
-    doubleMatrix createScoringMatrix(const std::string&, const std::string&);
+    void fillScoringMatrix(doubleMatrix&, const std::string&, const std::string&, IndexTuple&);
+    doubleMatrix createScoringMatrix(const std::string&, const std::string&, IndexTuple&);
 
     // traceback computation
-    static IndexTuple argMax(const doubleMatrix&);
-    static IndexTuple tracebackStep(const doubleMatrix&, const IndexTuple&);
-    static double tracebackScore(const doubleMatrix&, const IndexTuple&);
+    static void tracebackStep(const doubleMatrix&, size_t&, size_t&);
+    static double tracebackScore(const doubleMatrix&, IndexTuple&);
 
 public:
     SmithWaterman() : cache(), substitutionMatrix(), gapPenalty{0} {};

@@ -9,12 +9,26 @@
 #include <pybind11/stl.h>
 #include "PairwiseDistanceComputer.h"
 #include "metrics/CdrDist.h"
+#include "metrics/TcrDist.h"
 #include "utils/typeDefs.h"
 
 namespace py = pybind11;
 
 py::list cdr_dist(const stringVector &sequences, const doubleMatrix& substitutionMatrix, const stringIndexMap& index) {
     metric::CdrDist metric {substitutionMatrix, index};
+    PairwiseDistanceComputer computer { &metric };
+
+    doubleVector out = computer.computeDistance(sequences);
+    return py::cast(out);
+}
+
+py::list tcr_dist_component(const stringVector& sequences,
+                            const doubleMatrix& substitutionMatrix,
+                            const stringIndexMap& index,
+                            const double& gapPenalty,
+                            const char& gapSymbol,
+                            const double& distanceWeight) {
+    metric::TcrDist metric {substitutionMatrix, index, gapPenalty, gapSymbol, distanceWeight};
     PairwiseDistanceComputer computer { &metric };
 
     doubleVector out = computer.computeDistance(sequences);

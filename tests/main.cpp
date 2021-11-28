@@ -1,24 +1,46 @@
+#include <fstream>
 #include <iostream>
+#include <json/json.h>
 #include "PairwiseDistanceComputer.h"
 #include "metrics/CdrDist.h"
 
-int main() {
-    std::string aminoAcids{"'ARNDCQEGHILKMFPSTWYVBZX*'"};
-
-    size_t N = aminoAcids.size();
-    doubleMatrix matrix (N, doubleVector (N, 0));
+stringIndexMap getIndexMap (const Json::Value &jsonObject) {
     stringIndexMap index;
-    for (size_t i = 0; i < N; i++) {
-        index[aminoAcids.substr(i, 1)] = i;
-        matrix[i][i] = 1;
+    for (auto const& key : jsonObject["index"].getMemberNames()) {
+        index[key] = jsonObject["index"][key].asUInt();
     }
+    return index;
+}
+
+doubleMatrix getSubstitutionMatrix (const Json::Value &jsonObject) {
+    size_t N = jsonObject["substitution_matrix"].size();
+    size_t M = jsonObject["substitution_matrix"][0].size();
+
+    doubleMatrix matrix (N);
+    for (int i = 0; i < N; ++i) {
+
+        doubleVector row (M);
+        for (int j = 0; j < M; ++j) {
+            row[j] = jsonObject["substitution_matrix"][i][j].asFloat();
+        }
+        matrix[i] = row;
+    }
+    return matrix;
+}
+
+int main() {
+    Json::Value root;
+    Json::Reader reader;
+    std::ifstream file ("data/blosum-62.json");
+
+    reader.parse(file, root);
+
+    stringIndexMap index {getIndexMap(root)};
+    doubleMatrix matrix {getSubstitutionMatrix(root)};
 
     metric::CdrDist metric {matrix, index};
-    stringVector inputs {std::string("CASTPGTGGLYTF"),
-                         std::string("CASSHTGPLMNTEAFF"),
-                         std::string("CASSQGGAINYGYTF"),
-                         std::string("CASSDFGGAYNEQFF"),
-                         std::string("CASSYQDRVNSPLHF")};
+    stringVector inputs {std::string("AASQ"),
+                         std::string("PASQ")};
 
     PairwiseDistanceComputer executor { &metric };
     doubleVector distances = executor.computeDistance(inputs);
