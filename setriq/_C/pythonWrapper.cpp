@@ -41,6 +41,10 @@ PYBIND11_MODULE(_C, m) {
     m.def("cdr_dist", &cdr_dist, "Compute the pairwise CDR-dist metric for a set of CDR3 sequences.",
           py::arg("sequences"), py::arg("substitution_matrix"), py::arg("index"));
 
+    m.def("tcr_dist_component", &tcr_dist_component, "Compute pairwise TCR-dist for a set of TCR components.",
+          py::arg("sequences"), py::arg("substitution_matrix"), py::arg("index"),
+          py::arg("gap_penalty"), py::arg("gap_symbol"), py::arg("weight"))
+
 #ifdef VERSION_INFO
     m.attr("__version__") = MACRO_STRINGIFY(VERSION_INFO);
 #else
