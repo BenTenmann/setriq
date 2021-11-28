@@ -43,7 +43,7 @@ PYBIND11_MODULE(_C, m) {
 
     m.def("tcr_dist_component", &tcr_dist_component, "Compute pairwise TCR-dist for a set of TCR components.",
           py::arg("sequences"), py::arg("substitution_matrix"), py::arg("index"),
-          py::arg("gap_penalty"), py::arg("gap_symbol"), py::arg("weight"))
+          py::arg("gap_penalty"), py::arg("gap_symbol"), py::arg("weight"));
 
 #ifdef VERSION_INFO
     m.attr("__version__") = MACRO_STRINGIFY(VERSION_INFO);
