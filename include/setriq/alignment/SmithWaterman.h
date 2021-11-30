@@ -9,14 +9,6 @@
 #include "utils/LRUCache.h"
 #include "utils/typeDefs.h"
 
-struct IndexTuple {
-    size_t i;
-    size_t j;
-
-    IndexTuple() : i{0}, j{0} {};
-    IndexTuple(size_t n, size_t m) : i{n}, j{m} {};
-};
-
 class SmithWaterman {
 private:
     LRUCache<std::string, double> cache;
@@ -25,12 +17,8 @@ private:
 
     // scoring matrix creation
     double calculateGapPenalty(const doubleMatrix&, const size_t&, const size_t&, const size_t&) const;
-    void fillScoringMatrix(doubleMatrix&, const std::string&, const std::string&, IndexTuple&);
-    doubleMatrix createScoringMatrix(const std::string&, const std::string&, IndexTuple&);
-
-    // traceback computation
-    static void tracebackStep(const doubleMatrix&, size_t&, size_t&);
-    static double tracebackScore(const doubleMatrix&, IndexTuple&);
+    double fillScoringMatrix(doubleMatrix&, const std::string&, const std::string&);
+    double computeBestAlignmentScore(const std::string&, const std::string&);
 
 public:
     SmithWaterman() : cache(), substitutionMatrix(), gapPenalty{0} {};

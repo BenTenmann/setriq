@@ -2,6 +2,7 @@
 // Created by Benjamin Tenmann on 21/11/2021.
 //
 
+
 #include <utility>
 #include "alignment/SmithWaterman.h"
 
@@ -11,10 +12,9 @@ SmithWaterman::SmithWaterman(SubstitutionMatrix matrix, double gapPen, size_t ca
     this->gapPenalty = gapPen;
 }
 
-void SmithWaterman::fillScoringMatrix(doubleMatrix &scoringMatrix,
-                                      const std::string &a,
-                                      const std::string &b,
-                                      IndexTuple &argMax) {
+double SmithWaterman::fillScoringMatrix(doubleMatrix &scoringMatrix,
+                                        const std::string &a,
+                                        const std::string &b) {
     size_t N = scoringMatrix.size();
     size_t M = scoringMatrix[0].size();
 
@@ -30,14 +30,11 @@ void SmithWaterman::fillScoringMatrix(doubleMatrix &scoringMatrix,
             lGapScore = this->calculateGapPenalty(scoringMatrix, j, i, lAxis);
 
             currentScore = std::max(alignmentScore, std::max(kGapScore, lGapScore));
-            if (currentScore > maxScore) {
-                maxScore = currentScore;
-                argMax.i = i;
-                argMax.j = j;
-            }
+            if (currentScore > maxScore) maxScore = currentScore;
             scoringMatrix[i][j] = currentScore;
         }
     }
+    return maxScore;
 }
 
 double SmithWaterman::calculateGapPenalty(const doubleMatrix &scoringMatrix,
@@ -58,50 +55,19 @@ double SmithWaterman::calculateGapPenalty(const doubleMatrix &scoringMatrix,
     return maxScore;
 }
 
-doubleMatrix SmithWaterman::createScoringMatrix(const std::string &a, const std::string &b, IndexTuple &argMax) {
+double SmithWaterman::computeBestAlignmentScore(const std::string &a, const std::string &b) {
     size_t N = a.size();
     size_t M = b.size();
 
     doubleMatrix scoringMatrix (N + 1, doubleVector (M + 1, 0));
-    this->fillScoringMatrix(scoringMatrix, a, b, argMax);
+    double score {this->fillScoringMatrix(scoringMatrix, a, b)};
 
-    return scoringMatrix;
+    return score;
 }
 
 double SmithWaterman::forward(const std::string &a, const std::string &b) {
-    IndexTuple argMax {0, 0};
-    doubleMatrix scoringMatrix {this->createScoringMatrix(a, b, argMax)};
-
-    return SmithWaterman::tracebackScore(scoringMatrix, argMax);
-}
-
-double SmithWaterman::tracebackScore(const doubleMatrix &scoringMatrix, IndexTuple &currentPosition) {
-    double totalScore {scoringMatrix[currentPosition.i][currentPosition.j]};
-
-    double currentScore {totalScore};
-    while (currentScore > 0) {
-        SmithWaterman::tracebackStep(scoringMatrix, currentPosition.i, currentPosition.j);
-        currentScore = scoringMatrix[currentPosition.i][currentPosition.j];
-
-        totalScore += currentScore;
-    }
-
-    return totalScore;
-}
-
-void SmithWaterman::tracebackStep(const doubleMatrix &scoringMatrix, size_t &i, size_t &j) {
-    double across {scoringMatrix[i][j - 1]};
-    double diagonal {scoringMatrix[i - 1][j - 1]};
-    double up {scoringMatrix[i - 1][j]};
-
-    if (across > diagonal && across > up) j--;
-
-    else if (up > diagonal && up > across) i--;
-
-    else {
-        i--;
-        j--;
-    }
+    double bestScore {this->computeBestAlignmentScore(a, b)};
+    return bestScore;
 }
 
 double SmithWaterman::identityScore(const std::string &inputString) {
@@ -109,8 +75,7 @@ double SmithWaterman::identityScore(const std::string &inputString) {
 
     double score {0};
     for (size_t i = 0; i < N; i++) {
-        double elem = this->substitutionMatrix(inputString.substr(i, 1), inputString.substr(i, 1));
-        score += (double) (N - i) * elem;
+        score += this->substitutionMatrix(inputString.substr(i, 1), inputString.substr(i, 1));
     }
     return score;
 }

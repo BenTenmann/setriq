@@ -62,6 +62,13 @@ class TcrDistComponent(Metric):
 
 
 class TcrDist(Metric):
+    """
+    TcrDist class.
+
+    Attributes:
+    ----------
+
+    """
     _default = [
         ('cdr_1', {'substitution_matrix': BLOSUM62, 'gap_penalty': 4., 'weight': 1.}),
         ('cdr_2', {'substitution_matrix': BLOSUM62, 'gap_penalty': 4., 'weight': 1.}),

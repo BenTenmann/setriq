@@ -35,6 +35,8 @@
 
 # build-debug
 cmake-build-debug
+CMakeLists.txt
+tests/main.cpp
 
 ### Python template
 # Byte-compiled / optimized / DLL files
