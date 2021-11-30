@@ -16,7 +16,7 @@ jobs:
           command: |
             python -m pip install -r requirements.txt --user
             python setup.py build --force
-            python -m install .
+            python -m install . --user
       - save_cache:
           paths:
             - ~/.cache/pip
