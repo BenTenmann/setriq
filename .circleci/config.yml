@@ -15,8 +15,7 @@ jobs:
           name: install dependencies
           command: |
             python -m pip install -r requirements.txt
-            python setup.py build --force
-            python -m pip install .
+            python -m pip install -e .
       - save_cache:
           paths:
             - ~/.cache/pip
