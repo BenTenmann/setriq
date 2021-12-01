@@ -3,7 +3,7 @@ import warnings
 
 import pytest
 
-from src import setriq
+import setriq
 
 ROUNDING = decimal.Decimal('0.0001')
 

@@ -14,8 +14,8 @@ jobs:
       - run:
           name: install dependencies
           command: |
-            python -m pip install -r requirements.txt
-            python -m pip install .
+            python -m pip install -r requirements.txt --user
+            python -m pip install . --user
       - save_cache:
           paths:
             - ~/.cache/pip

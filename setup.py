@@ -34,8 +34,8 @@ except (FileNotFoundError, ValueError) as ex:
     logging.error(traceback.print_exc())
     logging.warning(f'Unable to get semantic release version. Setting version to {__version__}.')
 
-PROJECT_NAME = 'setriq'
 SOURCE_DIR = 'src'
+PROJECT_NAME = 'setriq'
 
 ParallelCompile("NPY_NUM_BUILD_JOBS").install()
 
@@ -62,6 +62,11 @@ setup(
     ext_modules=extensions,
     license='MIT',
     python_requires='>=3.7,<3.10',
+    install_requires=[
+        'glom>=20.0.0,<21.0.0',
+        'numpy>=1.0.0,<2.0.0',
+        'srsly>=2.0.0,<3.0.0',
+    ],
     package_dir={f'{PROJECT_NAME}': f'{SOURCE_DIR}/{PROJECT_NAME}'},
     packages=find_packages(where=f'{SOURCE_DIR}', exclude=['tests', 'scripts']),
     package_data={f'{PROJECT_NAME}': ['data/*.json']},
