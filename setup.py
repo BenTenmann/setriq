@@ -13,7 +13,7 @@ import re
 import traceback
 from glob import glob
 
-from pybind11.setup_helpers import Pybind11Extension
+from pybind11.setup_helpers import ParallelCompile, Pybind11Extension
 from setuptools import setup, find_packages
 
 logging.basicConfig(
@@ -35,12 +35,14 @@ except (FileNotFoundError, ValueError) as ex:
     logging.warning(f'Unable to get semantic release version. Setting version to {__version__}.')
 
 PROJECT_NAME = 'setriq'
-SOURCE_DIR = 'setriq'
+SOURCE_DIR = 'src'
+
+ParallelCompile("NPY_NUM_BUILD_JOBS").install()
 
 extensions = [
     Pybind11Extension(
         f'{PROJECT_NAME}._C',
-        sources=sorted(glob(f'{SOURCE_DIR}/_C/**/*.cpp', recursive=True)),
+        sources=sorted(glob(f'{SOURCE_DIR}/{PROJECT_NAME}/_C/**/*.cpp', recursive=True)),
         cxx_std=14,
         define_macros=[('VERSION_INFO', __version__)],
         include_dirs=['include/setriq'],
@@ -59,9 +61,9 @@ setup(
     url='https://github.com/BenTenmann/setriq',
     ext_modules=extensions,
     license='MIT',
-    requires=[],
     python_requires='>=3.7,<3.10',
-    packages=find_packages(exclude=['tests', 'scripts']),
-    package_data={f'{SOURCE_DIR}': sorted(glob(f'data/*.json'))},
+    package_dir={f'{PROJECT_NAME}': f'{SOURCE_DIR}/{PROJECT_NAME}'},
+    packages=find_packages(where=f'{SOURCE_DIR}', exclude=['tests', 'scripts']),
+    package_data={f'{PROJECT_NAME}': sorted(glob(f'data/*.json'))},
     include_package_data=True
 )

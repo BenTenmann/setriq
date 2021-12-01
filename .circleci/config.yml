@@ -15,7 +15,7 @@ jobs:
           name: install dependencies
           command: |
             python -m pip install -r requirements.txt
-            python -m pip install -e .
+            python -m pip install .
       - save_cache:
           paths:
             - ~/.cache/pip
@@ -24,7 +24,7 @@ jobs:
       - run:
           name: run unit tests
           command: |
-            python -m pytest -v tests --cov=${CIRCLE_REPO_NAME/-/_}
+            python -m pytest -v tests --cov=${CIRCLE_REPONAME/-/_}
 
 workflows:
   version: 2
