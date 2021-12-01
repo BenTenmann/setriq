@@ -64,6 +64,6 @@ setup(
     python_requires='>=3.7,<3.10',
     package_dir={f'{PROJECT_NAME}': f'{SOURCE_DIR}/{PROJECT_NAME}'},
     packages=find_packages(where=f'{SOURCE_DIR}', exclude=['tests', 'scripts']),
-    package_data={f'{PROJECT_NAME}': sorted(glob(f'data/*.json'))},
+    package_data={f'{PROJECT_NAME}': ['data/*.json']},
     include_package_data=True
 )
