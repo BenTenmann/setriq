@@ -24,7 +24,7 @@ jobs:
       - run:
           name: run unit tests
           command: |
-            python -m pytest -v tests --cov=${CIRCLE_REPONAME/-/_}
+            python -m pytest -v tests --cov=${CIRCLE_PROJECT_REPONAME/-/_}
 
 workflows:
   version: 2
