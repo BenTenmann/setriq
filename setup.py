@@ -9,6 +9,7 @@ if sys.platform == 'win32' and sys.maxsize.bit_length() == 31:
 
 import logging
 import pathlib
+import platform
 import re
 import traceback
 from glob import glob
@@ -37,7 +38,13 @@ except (FileNotFoundError, ValueError) as ex:
 SOURCE_DIR = 'src'
 PROJECT_NAME = 'setriq'
 
-ParallelCompile("NPY_NUM_BUILD_JOBS").install()
+ParallelCompile('NPY_NUM_BUILD_JOBS').install()
+
+compile_args = ['-fopenmp']
+include_args = []
+if platform.system() == 'Darwin':
+    compile_args = ['-Xpreprocessor', *compile_args]
+    include_args = ['-lomp', *include_args]
 
 extensions = [
     Pybind11Extension(
@@ -46,8 +53,8 @@ extensions = [
         cxx_std=14,
         define_macros=[('VERSION_INFO', __version__)],
         include_dirs=['include/setriq'],
-        extra_compile_args=['-Xpreprocessor', '-fopenmp'],
-        extra_link_args=['-lomp']
+        extra_compile_args=compile_args,
+        extra_link_args=include_args
     ),
 ]
 
