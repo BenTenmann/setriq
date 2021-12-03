@@ -16,7 +16,7 @@ namespace metric {
 
     public:
         CdrDist() : algorithm() {};
-        explicit CdrDist(const doubleMatrix&, const stringIndexMap&, double = 1.0, size_t = 1000);
+        explicit CdrDist(const doubleMatrix&, const stringIndexMap&, double = 1.0);
 
         double forward(const std::string &, const std::string &) override;
     };

@@ -6,8 +6,7 @@
 #include <utility>
 #include "alignment/SmithWaterman.h"
 
-SmithWaterman::SmithWaterman(SubstitutionMatrix matrix, double gapPen, size_t cacheSize) {
-    this->cache = LRUCache<std::string, double> (cacheSize);
+SmithWaterman::SmithWaterman(SubstitutionMatrix matrix, double gapPen) {
     this->substitutionMatrix = std::move(matrix);
     this->gapPenalty = gapPen;
 }

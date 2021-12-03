@@ -6,9 +6,9 @@
 #include <utility>
 #include "metrics/CdrDist.h"
 
-metric::CdrDist::CdrDist(const doubleMatrix& matrix, const stringIndexMap& index, double gapPenalty, size_t cacheSize) {
+metric::CdrDist::CdrDist(const doubleMatrix& matrix, const stringIndexMap& index, double gapPenalty) {
     SubstitutionMatrix substitutionMatrix(matrix, index);
-    SmithWaterman algo(substitutionMatrix, gapPenalty, cacheSize);
+    SmithWaterman algo(substitutionMatrix, gapPenalty);
 
     this->algorithm = algo;
 }

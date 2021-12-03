@@ -15,6 +15,9 @@ jobs:
           name: install dependencies
           command: |
             python -m pip install -r requirements.txt --user
+
+            # OpenMP env var
+            export OMP_NUM_THREADS="4"
             python -m pip install . --user
       - save_cache:
           paths:
@@ -24,7 +27,7 @@ jobs:
       - run:
           name: run unit tests
           command: |
-            python -m pytest -v tests --cov=${CIRCLE_PROJECT_REPONAME/-/_}
+            python -m pytest -v tests --cov=${CIRCLE_PROJECT_REPONAME/-/_} --cov-report xml
 
 workflows:
   version: 2

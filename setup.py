@@ -46,7 +46,8 @@ extensions = [
         cxx_std=14,
         define_macros=[('VERSION_INFO', __version__)],
         include_dirs=['include/setriq'],
-        extra_compile_args=['-O3']
+        extra_compile_args=['-Xpreprocessor', '-fopenmp'],
+        extra_link_args=['-lomp']
     ),
 ]
 
