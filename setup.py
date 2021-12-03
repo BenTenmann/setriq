@@ -40,10 +40,10 @@ PROJECT_NAME = 'setriq'
 
 ParallelCompile('NPY_NUM_BUILD_JOBS').install()
 
-compile_args = ['-fopenmp']
+compile_args = ['-Xpreprocessor', '-fopenmp']
 include_args = []
 if platform.system() == 'Darwin':
-    compile_args = ['-Xpreprocessor', *compile_args]
+    compile_args = [*compile_args]
     include_args = ['-lomp', *include_args]
 
 extensions = [
