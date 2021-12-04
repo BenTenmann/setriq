@@ -53,7 +53,7 @@ def get_compile_args():
     if platform.system() == 'Darwin':
         return ['-Xpreprocessor', '-fopenmp']
 
-    return ['-openmp']
+    return ['-fopenmp']
 
 
 def get_link_args():
