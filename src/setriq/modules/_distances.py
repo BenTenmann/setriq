@@ -22,7 +22,7 @@ __all__ = [
 
 class Metric(abc.ABC):
     """
-    The `Metric` abstract base class. Users familiar with the `torch` paradigm will recognize the overall structure of
+    The Metric abstract base class. Users familiar with the torch paradigm will recognize the overall structure of
     the metric subclasses.
 
     Methods
@@ -45,7 +45,7 @@ class Metric(abc.ABC):
 
 class CdrDist(Metric):
     """
-    The `CdrDist` class. Inherits from `Metric`.
+    The CdrDist class. Inherits from Metric.
 
     Examples
     --------
@@ -112,6 +112,22 @@ class TcrDist(Metric):
     ----------
     components : List[str]
         holds the names of the components to be executed
+
+    Examples
+    --------
+    >>> sequences = [
+    ...     {'cdr_1': '', 'cdr_2': '', 'cdr_3': 'CASSLKPNTE'},
+    ...     {'cdr_1': '', 'cdr_2': '', 'cdr_3': 'CASS-HIANY'},
+    ...     {'cdr_1': '', 'cdr_2': '', 'cdr_3': 'CASRGAT--Q'}
+    ... ]
+    >>> metric = TcrDist()  # will produce a warning stating default parameters (Dash et al)
+    >>> distances = metric(sequences)
+
+    References
+    ----------
+    [1] Dash, P., Fiore-Gartland, A.J., Hertz, T., Wang, G.C., Sharma, S., Souquette, A., Crawford, J.C., Clemens, E.B.,
+        Nguyen, T.H., Kedzierska, K. and La Gruta, N.L., 2017. Quantifiable predictive features define
+        epitope-specific T cell receptor repertoires. Nature, 547(7661), pp.89-93. (https://doi.org/10.1038/nature22383)
     """
     _default = [
         ('cdr_1', {'substitution_matrix': BLOSUM62, 'gap_penalty': 4., 'weight': 1.}),
@@ -124,6 +140,36 @@ class TcrDist(Metric):
     ).format(', '.join(repr(key) for key, _ in _default))
     
     def __init__(self, **components):
+        """
+        Initialize a TcrDist object. Initialization can happen in two ways:
+            1. no arguments are passed, instantiating the default configuration of TcrDist -- i.e. the configuration
+               described in Dash et al.
+            2. a set of keyword arguments is passed, where each value is a TcrDistComponent instance and the key gives
+               the component its name. An arbitrary number of components can be set and their naming is also arbitrary.
+
+        Parameters
+        ----------
+        components : keyword arguments
+            either a set of keyword arguments, where each value is a TcrDistComponent instance which will be stored as
+            an attribute with the key as its name OR `None` -- in which case the default configuration is loaded (Dash
+            et al).
+
+        Examples
+        --------
+        Initialize with default parameters
+        >>> metric = TcrDist()  # will produce a warning
+
+        Initialize with custom components
+        >>> component_1 = TcrDistComponent(substitution_matrix=BLOSUM45, gap_penalty=3, weight=1)
+        >>> component_2 = TcrDistComponent(substitution_matrix=BLOSUM45, gap_penalty=5, weight=10)
+        >>>
+        >>> metric = TcrDist(cmp_1=component_1, cmp_2=component_2)
+
+        Keep in mind that the keys will be used to assiociate the components to the relevant input, i.e. in this case
+        the input should take the shape:
+        >>> [{'cmp_1': '...', 'cmp_2': '...'}, ...]
+        additional keys will have no effect.
+        """
         parts = []
         if components:
             for name, component in components.items():
