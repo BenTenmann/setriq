@@ -16,6 +16,13 @@ from glob import glob
 
 from pybind11.setup_helpers import ParallelCompile, Pybind11Extension
 from setuptools import setup, find_packages
+from setuptools.command.build_ext import build_ext as base_build_ext
+
+python_min_version = (3, 7, 2)
+python_min_version_str = '.'.join(map(str, python_min_version))
+if sys.version_info < python_min_version:
+    print('Minimum Python version required is {}. Current version is {}'.format(python_min_version_str,
+                                                                                platform.python_version()))
 
 logging.basicConfig(
     level=logging.DEBUG,
@@ -23,6 +30,7 @@ logging.basicConfig(
     datefmt='%Y-%m-%d %H:%M:%S'
 )
 
+# find the sem-rel version
 dirname = pathlib.Path(__file__).parent
 long_description = (dirname / 'README.md').read_text()
 
@@ -40,11 +48,20 @@ PROJECT_NAME = 'setriq'
 
 ParallelCompile('NPY_NUM_BUILD_JOBS').install()
 
-compile_args = ['-Xpreprocessor', '-fopenmp']
-include_args = []
-if platform.system() == 'Darwin':
-    compile_args = [*compile_args]
-    include_args = ['-lomp', *include_args]
+
+def get_compile_args():
+    if platform.system() == 'Darwin':
+        return ['-Xpreprocessor', '-fopenmp']
+
+    return ['-openmp']
+
+
+def get_link_args():
+    if platform.system() == 'Darwin':
+        return ['-lomp']
+
+    return ['-fopenmp']
+
 
 extensions = [
     Pybind11Extension(
@@ -53,8 +70,8 @@ extensions = [
         cxx_std=14,
         define_macros=[('VERSION_INFO', __version__)],
         include_dirs=['include/setriq'],
-        extra_compile_args=compile_args,
-        extra_link_args=include_args
+        extra_compile_args=get_compile_args(),
+        extra_link_args=get_link_args()
     ),
 ]
 
