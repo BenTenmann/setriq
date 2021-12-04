@@ -16,7 +16,6 @@ from glob import glob
 
 from pybind11.setup_helpers import ParallelCompile, Pybind11Extension
 from setuptools import setup, find_packages
-from setuptools.command.build_ext import build_ext as base_build_ext
 
 python_min_version = (3, 7, 2)
 python_min_version_str = '.'.join(map(str, python_min_version))
