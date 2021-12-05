@@ -13,6 +13,6 @@ How to use the documentation
 """
 
 from .modules import (
-    CdrDist, TcrDist,
+    CdrDist, Levenshtein, TcrDist,
     SubstitutionMatrix, BLOSUM45, BLOSUM62, BLOSUM90
 )
