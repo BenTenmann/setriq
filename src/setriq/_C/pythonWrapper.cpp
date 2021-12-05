@@ -9,6 +9,7 @@
 #include <pybind11/stl.h>
 #include "PairwiseDistanceComputer.h"
 #include "metrics/CdrDist.h"
+#include "metrics/Levenshtein.h"
 #include "metrics/TcrDist.h"
 #include "utils/typeDefs.h"
 
@@ -16,6 +17,14 @@ namespace py = pybind11;
 
 py::list cdr_dist(const stringVector &sequences, const doubleMatrix& substitutionMatrix, const stringIndexMap& index) {
     metric::CdrDist metric {substitutionMatrix, index};
+    PairwiseDistanceComputer computer { &metric };
+
+    doubleVector out = computer.computeDistance(sequences);
+    return py::cast(out);
+}
+
+py::list levenshtein(const stringVector sequences, double extra_cost) {
+    metric::Levenshtein metric {extra_cost};
     PairwiseDistanceComputer computer { &metric };
 
     doubleVector out = computer.computeDistance(sequences);
@@ -40,6 +49,9 @@ PYBIND11_MODULE(_C, m) {
 
     m.def("cdr_dist", &cdr_dist, "Compute the pairwise CDR-dist metric for a set of CDR3 sequences.",
           py::arg("sequences"), py::arg("substitution_matrix"), py::arg("index"));
+
+    m.def("levenshtein", &levenshtein, "Compute the pairwise Levenshtein distances for a set of sequences.",
+          py::arg("sequences"), py::arg("extra_cost"));
 
     m.def("tcr_dist_component", &tcr_dist_component, "Compute pairwise TCR-dist for a set of TCR components.",
           py::arg("sequences"), py::arg("substitution_matrix"), py::arg("index"),

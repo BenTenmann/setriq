@@ -12,10 +12,15 @@ import pandas as pd
 from glom import glom
 
 import setriq._C as C
-from ._substitution import *
+from .substitution import (
+    BLOSUM45,
+    BLOSUM62,
+    SubstitutionMatrix
+)
 
 __all__ = [
     'CdrDist',
+    'Levenshtein',
     'TcrDist',
     'TcrDistComponent',
 ]
@@ -68,6 +73,36 @@ class CdrDist(Metric):
         self.fn = C.cdr_dist
 
     def forward(self, sequences: List[str]) -> List[float]:
+        out = self.fn(sequences, **self.call_args)
+
+        return out
+
+
+class Levenshtein(Metric):
+    """
+    The Levenshtein class. Inherits from Metric. It uses a refactor of the `python-Levenshtein` implementation in the
+    backend.
+
+    Examples
+    --------
+    >>> sequences = ['CASSLKPNTEAFF', 'CASSAHIANYGYTF', 'CASRGATETQYF']
+    >>>
+    >>> metric = Levenshtein()
+    >>> distances = metric(sequences)
+
+    References
+    ----------
+    [1] Levenshtein, V.I., 1966, February. Binary codes capable of correcting deletions, insertions, and reversals. In
+        Soviet physics doklady (Vol. 10, No. 8, pp. 707-710). ()
+    [2] python-Levenshtein (https://github.com/ztane/python-Levenshtein)
+    """
+    def __init__(self, extra_cost: float = 0.):
+        self.call_args = {
+            'extra_cost': extra_cost
+        }
+        self.fn = C.levenshtein
+
+    def forward(self, sequences: List[str]):
         out = self.fn(sequences, **self.call_args)
 
         return out
