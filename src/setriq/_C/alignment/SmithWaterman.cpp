@@ -23,8 +23,7 @@ double SmithWaterman::fillScoringMatrix(doubleMatrix &scoringMatrix,
 
     for (size_t i = 1; i < N; i++) {
         for (size_t j = 1; j < M; j++) {
-            alignmentScore = scoringMatrix[i - 1][j - 1] + this->substitutionMatrix(a.substr(i - 1, 1),
-                                                                                    b.substr(j - 1, 1));
+            alignmentScore = scoringMatrix[i - 1][j - 1] + this->substitutionMatrix(a[i - 1], b[j - 1]);
             kGapScore = this->calculateGapPenalty(scoringMatrix, i, j, kAxis);
             lGapScore = this->calculateGapPenalty(scoringMatrix, j, i, lAxis);
 
@@ -74,7 +73,7 @@ double SmithWaterman::identityScore(const std::string &inputString) {
 
     double score {0};
     for (size_t i = 0; i < N; i++) {
-        score += this->substitutionMatrix(inputString.substr(i, 1), inputString.substr(i, 1));
+        score += this->substitutionMatrix(inputString[i], inputString[i]);
     }
     return score;
 }

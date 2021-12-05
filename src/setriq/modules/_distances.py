@@ -8,6 +8,7 @@ import warnings
 from typing import Dict, List
 
 import numpy as np
+import pandas as pd
 from glom import glom
 
 import setriq._C as C
@@ -98,6 +99,8 @@ class TcrDistComponent(Metric):
         self.fn = C.tcr_dist_component
 
     def forward(self, sequences: List[str]) -> List[float]:
+        if not (len(sequences[0]) == pd.Series(sequences).str.len()).all():
+            raise ValueError('Sequences must be of equal length')
         out = self.fn(sequences, **self.call_args)
 
         return out
@@ -178,7 +181,7 @@ class TcrDist(Metric):
             for name, component in components.items():
                 # some type checking
                 if not isinstance(component, TcrDistComponent):
-                    raise TypeError(f'{repr(name)} is not of type {TcrDistComponent}')
+                    raise TypeError(f'{repr(name)} is not of type {TcrDistComponent.__class__.__name__}')
 
                 self.__setattr__(name, component)
                 parts.append(name)
@@ -199,7 +202,7 @@ class TcrDist(Metric):
 
         diff = pts.difference(ipt)
         if diff:
-            raise ValueError('please inspect inputs - missing key(s): {}'.format(', '.join(map(repr, diff))))
+            raise ValueError('Missing key(s): {}'.format(', '.join(map(repr, diff))))
 
     @property
     def required_input_keys(self) -> List[str]:

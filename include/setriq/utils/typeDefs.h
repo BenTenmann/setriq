@@ -5,13 +5,13 @@
 #ifndef METRICS_TYPEDEFS_H
 #define METRICS_TYPEDEFS_H
 
-#include <map>
 #include <string>
+#include <unordered_map>
 #include <vector>
 
 typedef std::vector<std::string> stringVector;
 typedef std::vector<double> doubleVector;
 typedef std::vector<doubleVector> doubleMatrix;
-typedef std::map<std::string, size_t> stringIndexMap;
+typedef std::unordered_map<char, size_t> stringIndexMap;
 
 #endif //METRICS_TYPEDEFS_H

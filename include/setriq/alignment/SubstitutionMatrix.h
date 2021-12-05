@@ -17,8 +17,8 @@ public:
     SubstitutionMatrix() : subMatrix(), edgeMap() {};
     SubstitutionMatrix(const doubleMatrix&, const stringIndexMap&);
 
-    double forward (const std::string&, const std::string&);
-    double operator () (const std::string& a, const std::string &b) { return this->forward(a, b); };
+    double forward (const char&, const char&);
+    double operator () (const char& a, const char &b) { return this->forward(a, b); };
 };
 
 

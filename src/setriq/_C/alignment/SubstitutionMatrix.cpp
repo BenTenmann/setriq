@@ -9,7 +9,7 @@ SubstitutionMatrix::SubstitutionMatrix(const doubleMatrix& matrix, const stringI
     this->edgeMap = index;
 }
 
-double SubstitutionMatrix::forward(const std::string &from, const std::string &to) {
+double SubstitutionMatrix::forward(const char &from, const char &to) {
     size_t fromIdx, toIdx;
     fromIdx = this->edgeMap[from];
     toIdx = this->edgeMap[to];

@@ -50,6 +50,7 @@ class SubstitutionMatrix(abc.ABC):
     here we can see that we can provide any arbitrary substitution matrix, but in general it is advised to use the
     pre-loaded BLOSUM matrices
     >>> [BLOSUM45, BLOSUM62, BLOSUM90]  # choose one of the following
+
     these are just instances of `SubstitutionMatrix`, initialised through `from_json`
     """
     _required_keys = (
