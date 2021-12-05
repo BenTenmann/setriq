@@ -2,6 +2,7 @@
 // Created by Benjamin Tenmann on 05/12/2021.
 //
 
+#include <cstring>
 #include <numeric>
 #include <string>
 #include <vector>
