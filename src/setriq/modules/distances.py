@@ -15,7 +15,8 @@ import setriq._C as C
 from .substitution import (
     BLOSUM45,
     BLOSUM62,
-    SubstitutionMatrix
+    SubstitutionMatrix,
+    TCR_DIST_BLOSUM_DEFAULT
 )
 
 __all__ = [
@@ -154,8 +155,8 @@ class TcrDist(Metric):
     Examples
     --------
     >>> sequences = [
-    ...     {'cdr_1': '', 'cdr_2': '', 'cdr_3': 'CASSLKPNTE'},
-    ...     {'cdr_1': '', 'cdr_2': '', 'cdr_3': 'CASS-HIANY'},
+    ...     {'cdr_1': 'TSG------FNG', 'cdr_2': 'VVL----DGL', 'cdr_2_5': 'SRSN-GY', 'cdr_3': 'CAVR--'},
+    ...     {'cdr_1': 'TSG------FYG', 'cdr_2': 'NGL----DGL', 'cdr_2_5': 'SRSD-SY', 'cdr_3': 'CA-------'},
     ...     {'cdr_1': '', 'cdr_2': '', 'cdr_3': 'CASRGAT--Q'}
     ... ]
     >>> metric = TcrDist()  # will produce a warning stating default configuration (Dash et al)
@@ -168,9 +169,10 @@ class TcrDist(Metric):
         epitope-specific T cell receptor repertoires. Nature, 547(7661), pp.89-93. (https://doi.org/10.1038/nature22383)
     """
     _default = [
-        ('cdr_1', {'substitution_matrix': BLOSUM62, 'gap_penalty': 4., 'weight': 1.}),
-        ('cdr_2', {'substitution_matrix': BLOSUM62, 'gap_penalty': 4., 'weight': 1.}),
-        ('cdr_3', {'substitution_matrix': BLOSUM62, 'gap_penalty': 8., 'weight': 3.})
+        ('cdr_1', {'substitution_matrix': TCR_DIST_BLOSUM_DEFAULT, 'gap_penalty': 4., 'weight': 1.}),
+        ('cdr_2', {'substitution_matrix': TCR_DIST_BLOSUM_DEFAULT, 'gap_penalty': 4., 'weight': 1.}),
+        ('cdr_2_5', {'substitution_matrix': TCR_DIST_BLOSUM_DEFAULT, 'gap_penalty': 4., 'weight': 1.}),
+        ('cdr_3', {'substitution_matrix': TCR_DIST_BLOSUM_DEFAULT, 'gap_penalty': 8., 'weight': 3.})
     ]
     _default_msg = (
         'TcrDist has been initialized using the default configuration. '

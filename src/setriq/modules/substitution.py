@@ -15,10 +15,12 @@ from typing import (
 import srsly
 
 __all__ = [
-    'SubstitutionMatrix',
     'BLOSUM45',
     'BLOSUM62',
     'BLOSUM90',
+    'SubstitutionMatrix',
+    'TCR_DIST_BLOSUM62',
+    'TCR_DIST_BLOSUM_DEFAULT'
 ]
 
 
@@ -107,6 +109,9 @@ class SubstitutionMatrix(abc.ABC):
         model = cls(**values)
         return model
 
+    def __len__(self):
+        return len(self.substitution_matrix)
+
     def __getitem__(self, key: str):
         out = self.__getattribute__(key)
         return out
@@ -143,6 +148,56 @@ class SubstitutionMatrix(abc.ABC):
         out = self.substitution_matrix[i][j]
         return out
 
+    def add_token(self, token: str, values: Union[float, List[float]]):
+        """
+        Add a special token to the substitution matrix with a given value or list of values.
+
+        Parameters
+        ----------
+        token : str
+            a special token to be added
+        values : Union[float, List[float]]
+            a value or list of values to which the token will correspond. If a list of floats is provided, the list must
+            have a length of `len(substitution_matrix) + 1`, i.e. there must be number of rows + 1 elements in the list
+
+        Returns
+        -------
+        None
+            this is an inplace operation
+
+        Examples
+        --------
+        Single value example. The value is repeated to fit the required shape
+        >>> sm = BLOSUM62
+        >>> sm.add_token('-', 4.)
+
+        List of floats example
+        >>> sm = BLOSUM62
+        >>> len(sm)
+        ... 24
+        >>> sm.add_token('setriq', [*range(26)])  # ints implicitly converted to floats
+
+        """
+        if token in self.index:
+            raise ValueError('`token` already exists')
+
+        # generate the full row in case of single value
+        if isinstance(values, float):
+            values = [values for _ in range(len(self.substitution_matrix[0]) + 1)]
+
+        # check if first dimension fits
+        if len(values) - 1 != len(self.substitution_matrix):
+            raise ValueError('`values` and `substitution_matrix` must have same dimension 0')
+
+        # append the values in the new row to the each existing row to enforce symmetry
+        values = [*map(float, values)]
+        for scoring_row, new_value in zip(self.substitution_matrix, values[:-1]):
+            scoring_row.append(new_value)
+
+        # append the new row and add new token
+        self.substitution_matrix.append(values)
+        self.index[token] = len(self.substitution_matrix) - 1
+
 
 # below we load the matrices which come with the package -- this exposes them to the user
 # they will be used for default settings in a number of metrics
@@ -152,3 +207,11 @@ DATA_DIR = pathlib.Path(pkg.resource_filename(PKG_NAME, 'data/'))
 BLOSUM45 = SubstitutionMatrix.from_json(DATA_DIR / 'blosum-45.json')
 BLOSUM62 = SubstitutionMatrix.from_json(DATA_DIR / 'blosum-62.json')
 BLOSUM90 = SubstitutionMatrix.from_json(DATA_DIR / 'blosum-90.json')
+
+# the below is a pre-computed substitution matrix for the default TcrDist configuration
+# note that the the gap symbol is omitted from this for flexibility
+TCR_DIST_BLOSUM62 = SubstitutionMatrix.from_json(DATA_DIR / 'tcr-dist-blosum-62.json')
+
+# here we have an instance *with* the default gap symbol
+TCR_DIST_BLOSUM_DEFAULT = SubstitutionMatrix.from_json(DATA_DIR / 'tcr-dist-blosum-62.json')
+TCR_DIST_BLOSUM_DEFAULT.add_token('-', 4.)
