@@ -15,8 +15,7 @@ import setriq._C as C
 from .substitution import (
     BLOSUM45,
     BLOSUM62,
-    SubstitutionMatrix,
-    TCR_DIST_BLOSUM_DEFAULT
+    SubstitutionMatrix
 )
 
 __all__ = [
@@ -169,10 +168,10 @@ class TcrDist(Metric):
         epitope-specific T cell receptor repertoires. Nature, 547(7661), pp.89-93. (https://doi.org/10.1038/nature22383)
     """
     _default = [
-        ('cdr_1', {'substitution_matrix': TCR_DIST_BLOSUM_DEFAULT, 'gap_penalty': 4., 'weight': 1.}),
-        ('cdr_2', {'substitution_matrix': TCR_DIST_BLOSUM_DEFAULT, 'gap_penalty': 4., 'weight': 1.}),
-        ('cdr_2_5', {'substitution_matrix': TCR_DIST_BLOSUM_DEFAULT, 'gap_penalty': 4., 'weight': 1.}),
-        ('cdr_3', {'substitution_matrix': TCR_DIST_BLOSUM_DEFAULT, 'gap_penalty': 8., 'weight': 3.})
+        ('cdr_1', {'substitution_matrix': BLOSUM62, 'gap_penalty': 4., 'weight': 1.}),
+        ('cdr_2', {'substitution_matrix': BLOSUM62, 'gap_penalty': 4., 'weight': 1.}),
+        ('cdr_2_5', {'substitution_matrix': BLOSUM62, 'gap_penalty': 4., 'weight': 1.}),
+        ('cdr_3', {'substitution_matrix': BLOSUM62, 'gap_penalty': 8., 'weight': 3.})
     ]
     _default_msg = (
         'TcrDist has been initialized using the default configuration. '

@@ -4,6 +4,7 @@ Substitution matrix convenience interface.
 """
 
 import abc
+import copy
 import pathlib
 import pkg_resources as pkg
 from typing import (
@@ -19,8 +20,6 @@ __all__ = [
     'BLOSUM62',
     'BLOSUM90',
     'SubstitutionMatrix',
-    'TCR_DIST_BLOSUM62',
-    'TCR_DIST_BLOSUM_DEFAULT'
 ]
 
 
@@ -148,7 +147,11 @@ class SubstitutionMatrix(abc.ABC):
         out = self.substitution_matrix[i][j]
         return out
 
-    def add_token(self, token: str, values: Union[float, List[float]]):
+    def add_token(self,
+                  token: str,
+                  values: Union[float, List[float]],
+                  inplace: bool = False
+                  ) -> Union["SubstitutionMatrix", None]:
         """
         Add a special token to the substitution matrix with a given value or list of values.
 
@@ -159,6 +162,8 @@ class SubstitutionMatrix(abc.ABC):
         values : Union[float, List[float]]
             a value or list of values to which the token will correspond. If a list of floats is provided, the list must
             have a length of `len(substitution_matrix) + 1`, i.e. there must be number of rows + 1 elements in the list
+        inplace : bool
+            boolean whether to add token inplace
 
         Returns
         -------
@@ -189,14 +194,26 @@ class SubstitutionMatrix(abc.ABC):
         if len(values) - 1 != len(self.substitution_matrix):
             raise ValueError('`values` and `substitution_matrix` must have same dimension 0')
 
+        # generate deep copies to make inplace operation optional
+        substitution_matrix = copy.deepcopy(self.substitution_matrix)
+        index = copy.deepcopy(self.index)
+
         # append the values in the new row to the each existing row to enforce symmetry
         values = [*map(float, values)]
-        for scoring_row, new_value in zip(self.substitution_matrix, values[:-1]):
+        for scoring_row, new_value in zip(substitution_matrix, values[:-1]):
             scoring_row.append(new_value)
 
         # append the new row and add new token
-        self.substitution_matrix.append(values)
-        self.index[token] = len(self.substitution_matrix) - 1
+        substitution_matrix.append(values)
+        index[token] = len(self.substitution_matrix) - 1
+
+        if inplace:
+            self.substitution_matrix = substitution_matrix
+            self.index = index
+            return None
+
+        out = SubstitutionMatrix(index=index, substitution_matrix=substitution_matrix)
+        return out
 
 
 # below we load the matrices which come with the package -- this exposes them to the user
@@ -207,11 +224,3 @@ DATA_DIR = pathlib.Path(pkg.resource_filename(PKG_NAME, 'data/'))
 BLOSUM45 = SubstitutionMatrix.from_json(DATA_DIR / 'blosum-45.json')
 BLOSUM62 = SubstitutionMatrix.from_json(DATA_DIR / 'blosum-62.json')
 BLOSUM90 = SubstitutionMatrix.from_json(DATA_DIR / 'blosum-90.json')
-
-# the below is a pre-computed substitution matrix for the default TcrDist configuration
-# note that the the gap symbol is omitted from this for flexibility
-TCR_DIST_BLOSUM62 = SubstitutionMatrix.from_json(DATA_DIR / 'tcr-dist-blosum-62.json')
-
-# here we have an instance *with* the default gap symbol
-TCR_DIST_BLOSUM_DEFAULT = SubstitutionMatrix.from_json(DATA_DIR / 'tcr-dist-blosum-62.json')
-TCR_DIST_BLOSUM_DEFAULT.add_token('-', 4.)

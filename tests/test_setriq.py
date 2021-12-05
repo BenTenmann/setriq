@@ -20,8 +20,8 @@ cdr_dist_results = [
 ]
 
 tcr_dist_results = [
-    [decimal.Decimal('20.0')],
-    [decimal.Decimal('40.0'), decimal.Decimal('60.0'), decimal.Decimal('60.0')],
+    [decimal.Decimal('24.0')],
+    [decimal.Decimal('48.0'), decimal.Decimal('72.0'), decimal.Decimal('72.0')],
     [decimal.Decimal('0.0')],
 ]
 
@@ -47,7 +47,7 @@ def tcr_dist_base():
 
 
 def convert_to_tcr_dist_format(tc, rs):
-    out = zip(([{'cdr_1': seq, 'cdr_2': seq, 'cdr_3': seq} for seq in case]
+    out = zip(([{'cdr_1': seq, 'cdr_2': seq, 'cdr_2_5': seq, 'cdr_3': seq} for seq in case]
                for case in tc), rs)
 
     return out
