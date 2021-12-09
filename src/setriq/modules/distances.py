@@ -125,6 +125,20 @@ class TcrDistComponent(Metric):
                  gap_penalty: float,
                  gap_symbol: str = '-',
                  weight: float = 1.):
+        """
+        Initialize a TcrDistComponent object.
+
+        Parameters
+        ----------
+        substitution_matrix : SubstitutionMatrix
+            a SubstitutionMatrix object
+        gap_penalty : float
+            the gap penalty, i.e. the score given for a <not-gap-symbol> -> <gap-symbol> substitution
+        gap_symbol : str
+            the gap symbol (default = '-')
+        weight : float
+            the weighting of the component weight
+        """
         self.call_args = {
             **substitution_matrix,
             'gap_penalty': gap_penalty,
