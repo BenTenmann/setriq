@@ -9,6 +9,13 @@ PairwiseDistanceComputer::PairwiseDistanceComputer(Metric* metric) {
 }
 
 doubleVector PairwiseDistanceComputer::computeDistance(const stringVector& inputStrings) const {
+    /**
+     * Method for computing a given metric on a set of sequences, pairwise. In case OpenMP is available at compile-time,
+     * the method will be multi-threaded.
+     *
+     * @param inputStrings: a vector of input strings
+     * @return a flat (N * (N - 1)) / 2 vector of doubles
+     */
     size_t N = inputStrings.size();
     doubleVector distanceMatrix(N * (N - 1) / 2);
 
