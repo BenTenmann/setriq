@@ -43,7 +43,7 @@ class SubstitutionMatrix(abc.ABC):
     Examples
     --------
     suppose we have a token index `idx` and a substitution matrix `scores`
-    >>> idx = {'hello': 1, 'world': 2}
+    >>> idx = {'hello': 0, 'world': 1}
     >>> scores = [[1., -1.],
     ...           [-1., 1.]]
     >>> matrix = SubstitutionMatrix(index=idx, substitution_matrix=scores)
