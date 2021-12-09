@@ -1,11 +1,11 @@
-import decimal
+import decimal as dc
 import warnings
 
 import pytest
 
 import setriq
 
-ROUNDING = decimal.Decimal('0.0001')
+ROUNDING = dc.Decimal('0.0001')
 
 test_cases = [
     ['AASQ', 'PASQ'],
@@ -14,15 +14,15 @@ test_cases = [
 ]
 
 cdr_dist_results = [
-    [decimal.Decimal('0.2950')],
-    [decimal.Decimal('0.7418'), decimal.Decimal('1.0'), decimal.Decimal('1.0')],
-    [decimal.Decimal('0.0')],
+    [dc.Decimal('0.2950')],
+    [dc.Decimal('0.7418'), dc.Decimal('1.0'), dc.Decimal('1.0')],
+    [dc.Decimal('0.0')],
 ]
 
 tcr_dist_results = [
-    [decimal.Decimal('24.0')],
-    [decimal.Decimal('48.0'), decimal.Decimal('72.0'), decimal.Decimal('72.0')],
-    [decimal.Decimal('0.0')],
+    [dc.Decimal('24.0')],
+    [dc.Decimal('48.0'), dc.Decimal('72.0'), dc.Decimal('72.0')],
+    [dc.Decimal('0.0')],
 ]
 
 
@@ -63,7 +63,7 @@ def test_cdr_dist(cdr_dist, test_case):
     n = len(sequences)
     assert len(response) == (n * (n - 1) / 2)
 
-    res = [decimal.Decimal(r).quantize(ROUNDING, rounding=decimal.ROUND_HALF_UP) for r in response]
+    res = [dc.Decimal(r).quantize(ROUNDING, rounding=dc.ROUND_HALF_UP) for r in response]
     assert all(r == tgt for r, tgt in zip(res, distances))
 
 
@@ -77,7 +77,7 @@ def test_tcr_dist(tcr_dist_base, test_case):
     n = len(sequences)
     assert len(response) == (n * (n - 1) / 2)
 
-    res = [decimal.Decimal(r).quantize(ROUNDING, rounding=decimal.ROUND_HALF_UP) for r in response]
+    res = [dc.Decimal(r).quantize(ROUNDING, rounding=dc.ROUND_HALF_UP) for r in response]
     assert all(r == tgt for r, tgt in zip(res, distances))
 
 
