@@ -93,7 +93,7 @@ class Levenshtein(Metric):
     References
     ----------
     [1] Levenshtein, V.I., 1966, February. Binary codes capable of correcting deletions, insertions, and reversals. In
-        Soviet physics doklady (Vol. 10, No. 8, pp. 707-710). ()
+        Soviet physics doklady (Vol. 10, No. 8, pp. 707-710).
     [2] python-Levenshtein (https://github.com/ztane/python-Levenshtein)
     """
     def __init__(self, extra_cost: float = 0.):
