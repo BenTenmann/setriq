@@ -168,9 +168,9 @@ class TcrDist(Metric):
     Examples
     --------
     >>> sequences = [
-    ...     {'cdr_1': 'TSG------FNG', 'cdr_2': 'VVL----DGL', 'cdr_2_5': 'SRSN-GY', 'cdr_3': 'CAVR--'},
+    ...     {'cdr_1': 'TSG------FNG', 'cdr_2': 'VVL----DGL', 'cdr_2_5': 'SRSN-GY', 'cdr_3': 'CAVR-----'},
     ...     {'cdr_1': 'TSG------FYG', 'cdr_2': 'NGL----DGL', 'cdr_2_5': 'SRSD-SY', 'cdr_3': 'CA-------'},
-    ...     {'cdr_1': '', 'cdr_2': '', 'cdr_3': 'CASRGAT--Q'}
+    ...     {'cdr_1': 'NSA------FQY', 'cdr_2': 'TYS----SGN', 'cdr_2_5': 'DKSSKY-', 'cdr_3': 'CAMS-----'}
     ... ]
     >>> metric = TcrDist()  # will produce a warning stating default configuration (Dash et al)
     >>> distances = metric(sequences)
