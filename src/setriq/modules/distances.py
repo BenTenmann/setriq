@@ -282,7 +282,7 @@ class TcrDist(Metric):
 
     def forward(self, sequences: List[Dict[str, str]]) -> List[float]:
         # check the input keys provided -- assumes consistency
-        self._check_input_format(sequences[0])
+        self._check_input_format(pd.DataFrame(sequences).columns)
 
         # iterate through components and collect component output
         out = []
