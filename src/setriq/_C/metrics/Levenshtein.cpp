@@ -9,6 +9,14 @@
 #include "metrics/Levenshtein.h"
 
 double metric::Levenshtein::forward(const std::string &a, const std::string &b) {
+    /**
+     * Compute the Levenshtein distance between two input strings. This is a C++ refactor of the `python-Levenshtein`
+     * implementation (https://github.com/ztane/python-Levenshtein).
+     *
+     * @param a: an input string to be compared
+     * @param b: an input string to be compared
+     * @return the Levensthein distance between the two input strings
+     */
     size_t lengthOfA {a.size()};
     size_t lengthOfB {b.size()};
     size_t halfOfLengthA;
@@ -93,8 +101,8 @@ double metric::Levenshtein::forward(const std::string &a, const std::string &b) 
         /*
          *
          * in this case we don't have to scan two corner triangles (of size len1/2)
-         * in the matrix because no best path can go throught them. note this
-         * breaks when len1 == len2 == 2 so the memchr() special case above is
+         * in the matrix because no best path can go through them. note this
+         * breaks when lengthOfA == lengthOfB == 2 so the `memchr()` special case above is
          * necessary
          *
          */

@@ -7,6 +7,13 @@
 #include "metrics/CdrDist.h"
 
 metric::CdrDist::CdrDist(const doubleMatrix& matrix, const stringIndexMap& index, double gapPenalty) {
+    /**
+     * Initialize a CdrDist object. Uses the SmithWaterman algorithm for the sequence alignment.
+     *
+     * @param matrix: the substitution scoring matrix
+     * @param index: the token-index map
+     * @param gapPenalty: the penalty for a gap in the alignment
+     */
     SubstitutionMatrix substitutionMatrix(matrix, index);
     SmithWaterman algo(substitutionMatrix, gapPenalty);
 
