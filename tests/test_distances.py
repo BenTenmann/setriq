@@ -26,6 +26,12 @@ levensthein_test_results = [
     [dc.Decimal('0.0')]
 ]
 
+tcr_dist_component_results = [
+    [dc.Decimal('4.0')],
+    [dc.Decimal('8.0'), dc.Decimal('12.0'), dc.Decimal('12.0')],
+    [dc.Decimal('0.0')]
+]
+
 tcr_dist_results = [
     [dc.Decimal('24.0')],
     [dc.Decimal('48.0'), dc.Decimal('72.0'), dc.Decimal('72.0')],
@@ -51,6 +57,19 @@ def levenshtein():
 
 
 @pytest.fixture()
+def tcr_dist_component():
+    def _method():
+        return setriq.modules.distances.TcrDistComponent(
+            substitution_matrix=setriq.BLOSUM62,
+            gap_penalty=4.,
+            gap_symbol='-',
+            weight=1.
+        )
+
+    return _method
+
+
+@pytest.fixture()
 def tcr_dist_base():
     def _method():
         with warnings.catch_warnings():
@@ -58,6 +77,31 @@ def tcr_dist_base():
             metric = setriq.TcrDist()
 
         return metric
+
+    return _method
+
+
+@pytest.fixture()
+def tcr_dist_custom():
+    def _method():
+        cdr_1 = setriq.modules.distances.TcrDistComponent(
+            substitution_matrix=setriq.BLOSUM62,
+            gap_penalty=4.
+        )
+        cdr_2 = setriq.modules.distances.TcrDistComponent(
+            substitution_matrix=setriq.BLOSUM62,
+            gap_penalty=4.
+        )
+        cdr_2_5 = setriq.modules.distances.TcrDistComponent(
+            substitution_matrix=setriq.BLOSUM62,
+            gap_penalty=4.
+        )
+        cdr_3 = setriq.modules.distances.TcrDistComponent(
+            substitution_matrix=setriq.BLOSUM62,
+            gap_penalty=8.,
+            weight=3.
+        )
+        return setriq.TcrDist(cdr_1=cdr_1, cdr_2=cdr_2, cdr_2_5=cdr_2_5, cdr_3=cdr_3)
 
     return _method
 
@@ -101,6 +145,18 @@ def test_levenshtein(levenshtein, sequences, distances):
     assert all(r == tgt for r, tgt in zip(res, distances))
 
 
+@pytest.mark.parametrize(['sequences', 'distances'], zip(test_cases, tcr_dist_component_results))
+def test_tcr_dist_component(tcr_dist_component, sequences, distances):
+    metric = tcr_dist_component()
+    response = metric(sequences)
+
+    n = len(sequences)
+    assert len(response) == (n * (n - 1) / 2)
+
+    res = response_to_decimal(response)
+    assert all(r == tgt for r, tgt in zip(res, distances))
+
+
 @pytest.mark.parametrize(['sequences', 'distances'], convert_to_tcr_dist_format(test_cases, tcr_dist_results))
 def test_tcr_dist(tcr_dist_base, sequences, distances):
     metric = tcr_dist_base()
@@ -119,3 +175,22 @@ def test_tcr_dist_error(tcr_dist_base, sequences, distances):
 
     with pytest.raises(ValueError):
         metric(sequences)
+
+
+@pytest.mark.parametrize(['sequences', 'distances'], convert_to_tcr_dist_format(test_cases, tcr_dist_results))
+def test_tcr_dist_custom(tcr_dist_custom, sequences, distances):
+    metric = tcr_dist_custom()
+    response = metric(sequences)
+
+    n = len(sequences)
+    assert len(response) == (n * (n - 1) / 2)
+
+    res = response_to_decimal(response)
+    assert all(r == tgt for r, tgt in zip(res, distances))
+
+
+def test_tcr_dist_custom_error():
+    rainbows = setriq.modules.distances.TcrDistComponent(setriq.BLOSUM62, 4.)
+    butterflies = {'wings': 'beat'}
+    with pytest.raises(TypeError):
+        setriq.TcrDist(rainbows=rainbows, butterflies=butterflies)
