@@ -19,7 +19,7 @@ namespace metric {
         double distance_weight_;
 
     public:
-        TcrDist() : substitution_matrix_(), gap_penalty_(), gap_symbol_(), distance_weight_() {};
+        TcrDist() : substitution_matrix_{}, gap_penalty_{}, gap_symbol_{}, distance_weight_{} {};
         TcrDist(const double_matrix_t &scoring_matrix,
                 const token_index_map_t &index,
                 double gap_penalty,

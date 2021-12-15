@@ -29,12 +29,12 @@ double metric::CdrDist::forward(const std::string &a, const std::string &b) {
 
     // calculate the numerator of CdrDist. This is the most expensive operation of the metric, as the sequences get
     // aligned
-    double ab_score = this->algorithm_(a, b);
+    const auto& ab_score = this->algorithm_(a, b);
 
     // when a == b in SW, the best score collapses down to a simple arithmetic sum over all the amino acid positions
     // this gives a significant speed bump
-    double aa_score = this->algorithm_.identity_score(a);
-    double bb_score = this->algorithm_.identity_score(b);
+    const auto& aa_score = this->algorithm_.identity_score(a);
+    const auto& bb_score = this->algorithm_.identity_score(b);
 
     return 1 - std::sqrt((ab_score * ab_score) / (aa_score * bb_score));
 }

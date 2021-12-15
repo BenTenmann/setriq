@@ -22,8 +22,8 @@ private:
     double compute_best_alignment_score_(const std::string&a, const std::string&b);
 
 public:
-    SmithWaterman() : substitution_matrix_(), gap_penalty_{0} {};
-    SmithWaterman(SubstitutionMatrix, double);
+    SmithWaterman() : substitution_matrix_{}, gap_penalty_{0} {};
+    SmithWaterman(SubstitutionMatrix, const double&);
 
     double forward(const std::string&, const std::string&);
     double operator() (const std::string& a, const std::string& b) {

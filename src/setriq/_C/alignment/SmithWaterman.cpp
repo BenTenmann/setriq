@@ -6,7 +6,7 @@
 #include <utility>
 #include "alignment/SmithWaterman.h"
 
-SmithWaterman::SmithWaterman(SubstitutionMatrix matrix, double gapPen) {
+SmithWaterman::SmithWaterman(SubstitutionMatrix matrix, const double& gap_penalty) : gap_penalty_{gap_penalty} {
     /**
      * Initialize a SmithWaterman object.
      *
@@ -14,7 +14,6 @@ SmithWaterman::SmithWaterman(SubstitutionMatrix matrix, double gapPen) {
      * @param gapPen: the penalty for a gap in the alignment
      */
     this->substitution_matrix_ = std::move(matrix);
-    this->gap_penalty_ = gapPen;
 }
 
 double SmithWaterman::fill_scoring_matrix_(double_matrix_t &scoring_matrix,
@@ -28,12 +27,12 @@ double SmithWaterman::fill_scoring_matrix_(double_matrix_t &scoring_matrix,
      * @param b: an input string to be aligned
      * @return the maximal alignment score between two sequences
      */
-    size_t N = scoring_matrix.size();
-    size_t M = scoring_matrix[0].size();
+    const auto& N = scoring_matrix.size();
+    const auto& M = scoring_matrix[0].size();
 
     double alignmentScore, kGapScore, lGapScore;
     double currentScore, maxScore {0};
-    size_t kAxis = 0, lAxis = 1;
+    const size_t &kAxis = 0, &lAxis = 1;
 
     for (size_t i = 1; i < N; i++) {
         for (size_t j = 1; j < M; j++) {
@@ -88,7 +87,7 @@ double SmithWaterman::compute_best_alignment_score_(const std::string &a, const 
     size_t M = b.size();
 
     double_matrix_t scoring_matrix (N + 1, double_vector_t (M + 1, 0));
-    double score {this->fill_scoring_matrix_(scoring_matrix, a, b)};
+    const double& score {this->fill_scoring_matrix_(scoring_matrix, a, b)};
 
     return score;
 }
@@ -101,7 +100,7 @@ double SmithWaterman::forward(const std::string &a, const std::string &b) {
      * @param b: an input string to be aligned
      * @return the maximal alignment score
      */
-    double bestScore {this->compute_best_alignment_score_(a, b)};
+    const double& bestScore {this->compute_best_alignment_score_(a, b)};
     return bestScore;
 }
 
@@ -114,7 +113,7 @@ double SmithWaterman::identity_score(const std::string &input_string) {
      * @param inputString: an input string to be aligned with itself
      * @return the maximal self-alignment score for an input string
      */
-    size_t N {input_string.size()};
+    const size_t& N {input_string.size()};
 
     double score {0};
     for (size_t i = 0; i < N; i++) {

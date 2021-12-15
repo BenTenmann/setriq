@@ -31,6 +31,7 @@ double metric::TcrDist::forward(const std::string &a, const std::string &b) {
      * @param b: another string to be compared
      * @return TcrDist metric between the two strings
      */
+    const auto& max_distance {4.};
 
     double distance {0}, substitution;
     for (size_t i = 0; i < a.size(); i++) {
@@ -41,8 +42,8 @@ double metric::TcrDist::forward(const std::string &a, const std::string &b) {
             continue;
         }
 
-        substitution = this->substitution_matrix_(a[i], b[i]);
-        distance += std::min(4., 4. - substitution);
+        substitution = max_distance - this->substitution_matrix_(a[i], b[i]);
+        distance += std::min(max_distance, substitution);
     }
     return distance * this->distance_weight_;
 }

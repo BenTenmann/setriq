@@ -23,9 +23,8 @@ double SubstitutionMatrix::forward(const char &from, const char &to) {
      * @param to: the second character in the substitution
      * @return the substitution score between two characters
      */
-    size_t fromIdx, toIdx;
-    fromIdx = this->token_map_[from];
-    toIdx = this->token_map_[to];
+    const auto& from_idx = this->token_map_[from];
+    const auto& to_idx = this->token_map_[to];
 
-    return this->scoring_matrix_[fromIdx][toIdx];
+    return this->scoring_matrix_[from_idx][to_idx];
 }

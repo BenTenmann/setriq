@@ -12,7 +12,7 @@ double_vector_t PairwiseDistanceComputer::compute_distance(const string_vector_t
      * @param input_strings: a vector of input strings
      * @return a flat (N * (N - 1)) / 2 vector of doubles
      */
-    size_t N = input_strings.size();
+    const size_t& N = input_strings.size();
     double_vector_t distance_matrix(N * (N - 1) / 2);
 
     #pragma omp parallel for default(none) shared(input_strings, distance_matrix, N)
