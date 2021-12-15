@@ -12,11 +12,11 @@ namespace metric {
 
     class CdrDist : public Metric {
     private:
-        SmithWaterman algorithm;
+        SmithWaterman algorithm_;
 
     public:
-        CdrDist() : algorithm() {};
-        explicit CdrDist(const doubleMatrix&, const stringIndexMap&, double = 1.0);
+        CdrDist() : algorithm_{} {};
+        explicit CdrDist(const double_matrix_t&, const token_index_map_t&, double = 1.0);
 
         double forward(const std::string &, const std::string &) override;
     };

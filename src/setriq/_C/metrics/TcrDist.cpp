@@ -5,26 +5,21 @@
 #include <stdexcept>
 #include "metrics/TcrDist.h"
 
-metric::TcrDist::TcrDist(const doubleMatrix& subMat,
-                         const stringIndexMap& index,
-                         double gapPen,
-                         char gapSym,
-                         double weight) {
+metric::TcrDist::TcrDist(const double_matrix_t& scoring_matrix,
+                         const token_index_map_t& index,
+                         double gap_penalty,
+                         char gap_symbol,
+                         double weight) : gap_penalty_{gap_penalty}, gap_symbol_{gap_symbol}, distance_weight_{weight} {
     /**
      * Initialize the TcrDist object.
      *
-     * @param subMat: the substitution scoring matrix
+     * @param scoring_matrix: the substitution scoring matrix
      * @param index: the token index
-     * @param gapPen: the metric gap penalty
-     * @param gapSym: the gap symbol to be used (e.g. "-")
+     * @param gap_penalty: the metric gap penalty
+     * @param gap_symbol: the gap symbol to be used (e.g. "-")
      * @param weight: the weight of the metric component output
      */
-
-    SubstitutionMatrix sm {subMat, index};
-    this->substitutionMatrix = sm;
-    this->gapPenalty = gapPen;
-    this->gapSymbol = gapSym;
-    this->distanceWeight = weight;
+    this->substitution_matrix_ = SubstitutionMatrix (scoring_matrix, index);
 }
 
 double metric::TcrDist::forward(const std::string &a, const std::string &b) {
@@ -41,13 +36,13 @@ double metric::TcrDist::forward(const std::string &a, const std::string &b) {
     for (size_t i = 0; i < a.size(); i++) {
         if (a[i] == b[i]) continue;
 
-        if (a[i] == this->gapSymbol || b[i] == this->gapSymbol) {
-            distance += this->gapPenalty;
+        if (a[i] == this->gap_symbol_ || b[i] == this->gap_symbol_) {
+            distance += this->gap_penalty_;
             continue;
         }
 
-        substitution = this->substitutionMatrix(a[i], b[i]);
+        substitution = this->substitution_matrix_(a[i], b[i]);
         distance += std::min(4., 4. - substitution);
     }
-    return distance * this->distanceWeight;
+    return distance * this->distance_weight_;
 }

@@ -10,16 +10,19 @@
 
 class SmithWaterman {
 private:
-    SubstitutionMatrix substitutionMatrix;
-    double gapPenalty;
+    SubstitutionMatrix substitution_matrix_;
+    double gap_penalty_;
 
     // scoring matrix creation
-    double calculateGapPenalty(const doubleMatrix&, const size_t&, const size_t&, const size_t&) const;
-    double fillScoringMatrix(doubleMatrix&, const std::string&, const std::string&);
-    double computeBestAlignmentScore(const std::string&, const std::string&);
+    double calculate_gap_penalty_(const double_matrix_t& scoring_matrix,
+                                  const size_t& max_gap_length,
+                                  const size_t& index,
+                                  const size_t& axis) const;
+    double fill_scoring_matrix_(double_matrix_t& scoring_matrix, const std::string&a, const std::string&b);
+    double compute_best_alignment_score_(const std::string&a, const std::string&b);
 
 public:
-    SmithWaterman() : substitutionMatrix(), gapPenalty{0} {};
+    SmithWaterman() : substitution_matrix_(), gap_penalty_{0} {};
     SmithWaterman(SubstitutionMatrix, double);
 
     double forward(const std::string&, const std::string&);
@@ -30,7 +33,7 @@ public:
     };
 
     // special case: identity score
-    double identityScore(const std::string&);
+    double identity_score(const std::string&);
 };
 
 

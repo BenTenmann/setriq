@@ -13,14 +13,14 @@
 
 class PairwiseDistanceComputer {
 private:
-    Metric *distanceMetric;
+    Metric *distance_metric_;
 public:
-    PairwiseDistanceComputer() : distanceMetric() {};
+    PairwiseDistanceComputer() : distance_metric_() {};
 
-    explicit PairwiseDistanceComputer(Metric*);
+    explicit PairwiseDistanceComputer(Metric* metric) : distance_metric_{metric} {};
 
-    Metric *getMetric() { return this->distanceMetric; };
-    doubleVector computeDistance(const stringVector&) const;
+    Metric *get_metric() { return this->distance_metric_; };
+    double_vector_t compute_distance(const string_vector_t&input_strings) const;
 };
 
 

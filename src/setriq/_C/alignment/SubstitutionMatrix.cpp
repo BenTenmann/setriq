@@ -4,15 +4,15 @@
 
 #include "alignment/SubstitutionMatrix.h"
 
-SubstitutionMatrix::SubstitutionMatrix(const doubleMatrix& matrix, const stringIndexMap& index) {
+SubstitutionMatrix::SubstitutionMatrix(const double_matrix_t& matrix, const token_index_map_t& index) {
     /**
      * Initialize a SubstitutionMatrix object.
      *
      * @param matrix: the substitution scoring matrix
      * @param index: the token index map
      */
-    this->subMatrix = matrix;
-    this->edgeMap = index;
+    this->scoring_matrix_ = matrix;
+    this->token_map_ = index;
 }
 
 double SubstitutionMatrix::forward(const char &from, const char &to) {
@@ -24,8 +24,8 @@ double SubstitutionMatrix::forward(const char &from, const char &to) {
      * @return the substitution score between two characters
      */
     size_t fromIdx, toIdx;
-    fromIdx = this->edgeMap[from];
-    toIdx = this->edgeMap[to];
+    fromIdx = this->token_map_[from];
+    toIdx = this->token_map_[to];
 
-    return this->subMatrix[fromIdx][toIdx];
+    return this->scoring_matrix_[fromIdx][toIdx];
 }

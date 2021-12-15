@@ -13,14 +13,18 @@
 namespace metric {
     class TcrDist : public Metric {
     private:
-        SubstitutionMatrix substitutionMatrix;
-        double gapPenalty;
-        char gapSymbol;
-        double distanceWeight;
+        SubstitutionMatrix substitution_matrix_;
+        double gap_penalty_;
+        char gap_symbol_;
+        double distance_weight_;
 
     public:
-        TcrDist() : substitutionMatrix(), gapPenalty(), gapSymbol(), distanceWeight() {};
-        TcrDist(const doubleMatrix &subMat, const stringIndexMap &, double gapPen, char gapSym, double weight);
+        TcrDist() : substitution_matrix_(), gap_penalty_(), gap_symbol_(), distance_weight_() {};
+        TcrDist(const double_matrix_t &scoring_matrix,
+                const token_index_map_t &index,
+                double gap_penalty,
+                char gap_symbol,
+                double weight);
 
         double forward(const std::string &, const std::string &) override;
     };

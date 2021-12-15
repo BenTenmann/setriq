@@ -10,13 +10,13 @@
 
 namespace metric {
     class Levenshtein : public Metric {
-        double extraCost = 0;
+        double extra_cost_ {0};
 
     public:
-        Levenshtein() : extraCost() {};
-        explicit Levenshtein(double xCost) : extraCost {xCost} {};
+        Levenshtein() : extra_cost_ {} {};
+        explicit Levenshtein(double xCost) : extra_cost_ {xCost} {};
 
-        double forward(const std::string &, const std::string &);
+        double forward(const std::string &, const std::string &) override;
 
     };
 }

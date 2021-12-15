@@ -17,82 +17,82 @@ double metric::Levenshtein::forward(const std::string &a, const std::string &b) 
      * @param b: an input string to be compared
      * @return the Levensthein distance between the two input strings
      */
-    size_t lengthOfA {a.size()};
-    size_t lengthOfB {b.size()};
-    size_t halfOfLengthA;
+    size_t length_of_a {a.size()};
+    size_t length_of_b {b.size()};
+    size_t half_of_length_a;
 
-    const char* ptrToA = &a.front();
-    const char* ptrToB = &b.front();
+    const char* ptr_to_a = &a.front();
+    const char* ptr_to_b = &b.front();
 
     // catch the trivial cases
-    if (a.empty()) return lengthOfB;
-    if (b.empty()) return lengthOfA;
+    if (a.empty()) return length_of_b;
+    if (b.empty()) return length_of_a;
 
     // grind down common prefix
-    while (lengthOfA > 0 && lengthOfB > 0 && (*ptrToA) == (*ptrToB)) {
-        lengthOfA--;
-        lengthOfB--;
-        ptrToA++;
-        ptrToB++;
+    while (length_of_a > 0 && length_of_b > 0 && (*ptr_to_a) == (*ptr_to_b)) {
+        length_of_a--;
+        length_of_b--;
+        ptr_to_a++;
+        ptr_to_b++;
     }
 
     // grind down common suffix
-    while (lengthOfA > 0 && lengthOfB > 0 && ptrToA[lengthOfA - 1] == ptrToB[lengthOfB - 1]) {
-        lengthOfA--;
-        lengthOfB--;
+    while (length_of_a > 0 && length_of_b > 0 && ptr_to_a[length_of_a - 1] == ptr_to_b[length_of_b - 1]) {
+        length_of_a--;
+        length_of_b--;
     }
 
     // again, catch trivial cases
-    if (lengthOfA == 0) return lengthOfB;
-    if (lengthOfB == 0) return lengthOfA;
+    if (length_of_a == 0) return length_of_b;
+    if (length_of_b == 0) return length_of_a;
 
-    if (lengthOfA > lengthOfB) {  // enforce that b is the longer string
-        size_t temporaryLengthStore = lengthOfA;
-        const char *temporaryPtrStore = ptrToA;
-        lengthOfA = lengthOfB;
-        lengthOfB = temporaryLengthStore;
-        ptrToA = ptrToB;
-        ptrToB = temporaryPtrStore;
+    if (length_of_a > length_of_b) {  // enforce that b is the longer string
+        size_t temporary_length_store = length_of_a;
+        const char *temporary_ptr_store = ptr_to_a;
+        length_of_a = length_of_b;
+        length_of_b = temporary_length_store;
+        ptr_to_a = ptr_to_b;
+        ptr_to_b = temporary_ptr_store;
     }
 
-    if (lengthOfA == 1) {
-        if (this->extraCost > 0)
-            return (double) lengthOfB + 1 - this->extraCost * (memchr(ptrToB, *ptrToA, lengthOfB) != nullptr);
+    if (length_of_a == 1) {
+        if (this->extra_cost_ > 0)
+            return (double) length_of_b + 1 - this->extra_cost_ * (memchr(ptr_to_b, *ptr_to_a, length_of_b) != nullptr);
         else
-            return (double) lengthOfB - (memchr(ptrToB, *ptrToA, lengthOfB) != nullptr);
+            return (double) length_of_b - (memchr(ptr_to_b, *ptr_to_a, length_of_b) != nullptr);
     }
-    lengthOfA++;
-    lengthOfB++;
-    halfOfLengthA = lengthOfA >> 1;
+    length_of_a++;
+    length_of_b++;
+    half_of_length_a = length_of_a >> 1;
 
     // first row initialization
-    std::vector<size_t> row (lengthOfB);
-    std::iota(row.begin(), row.end() - (this->extraCost > 0 ? 0 : halfOfLengthA), 0);
+    std::vector<size_t> row (length_of_b);
+    std::iota(row.begin(), row.end() - (this->extra_cost_ > 0 ? 0 : half_of_length_a), 0);
 
-    size_t rowIndex;
-    size_t *end = &row.back() - lengthOfB - 1;
+    size_t row_index;
+    size_t *end = &row.back() - length_of_b - 1;
 
-    if (this->extraCost > 0) {
-        for (rowIndex = 1; rowIndex < lengthOfA; rowIndex++) {
-            size_t *ptrToRowElement = &row[1];
-            const char currentCharFromA = ptrToA[rowIndex - 1];
-            const char *ptrToCurrentCharFromB = ptrToB;
+    if (this->extra_cost_ > 0) {
+        for (row_index = 1; row_index < length_of_a; row_index++) {
+            size_t *ptr_to_row_element = &row[1];
+            const char current_char_from_a = ptr_to_a[row_index - 1];
+            const char *ptr_to_current_char_from_b = ptr_to_b;
 
-            size_t rowIndexCopy1 = rowIndex;
-            size_t rowIndexCopy2 = rowIndex;
-            while (ptrToRowElement <= end) {
-                if (currentCharFromA == *(ptrToCurrentCharFromB++))
-                    rowIndexCopy2 = --rowIndexCopy1;
+            size_t row_index_copy_1 = row_index;
+            size_t row_index_copy_2 = row_index;
+            while (ptr_to_row_element <= end) {
+                if (current_char_from_a == *(ptr_to_current_char_from_b++))
+                    row_index_copy_2 = --row_index_copy_1;
                 else
-                    rowIndexCopy2++;
+                    row_index_copy_2++;
 
-                rowIndexCopy1 = *ptrToRowElement;
-                rowIndexCopy1++;
+                row_index_copy_1 = *ptr_to_row_element;
+                row_index_copy_1++;
 
-                if (rowIndexCopy2 > rowIndexCopy1)
-                    rowIndexCopy2 = rowIndexCopy1;
+                if (row_index_copy_2 > row_index_copy_1)
+                    row_index_copy_2 = row_index_copy_1;
 
-                *(ptrToRowElement++) = rowIndexCopy2;
+                *(ptr_to_row_element++) = row_index_copy_2;
             }
         }
     }
@@ -102,66 +102,70 @@ double metric::Levenshtein::forward(const std::string &a, const std::string &b) 
          *
          * in this case we don't have to scan two corner triangles (of size len1/2)
          * in the matrix because no best path can go through them. note this
-         * breaks when lengthOfA == lengthOfB == 2 so the `memchr()` special case above is
+         * breaks when length_of_a == length_of_b == 2 so the `memchr()` special case above is
          * necessary
          *
          */
-        row[0] = lengthOfA - halfOfLengthA - 1;
-        for (rowIndex = 1; rowIndex < lengthOfA; rowIndex++) {
-            size_t *ptrToRowElement;
-            const char currentCharFromA = ptrToA[rowIndex - 1];
-            const char *ptrToCurrentCharFromB;
+        row[0] = length_of_a - half_of_length_a - 1;
+        for (row_index = 1; row_index < length_of_a; row_index++) {
+            size_t *ptr_to_row_element;
+            const char current_char_from_a = ptr_to_a[row_index - 1];
+            const char *ptr_to_current_char_from_b;
 
-            size_t rowIndexCopy1, rowIndexCopy2;
+            size_t row_index_copy_1, row_index_copy_2;
             /* skip the upper triangle */
-            if (rowIndex >= lengthOfA - halfOfLengthA) {
-                size_t offset = rowIndex - (lengthOfA - halfOfLengthA);
-                size_t rowIndexCopy3;
+            if (row_index >= length_of_a - half_of_length_a) {
+                size_t offset = row_index - (length_of_a - half_of_length_a);
+                size_t row_index_copy_3;
 
-                ptrToCurrentCharFromB = ptrToB + offset;
-                ptrToRowElement = &row[offset];
+                ptr_to_current_char_from_b = ptr_to_b + offset;
+                ptr_to_row_element = &row[offset];
 
-                rowIndexCopy3 = *(ptrToRowElement++) + (currentCharFromA != *(ptrToCurrentCharFromB++));
-                rowIndexCopy2 = *ptrToRowElement;
-                rowIndexCopy2++;
-                rowIndexCopy1 = rowIndexCopy2;
-                if (rowIndexCopy2 > rowIndexCopy3)
-                    rowIndexCopy2 = rowIndexCopy3;
-                *(ptrToRowElement++) = rowIndexCopy2;
+                row_index_copy_3 = *(ptr_to_row_element++) + (current_char_from_a != *(ptr_to_current_char_from_b++));
+                row_index_copy_2 = *ptr_to_row_element;
+                row_index_copy_2++;
+
+                row_index_copy_1 = row_index_copy_2;
+                if (row_index_copy_2 > row_index_copy_3)
+                    row_index_copy_2 = row_index_copy_3;
+
+                *(ptr_to_row_element++) = row_index_copy_2;
             }
             else {
-                ptrToRowElement = &row[1];
-                ptrToCurrentCharFromB = ptrToB;
-                rowIndexCopy1 = rowIndexCopy2 = rowIndex;
+                ptr_to_row_element = &row[1];
+                ptr_to_current_char_from_b = ptr_to_b;
+                row_index_copy_1 = row_index_copy_2 = row_index;
             }
 
             /* skip the lower triangle */
-            if (rowIndex <= halfOfLengthA + 1)
-                end = &row[lengthOfB + rowIndex - halfOfLengthA - 2];
+            if (row_index <= half_of_length_a + 1)
+                end = &row[length_of_b + row_index - half_of_length_a - 2];
 
             /* main */
-            while (ptrToRowElement <= end) {
-                size_t rowIndexCopy3 = --rowIndexCopy2 + (currentCharFromA != *(ptrToCurrentCharFromB++));
-                rowIndexCopy1++;
+            while (ptr_to_row_element <= end) {
+                size_t row_index_copy_3 = --row_index_copy_2 + (current_char_from_a != *(ptr_to_current_char_from_b++));
+                row_index_copy_1++;
 
-                if (rowIndexCopy1 > rowIndexCopy3)
-                    rowIndexCopy1 = rowIndexCopy3;
+                if (row_index_copy_1 > row_index_copy_3)
+                    row_index_copy_1 = row_index_copy_3;
 
-                rowIndexCopy2 = *ptrToRowElement;
-                rowIndexCopy2++;
+                row_index_copy_2 = *ptr_to_row_element;
+                row_index_copy_2++;
 
-                if (rowIndexCopy1 > rowIndexCopy2)
-                    rowIndexCopy1 = rowIndexCopy2;
-                *(ptrToRowElement++) = rowIndexCopy1;
+                if (row_index_copy_1 > row_index_copy_2)
+                    row_index_copy_1 = row_index_copy_2;
+                *(ptr_to_row_element++) = row_index_copy_1;
             }
 
             /* lower triangle sentinel */
-            if (rowIndex <= halfOfLengthA) {
-                size_t rowIndexCopy3 = --rowIndexCopy1 + (currentCharFromA != (*ptrToCurrentCharFromB));
-                rowIndexCopy2++;
-                if (rowIndexCopy2 > rowIndexCopy3)
-                    rowIndexCopy2 = rowIndexCopy3;
-                *ptrToRowElement = rowIndexCopy2;
+            if (row_index <= half_of_length_a) {
+                size_t row_index_copy_3 = --row_index_copy_1 + (current_char_from_a != (*ptr_to_current_char_from_b));
+
+                row_index_copy_2++;
+                if (row_index_copy_2 > row_index_copy_3)
+                    row_index_copy_2 = row_index_copy_3;
+
+                *ptr_to_row_element = row_index_copy_2;
             }
         }
     }

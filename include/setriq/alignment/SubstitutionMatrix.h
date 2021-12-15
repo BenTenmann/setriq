@@ -10,12 +10,12 @@
 
 class SubstitutionMatrix {
 private:
-    doubleMatrix subMatrix;
-    stringIndexMap edgeMap;
+    double_matrix_t scoring_matrix_;
+    token_index_map_t token_map_;
 
 public:
-    SubstitutionMatrix() : subMatrix(), edgeMap() {};
-    SubstitutionMatrix(const doubleMatrix&, const stringIndexMap&);
+    SubstitutionMatrix() : scoring_matrix_{}, token_map_{} {};
+    SubstitutionMatrix(const double_matrix_t&, const token_index_map_t&);
 
     double forward (const char&, const char&);
     double operator () (const char& a, const char &b) { return this->forward(a, b); };

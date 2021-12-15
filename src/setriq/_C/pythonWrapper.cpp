@@ -15,32 +15,34 @@
 
 namespace py = pybind11;
 
-py::list cdr_dist(const stringVector &sequences, const doubleMatrix& substitutionMatrix, const stringIndexMap& index) {
-    metric::CdrDist metric {substitutionMatrix, index};
+py::list cdr_dist(const string_vector_t& sequences,
+                  const double_matrix_t& substitution_matrix,
+                  const token_index_map_t& index) {
+    metric::CdrDist metric {substitution_matrix, index};
     PairwiseDistanceComputer computer { &metric };
 
-    doubleVector out = computer.computeDistance(sequences);
+    double_vector_t out = computer.compute_distance(sequences);
     return py::cast(out);
 }
 
-py::list levenshtein(const stringVector sequences, double extra_cost) {
+py::list levenshtein(const string_vector_t& sequences, const double& extra_cost) {
     metric::Levenshtein metric {extra_cost};
     PairwiseDistanceComputer computer { &metric };
 
-    doubleVector out = computer.computeDistance(sequences);
+    double_vector_t out = computer.compute_distance(sequences);
     return py::cast(out);
 }
 
-py::list tcr_dist_component(const stringVector& sequences,
-                            const doubleMatrix& substitutionMatrix,
-                            const stringIndexMap& index,
-                            const double& gapPenalty,
-                            const char& gapSymbol,
-                            const double& distanceWeight) {
-    metric::TcrDist metric {substitutionMatrix, index, gapPenalty, gapSymbol, distanceWeight};
+py::list tcr_dist_component(const string_vector_t& sequences,
+                            const double_matrix_t& substitution_matrix,
+                            const token_index_map_t& index,
+                            const double& gap_penalty,
+                            const char& gap_symbol,
+                            const double& distance_weight) {
+    metric::TcrDist metric {substitution_matrix, index, gap_penalty, gap_symbol, distance_weight};
     PairwiseDistanceComputer computer { &metric };
 
-    doubleVector out = computer.computeDistance(sequences);
+    double_vector_t out = computer.compute_distance(sequences);
     return py::cast(out);
 }
 
