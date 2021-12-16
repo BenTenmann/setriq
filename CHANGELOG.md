@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/BenTenmann/setriq/compare/deploy-1.0.1...deploy-1.0.2) (2021-12-16)
+
+
+### Bug Fixes
+
+* update cci config ([df6030a](https://github.com/BenTenmann/setriq/commit/df6030a400d9f93dde9854ed52dec2aedad72667))
+
 ## [1.0.1](https://github.com/BenTenmann/setriq/compare/deploy-1.0.0...deploy-1.0.1) (2021-12-16)
 
 
