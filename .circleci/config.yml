@@ -1,9 +1,28 @@
 version: 2.1
+orbs:
+  codecov: codecov/codecov@3.2.2
+
 executors:
   python-3-7:
     docker:
       - image: circleci/python:3.7
+  node-docker:
+    docker:
+      - image: docker pull circleci/node:14.18
+
 jobs:
+  generate-version:
+    executor: node-docker
+    steps:
+      - checkout
+      - run:
+          name: install semantic release dependencies
+          command: |
+            npm --prefix .semantic-release run installInParent
+      - run:
+          name: run semantic release
+          command: npx semantic-release
+
   build-and-test:
     executor: python-3-7
     steps:
@@ -31,9 +50,44 @@ jobs:
           name: run unit tests
           command: |
             python -m pytest -v tests --cov=${CIRCLE_PROJECT_REPONAME/-/_} --cov-report xml
+      - codecov/upload:
+          file: coverage.xml
+
+  release-package:
+    executor: python-3-7
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - python-cache-{{ checksum "requirements.txt" }}
+      - run:
+          name: install dependencies
+          command: |
+            pip install twine
+      - run:
+          name: create the distribution
+          command: |
+            python setup.py sdist
+
+            CHECKS=$(twine check dist/* | grep -c "PASSED")
+            N_FILES=$(( $(ls -l dist | wc -l) - 1 ))
+
+            if [[ $CHECKS -ne $N_FILES ]]
+            then
+              echo "twine checks failed"
+              exit 1
+            fi
+#      - run:
+#          name: push to pypi
+#          command: |
+#            twine upload -u ${PYPI_USERNAME} -p ${PYPI_PASSWORD} dist/*
 
 workflows:
   version: 2
   build:
     jobs:
+      - generate-version
       - build-and-test
+  release:
+    jobs:
+      - release-package

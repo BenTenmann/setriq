@@ -15,7 +15,7 @@ class PairwiseDistanceComputer {
 private:
     Metric *distance_metric_;
 public:
-    PairwiseDistanceComputer() : distance_metric_() {};
+    PairwiseDistanceComputer() : distance_metric_{} {};
 
     explicit PairwiseDistanceComputer(Metric* metric) : distance_metric_{metric} {};
 

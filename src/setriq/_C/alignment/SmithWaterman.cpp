@@ -115,7 +115,7 @@ double SmithWaterman::identity_score(const std::string &input_string) {
      * score will always be at the final diagonal position of the scoring matrix. Thus it reduces down to a cumulative
      * sum of the substitution scores of the string characters with themselves.
      *
-     * @param inputString: an input string to be aligned with itself
+     * @param input_string: an input string to be aligned with itself
      * @return the maximal self-alignment score for an input string
      */
     const auto& N = input_string.size();

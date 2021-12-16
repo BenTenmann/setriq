@@ -1,0 +1,24 @@
+{
+  "branches": [
+    "main"
+  ],
+  "plugins": [
+    "@semantic-release/commit-analyzer",
+    "@semantic-release/release-notes-generator",
+    "@semantic-release/changelog",
+    [
+      "@semantic-release/git",
+      {
+        "assets": "./CHANGELOG.md"
+      }
+    ],
+    [
+      "@semantic-release/exec",
+      {
+        "publishCmd": ".semantic-release/releaseImage.sh ${nextRelease.version}"
+      }
+    ]
+  ],
+  "tagFormat": "deploy-${version}",
+  "repositoryUrl": "git@github.com:BenTenmann/setriq"
+}
