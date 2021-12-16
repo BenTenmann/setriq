@@ -20,5 +20,5 @@
     ]
   ],
   "tagFormat": "deploy-${version}",
-  "repositoryUrl": "git@github.com:BenTenmann/setriq"
+  "repositoryUrl": "https://github.com/BenTenmann/setriq"
 }

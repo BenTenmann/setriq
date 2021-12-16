@@ -53,7 +53,7 @@ jobs:
       - codecov/upload:
           file: coverage.xml
 
-  release-package:
+  release:
     executor: python-3-7
     steps:
       - checkout
@@ -84,10 +84,13 @@ jobs:
 
 workflows:
   version: 2
-  build:
+  build-release:
     jobs:
-      - generate-version
+      - generate-version:
+          filters:
+            branches:
+              only: "main"
       - build-and-test
-  release:
-    jobs:
-      - release-package
+      - release:
+          requires:
+            - build-and-test

@@ -1,5 +1,6 @@
 # setriq: pairwise sequence distances
 [![CircleCI](https://circleci.com/gh/BenTenmann/setriq/tree/main.svg?style=shield&circle-token=11d21cf82d1b29647f02543f6bfee9703a8f7bfe)](https://circleci.com/gh/BenTenmann/setriq/tree/main)
+[![codecov](https://codecov.io/gh/BenTenmann/setriq/branch/main/graph/badge.svg?token=I8Q4RWPCMS)](https://codecov.io/gh/BenTenmann/setriq)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ![logo](fig/logo.png)
