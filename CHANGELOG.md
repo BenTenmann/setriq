@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/BenTenmann/setriq/compare/deploy-1.0.2...deploy-1.1.0) (2021-12-16)
+
+
+### Features
+
+* update README ([530ba17](https://github.com/BenTenmann/setriq/commit/530ba171ff4ed23799151c11f40a44b3fac6a8f9))
+
 ## [1.0.2](https://github.com/BenTenmann/setriq/compare/deploy-1.0.1...deploy-1.0.2) (2021-12-16)
 
 
