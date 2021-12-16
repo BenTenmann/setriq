@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/BenTenmann/setriq/compare/deploy-1.0.0...deploy-1.0.1) (2021-12-16)
+
+
+### Bug Fixes
+
+* give releaseImage.sh execution permission ([6aded34](https://github.com/BenTenmann/setriq/commit/6aded3440baad07faa2467e8b52203803f7391c1))
+
 # 1.0.0 (2021-12-16)
 
 
