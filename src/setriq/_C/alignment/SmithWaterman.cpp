@@ -11,7 +11,7 @@ SmithWaterman::SmithWaterman(SubstitutionMatrix matrix, const double& gap_penalt
      * Initialize a SmithWaterman object.
      *
      * @param matrix: a SubstitutionMatrix objet defining the substitution scores in the alignment
-     * @param gapPen: the penalty for a gap in the alignment
+     * @param gap_penalty: the penalty for a gap in the alignment
      */
     this->substitution_matrix_ = std::move(matrix);
 }
@@ -22,7 +22,7 @@ double SmithWaterman::fill_scoring_matrix_(double_matrix_t &scoring_matrix,
     /**
      * Fill the alignment scoring matrix and return the maximal alignment score between two input strings.
      *
-     * @param scoringMatrix: the unfilled scoring matrix
+     * @param scoring_matrix: the unfilled scoring matrix
      * @param a: an input string to be aligned
      * @param b: an input string to be aligned
      * @return the maximal alignment score between two sequences
@@ -30,22 +30,23 @@ double SmithWaterman::fill_scoring_matrix_(double_matrix_t &scoring_matrix,
     const auto& N = scoring_matrix.size();
     const auto& M = scoring_matrix[0].size();
 
-    double alignmentScore, kGapScore, lGapScore;
-    double currentScore, maxScore {0};
-    const size_t &kAxis = 0, &lAxis = 1;
+    double alignment_score, k_gap_score, l_gap_score;
+    double current_score, max_score {0};
+    const size_t &k_axis {0}, &l_axis {1};
 
     for (size_t i = 1; i < N; i++) {
         for (size_t j = 1; j < M; j++) {
-            alignmentScore = scoring_matrix[i - 1][j - 1] + this->substitution_matrix_(a[i - 1], b[j - 1]);
-            kGapScore = this->calculate_gap_penalty_(scoring_matrix, i, j, kAxis);
-            lGapScore = this->calculate_gap_penalty_(scoring_matrix, j, i, lAxis);
+            alignment_score = scoring_matrix[i - 1][j - 1] + this->substitution_matrix_(a[i - 1], b[j - 1]);
+            k_gap_score = this->calculate_gap_penalty_(scoring_matrix, i, j, k_axis);
+            l_gap_score = this->calculate_gap_penalty_(scoring_matrix, j, i, l_axis);
 
-            currentScore = std::max(alignmentScore, std::max(kGapScore, lGapScore));
-            if (currentScore > maxScore) maxScore = currentScore;
-            scoring_matrix[i][j] = currentScore;
+            current_score = std::max(alignment_score, std::max(k_gap_score, l_gap_score));
+
+            if (current_score > max_score) max_score = current_score;
+            scoring_matrix[i][j] = current_score;
         }
     }
-    return maxScore;
+    return max_score;
 }
 
 double SmithWaterman::calculate_gap_penalty_(const double_matrix_t &scoring_matrix,
@@ -61,7 +62,7 @@ double SmithWaterman::calculate_gap_penalty_(const double_matrix_t &scoring_matr
      * @param axis: the axis over which to iterate
      * @return the maximum gap-score
      */
-    double maxScore = 0;
+    double max_score {0};
 
     double elem, score;
     size_t k;
@@ -70,9 +71,9 @@ double SmithWaterman::calculate_gap_penalty_(const double_matrix_t &scoring_matr
         elem = axis ? scoring_matrix[index][k] : scoring_matrix[k][index];
         score = elem - (i * this->gap_penalty_);
 
-        if (score > maxScore) maxScore = score;
+        if (score > max_score) max_score = score;
     }
-    return maxScore;
+    return max_score;
 }
 
 double SmithWaterman::compute_best_alignment_score_(const std::string &a, const std::string &b) {
@@ -100,8 +101,8 @@ double SmithWaterman::forward(const std::string &a, const std::string &b) {
      * @param b: an input string to be aligned
      * @return the maximal alignment score
      */
-    const double& bestScore {this->compute_best_alignment_score_(a, b)};
-    return bestScore;
+    const double& best_score {this->compute_best_alignment_score_(a, b)};
+    return best_score;
 }
 
 double SmithWaterman::identity_score(const std::string &input_string) {
