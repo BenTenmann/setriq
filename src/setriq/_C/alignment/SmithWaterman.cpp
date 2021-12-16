@@ -32,7 +32,9 @@ double SmithWaterman::fill_scoring_matrix_(double_matrix_t &scoring_matrix,
 
     double alignment_score, k_gap_score, l_gap_score;
     double current_score, max_score {0};
-    const size_t &k_axis {0}, &l_axis {1};
+
+    const size_t& k_axis = 0;
+    const size_t& l_axis = 1;
 
     for (size_t i = 1; i < N; i++) {
         for (size_t j = 1; j < M; j++) {
@@ -86,8 +88,8 @@ double SmithWaterman::compute_best_alignment_score_(const std::string &a, const 
      * @param b: an input string to be aligned
      * @return the maximal alignment score
      */
-    size_t N = a.size();
-    size_t M = b.size();
+    const auto& N = a.size();
+    const auto& M = b.size();
 
     double_matrix_t scoring_matrix (N + 1, double_vector_t (M + 1, 0));
     const double& score {this->fill_scoring_matrix_(scoring_matrix, a, b)};
@@ -103,7 +105,7 @@ double SmithWaterman::forward(const std::string &a, const std::string &b) {
      * @param b: an input string to be aligned
      * @return the maximal alignment score
      */
-    const double& best_score {this->compute_best_alignment_score_(a, b)};
+    const auto& best_score {this->compute_best_alignment_score_(a, b)};
     return best_score;
 }
 
@@ -116,7 +118,7 @@ double SmithWaterman::identity_score(const std::string &input_string) {
      * @param inputString: an input string to be aligned with itself
      * @return the maximal self-alignment score for an input string
      */
-    const size_t& N {input_string.size()};
+    const auto& N = input_string.size();
 
     double score {0};
     for (size_t i = 0; i < N; i++) {
