@@ -41,8 +41,9 @@ double SmithWaterman::fill_scoring_matrix_(double_matrix_t &scoring_matrix,
             l_gap_score = this->calculate_gap_penalty_(scoring_matrix, j, i, l_axis);
 
             current_score = std::max(alignment_score, std::max(k_gap_score, l_gap_score));
+            if (current_score > max_score)
+                max_score = current_score;
 
-            if (current_score > max_score) max_score = current_score;
             scoring_matrix[i][j] = current_score;
         }
     }
@@ -56,8 +57,8 @@ double SmithWaterman::calculate_gap_penalty_(const double_matrix_t &scoring_matr
     /**
      * Calculate the gap score along a give axis. It has a lower bound of 0 and is linear (non-affine).
      *
-     * @param scoringMatrix: the alignment scoring matrix
-     * @param maxGapLength: the maximum possible gap length
+     * @param scoring_matrix: the alignment scoring matrix
+     * @param max_gap_length: the maximum possible gap length
      * @param index: the current index position (row or column)
      * @param axis: the axis over which to iterate
      * @return the maximum gap-score
@@ -71,7 +72,8 @@ double SmithWaterman::calculate_gap_penalty_(const double_matrix_t &scoring_matr
         elem = axis ? scoring_matrix[index][k] : scoring_matrix[k][index];
         score = elem - (i * this->gap_penalty_);
 
-        if (score > max_score) max_score = score;
+        if (score > max_score)
+            max_score = score;
     }
     return max_score;
 }
