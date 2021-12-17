@@ -1,2 +1,3 @@
 include CHANGELOG.md
 recursive-include include *.h
+include fig/logo.png
