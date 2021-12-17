@@ -1,3 +1,10 @@
+## [1.1.2](https://github.com/BenTenmann/setriq/compare/deploy-1.1.1...deploy-1.1.2) (2021-12-17)
+
+
+### Bug Fixes
+
+* update build flag selection ([a62b482](https://github.com/BenTenmann/setriq/commit/a62b482c96acc79a41085594612f0058c0a2f7b0))
+
 ## [1.1.1](https://github.com/BenTenmann/setriq/compare/deploy-1.1.0...deploy-1.1.1) (2021-12-17)
 
 
