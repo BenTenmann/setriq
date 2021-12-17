@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/BenTenmann/setriq/compare/deploy-1.1.0...deploy-1.1.1) (2021-12-17)
+
+
+### Bug Fixes
+
+* sdist include ([dd7bc20](https://github.com/BenTenmann/setriq/commit/dd7bc2014c61e5d005232743c956be0c2c44accd))
+
 # [1.1.0](https://github.com/BenTenmann/setriq/compare/deploy-1.0.2...deploy-1.1.0) (2021-12-16)
 
 
