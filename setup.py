@@ -11,6 +11,8 @@ import logging
 import pathlib
 import platform
 import re
+import shutil
+import subprocess
 import traceback
 from glob import glob
 
@@ -20,8 +22,9 @@ from setuptools import setup, find_packages
 python_min_version = (3, 7, 2)
 python_min_version_str = '.'.join(map(str, python_min_version))
 if sys.version_info < python_min_version:
-    print('Minimum Python version required is {}. Current version is {}'.format(python_min_version_str,
-                                                                                platform.python_version()))
+    logging.error('Minimum Python version required is {}. Current version is {}'.format(python_min_version_str,
+                                                                                        platform.python_version()))
+    sys.exit(-1)
 
 logging.basicConfig(
     level=logging.DEBUG,
@@ -48,20 +51,52 @@ PROJECT_NAME = 'setriq'
 ParallelCompile('NPY_NUM_BUILD_JOBS').install()
 
 
-def get_compile_args():
-    if platform.system() == 'Darwin':
-        return ['-Xpreprocessor', '-fopenmp']
+class BuildFlags:
+    _tools_formulae = {
+        'Darwin': ('brew', 'libomp'),
+    }
+    _args = {
+        'Darwin': {
+            'compiler': ['-Xpreprocessor', '-fopenmp'],
+            'linker': ['-lomp']
+        }
+    }
+    _default_args = {
+        'compiler': ['-fopenmp'],
+        'linker': ['-fopenmp']
+    }
+    compiler: list
+    linker: list
 
-    return ['-fopenmp']
+    def __init__(self):
+        self._system = platform.system()
+        tool, formula = self._tools_formulae.get(self._system, ('Linux', 'libomp-dev'))
+        args = self._args.get(self._system, self._default_args)
+
+        not_found = self._libomp_check(tool, formula)
+        if not_found is not None:
+            logging.warning(f'{repr(not_found)} not found -- cannot compile parallelized code')
+            logging.info('for information on how to enable CPU parallelization, '
+                         'please see https://github.com/BenTenmann/setriq#requirements')
+            for key in args:
+                args[key] = []
+
+        for key, val in args.items():
+            self.__setattr__(key, val)
+
+    @staticmethod
+    def _libomp_check(tool, formula):
+        if shutil.which(tool) is None:
+            return tool
+
+        formulae = subprocess.check_output([tool, 'list']).decode()
+        if formula not in formulae:
+            return formula
+
+        return None
 
 
-def get_link_args():
-    if platform.system() == 'Darwin':
-        return ['-lomp']
-
-    return ['-fopenmp']
-
-
+flags = BuildFlags()
 extensions = [
     Pybind11Extension(
         f'{PROJECT_NAME}._C',
@@ -69,8 +104,8 @@ extensions = [
         cxx_std=14,
         define_macros=[('VERSION_INFO', __version__)],
         include_dirs=['include/setriq'],
-        extra_compile_args=get_compile_args(),
-        extra_link_args=get_link_args()
+        extra_compile_args=flags.compiler,
+        extra_link_args=flags.linker
     ),
 ]
 
