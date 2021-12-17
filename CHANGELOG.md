@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/BenTenmann/setriq/compare/deploy-1.1.2...deploy-1.2.0) (2021-12-17)
+
+
+### Features
+
+* pypi release ([24549a4](https://github.com/BenTenmann/setriq/commit/24549a4ee3614b58fadc18b3cbe734f9300ac32a))
+
 ## [1.1.2](https://github.com/BenTenmann/setriq/compare/deploy-1.1.1...deploy-1.1.2) (2021-12-17)
 
 
