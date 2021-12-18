@@ -70,7 +70,7 @@ class BuildFlags:
 
     def __init__(self):
         self._system = platform.system()
-        tool, formula = self._tools_formulae.get(self._system, ('Linux', 'libomp-dev'))
+        tool, formula = self._tools_formulae.get(self._system, ('apt', 'libomp-dev'))
         args = self._args.get(self._system, self._default_args)
 
         not_found = self._libomp_check(tool, formula)
