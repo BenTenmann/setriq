@@ -65,10 +65,10 @@ class CdrDist(Metric):
     [1] Thakkar, N. and Bailey-Kellogg, C., 2019. Balancing sensitivity and specificity in distinguishing TCR groups by
         CDR sequence similarity. BMC bioinformatics, 20(1), pp.1-14. (https://doi.org/10.1186/s12859-019-2864-8)
     """
-    def __init__(self, substitution_matrix: SubstitutionMatrix = BLOSUM62, gap_penalty: float = 1.):
+    def __init__(self, substitution_matrix: SubstitutionMatrix = BLOSUM45, gap_penalty: float = 10.):
         self.call_args = {
             **substitution_matrix,
-            # implement gap-penalty option
+            'gap_penalty': gap_penalty
         }
         self.fn = C.cdr_dist
 

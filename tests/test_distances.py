@@ -15,8 +15,8 @@ test_cases = [
 ]
 
 cdr_dist_results = [
-    [dc.Decimal('0.2950')],
-    [dc.Decimal('0.7418'), dc.Decimal('1.0'), dc.Decimal('1.0')],
+    [dc.Decimal('0.3153')],
+    [dc.Decimal('0.7288'), dc.Decimal('1.0'), dc.Decimal('1.0')],
     [dc.Decimal('0.0')],
 ]
 

@@ -16,7 +16,7 @@ namespace metric {
 
     public:
         CdrDist() : algorithm_{} {};
-        explicit CdrDist(const double_matrix_t&, const token_index_map_t&, double = 1.0);
+        explicit CdrDist(const double_matrix_t&, const token_index_map_t&, const double&);
 
         double forward(const std::string &, const std::string &) override;
     };
