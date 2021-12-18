@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/BenTenmann/setriq/compare/deploy-1.2.1...deploy-1.3.0) (2021-12-18)
+
+
+### Features
+
+* update cdr-dist to have thakkar default ([0e312f6](https://github.com/BenTenmann/setriq/commit/0e312f680e5e8645f8950fc40479501c8df3bd6e))
+
 ## [1.2.1](https://github.com/BenTenmann/setriq/compare/deploy-1.2.0...deploy-1.2.1) (2021-12-18)
 
 
