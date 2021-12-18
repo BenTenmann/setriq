@@ -6,7 +6,9 @@
 #include <utility>
 #include "metrics/CdrDist.h"
 
-metric::CdrDist::CdrDist(const double_matrix_t& matrix, const token_index_map_t& index, double gap_penalty) {
+metric::CdrDist::CdrDist(const double_matrix_t& matrix,
+                         const token_index_map_t& index,
+                         const double& gap_penalty) {
     /**
      * Initialize a CdrDist object. Uses the SmithWaterman algorithm_ for the sequence alignment.
      *
