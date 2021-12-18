@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/BenTenmann/setriq/compare/deploy-1.2.0...deploy-1.2.1) (2021-12-18)
+
+
+### Bug Fixes
+
+* setup flags ([daca55f](https://github.com/BenTenmann/setriq/commit/daca55f37438f9485695eaa843fe24f686c47b07))
+
 # [1.2.0](https://github.com/BenTenmann/setriq/compare/deploy-1.1.2...deploy-1.2.0) (2021-12-17)
 
 
