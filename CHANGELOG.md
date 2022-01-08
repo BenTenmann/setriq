@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/BenTenmann/setriq/compare/deploy-1.3.0...deploy-1.3.1) (2022-01-08)
+
+
+### Bug Fixes
+
+* pin setuptools ([d576789](https://github.com/BenTenmann/setriq/commit/d576789fc0469da93b3a4d54b25b73d030c10e83))
+
 # [1.3.0](https://github.com/BenTenmann/setriq/compare/deploy-1.2.1...deploy-1.3.0) (2021-12-18)
 
 
