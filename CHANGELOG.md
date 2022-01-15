@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/BenTenmann/setriq/compare/deploy-1.3.1...deploy-1.4.0) (2022-01-15)
+
+
+### Features
+
+* add affine option to sw ([d96d1fd](https://github.com/BenTenmann/setriq/commit/d96d1fd1dbfbb1b7c5efa37603924334bcacc06d))
+
 ## [1.3.1](https://github.com/BenTenmann/setriq/compare/deploy-1.3.0...deploy-1.3.1) (2022-01-08)
 
 
