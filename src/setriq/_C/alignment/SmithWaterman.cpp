@@ -6,7 +6,8 @@
 #include <utility>
 #include "alignment/SmithWaterman.h"
 
-SmithWaterman::SmithWaterman(SubstitutionMatrix matrix, const double& gap_penalty) : gap_penalty_{gap_penalty} {
+SmithWaterman::SmithWaterman(SubstitutionMatrix matrix, const double& gap_opening_penalty, const double& gap_extension_penalty)
+    : gap_opening_penalty_{gap_opening_penalty}, gap_extension_penalty_{gap_extension_penalty} {
     /**
      * Initialize a SmithWaterman object.
      *
@@ -72,7 +73,7 @@ double SmithWaterman::calculate_gap_penalty_(const double_matrix_t &scoring_matr
     for (size_t i = 1; i < (max_gap_length + 1); i++) {
         k = max_gap_length - i;
         elem = axis ? scoring_matrix[index][k] : scoring_matrix[k][index];
-        score = elem - (i * this->gap_penalty_);
+        score = elem - this->gap_opening_penalty_ - ((double)(i - 1) * this->gap_extension_penalty_);
 
         if (score > max_score)
             max_score = score;

@@ -8,7 +8,8 @@
 
 metric::CdrDist::CdrDist(const double_matrix_t& matrix,
                          const token_index_map_t& index,
-                         const double& gap_penalty) {
+                         const double& gap_opening_penalty,
+                         const double& gap_extension_penalty) {
     /**
      * Initialize a CdrDist object. Uses the SmithWaterman algorithm_ for the sequence alignment.
      *
@@ -17,7 +18,7 @@ metric::CdrDist::CdrDist(const double_matrix_t& matrix,
      * @param gap_penalty: the penalty for a gap in the alignment
      */
     SubstitutionMatrix substitution_matrix {matrix, index};
-    this->algorithm_ = SmithWaterman (substitution_matrix, gap_penalty);
+    this->algorithm_ = SmithWaterman (substitution_matrix, gap_opening_penalty, gap_extension_penalty);
 }
 
 double metric::CdrDist::forward(const std::string &a, const std::string &b) {

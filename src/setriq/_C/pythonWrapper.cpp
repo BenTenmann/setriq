@@ -18,8 +18,9 @@ namespace py = pybind11;
 py::list cdr_dist(const string_vector_t& sequences,
                   const double_matrix_t& substitution_matrix,
                   const token_index_map_t& index,
-                  const double& gap_penalty) {
-    metric::CdrDist metric {substitution_matrix, index, gap_penalty};
+                  const double& gap_opening_penalty,
+                  const double& gap_extension_penalty) {
+    metric::CdrDist metric {substitution_matrix, index, gap_opening_penalty, gap_extension_penalty};
     PairwiseDistanceComputer computer { &metric };
 
     double_vector_t out = computer.compute_distance(sequences);
@@ -52,7 +53,7 @@ PYBIND11_MODULE(_C, m) {
 
     m.def("cdr_dist", &cdr_dist, "Compute the pairwise CDR-dist metric for a set of CDR3 sequences.",
           py::arg("sequences"), py::arg("substitution_matrix"), py::arg("index"),
-          py::arg("gap_penalty"));
+          py::arg("gap_opening_penalty"), py::arg("gap_extension_penalty"));
 
     m.def("levenshtein", &levenshtein, "Compute the pairwise Levenshtein distances for a set of sequences.",
           py::arg("sequences"), py::arg("extra_cost"));

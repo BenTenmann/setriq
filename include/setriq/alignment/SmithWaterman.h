@@ -11,7 +11,8 @@
 class SmithWaterman {
 private:
     SubstitutionMatrix substitution_matrix_;
-    double gap_penalty_;
+    double gap_opening_penalty_;
+    double gap_extension_penalty_;
 
     // scoring matrix creation
     double calculate_gap_penalty_(const double_matrix_t& scoring_matrix,
@@ -22,8 +23,8 @@ private:
     double compute_best_alignment_score_(const std::string&a, const std::string&b);
 
 public:
-    SmithWaterman() : substitution_matrix_{}, gap_penalty_{0} {};
-    SmithWaterman(SubstitutionMatrix, const double&);
+    SmithWaterman() : substitution_matrix_{}, gap_opening_penalty_{}, gap_extension_penalty_{} {};
+    SmithWaterman(SubstitutionMatrix, const double&, const double&);
 
     double forward(const std::string&, const std::string&);
     double operator() (const std::string& a, const std::string& b) {
