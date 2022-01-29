@@ -37,7 +37,7 @@ double metric::TcrDist::forward(const std::string &a, const std::string &b) cons
     const auto* ptr_a = &a.front();
     const auto* ptr_b = &b.front();
 
-    auto &&distance = 0.;
+    auto&& distance = 0.;
     for (size_t i = 0; i < n; i++) {
         const auto& _a = *(ptr_a + i);
         const auto& _b = *(ptr_b + i);
