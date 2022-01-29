@@ -31,18 +31,24 @@ double metric::TcrDist::forward(const std::string &a, const std::string &b) {
      * @param b: another string to be compared
      * @return TcrDist metric between the two strings
      */
-    const auto& max_distance {4.};
+    constexpr double max_distance = 4;
+    const auto& n = a.size();
 
-    double distance {0}, substitution;
-    for (size_t i = 0; i < a.size(); i++) {
-        if (a[i] == b[i]) continue;
+    const auto* ptr_a = &a.front();
+    const auto* ptr_b = &b.front();
+    auto &&distance = 0.f;
+    for (size_t i = 0; i < n; i++) {
+        const auto& _a = *(ptr_a + i);
+        const auto& _b = *(ptr_b + i);
+        if (_a == _b)
+            continue;
 
-        if (a[i] == this->gap_symbol_ || b[i] == this->gap_symbol_) {
+        if (_a == this->gap_symbol_ || _b == this->gap_symbol_) {
             distance += this->gap_penalty_;
             continue;
         }
 
-        substitution = max_distance - this->substitution_matrix_(a[i], b[i]);
+        const auto& substitution = max_distance - this->substitution_matrix_(_a, _b);
         distance += std::min(max_distance, substitution);
     }
     return distance * this->distance_weight_;

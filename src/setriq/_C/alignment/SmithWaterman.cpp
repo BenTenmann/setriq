@@ -119,11 +119,11 @@ double SmithWaterman::identity_score(const std::string &input_string) {
      * @param input_string: an input string to be aligned with itself
      * @return the maximal self-alignment score for an input string
      */
-    const auto& N = input_string.size();
+    const auto* end = &input_string.back() + 1;
 
-    double score {0};
-    for (size_t i = 0; i < N; i++) {
-        score += this->substitution_matrix_(input_string[i], input_string[i]);
+    auto&& score = 0.f;
+    for (auto* ptr = &input_string.front(); ptr != end; ptr++) {
+        score += this->substitution_matrix_(*ptr, *ptr);
     }
     return score;
 }
