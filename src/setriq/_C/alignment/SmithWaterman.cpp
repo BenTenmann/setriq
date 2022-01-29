@@ -29,14 +29,20 @@ double SmithWaterman::fill_scoring_matrix_(const std::string &a,
     const auto& n = a.size();
     const auto& m = b.size();
 
-    constexpr auto k_axis = 0;
-    constexpr auto l_axis = 1;
+    constexpr auto k_axis = 0ul;
+    constexpr auto l_axis = 1ul;
+
+    auto* ptr_a = &a.front();
+    auto* ptr_b = &b.front();
 
     auto&& max_score = 0.;
     auto&& scoring_matrix = double_matrix_t (n + 1, double_vector_t (m + 1, 0));
     for (size_t i = 1; i < (n + 1); i++) {
         for (size_t j = 1; j < (m + 1); j++) {
-            const auto& alignment_score = scoring_matrix[i - 1][j - 1] + this->substitution_matrix_(a[i - 1], b[j - 1]);
+            const auto& _i = i - 1;
+            const auto& _j = j - 1;
+
+            const auto& alignment_score = scoring_matrix[_i][_j] + this->substitution_matrix_(*(ptr_a + _i), *(ptr_b + _j));
             const auto& k_gap_score = this->calculate_gap_penalty_(scoring_matrix, i, j, k_axis);
             const auto& l_gap_score = this->calculate_gap_penalty_(scoring_matrix, j, i, l_axis);
 

@@ -18,7 +18,7 @@ public:
     SubstitutionMatrix(const double_matrix_t&, const token_index_map_t&);
 
     double forward (const char&, const char&) const;
-    double operator () (const char& a, const char &b) const { return this->forward(a, b); };
+    double operator () (const char& a, const char& b) const { return this->forward(a, b); };
 };
 
 

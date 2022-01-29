@@ -13,12 +13,9 @@ SubstitutionMatrix::SubstitutionMatrix(const double_matrix_t& matrix, const toke
      */
     this->scoring_matrix_ = matrix;
     this->token_map_ = index;
-
-    const auto& n_tokens = scoring_matrix_.size();
-
 }
 
-double SubstitutionMatrix::forward(const char &from, const char &to) const {
+double SubstitutionMatrix::forward(const char& from, const char& to) const {
     /**
      * Retrieve the substitution score for two input characters.
      *
