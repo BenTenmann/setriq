@@ -6,7 +6,7 @@
 #define METRICS_SMITHWATERMAN_H
 
 #include "SubstitutionMatrix.h"
-#include "utils/typeDefs.h"
+#include "utils/type_defs.h"
 
 class SmithWaterman {
 private:
@@ -19,22 +19,22 @@ private:
                                   const size_t& max_gap_length,
                                   const size_t& index,
                                   const size_t& axis) const;
-    double fill_scoring_matrix_(double_matrix_t& scoring_matrix, const std::string&a, const std::string&b);
-    double compute_best_alignment_score_(const std::string&a, const std::string&b);
+    double fill_scoring_matrix_(const std::string&a, const std::string&b) const;
+    double compute_best_alignment_score_(const std::string&a, const std::string&b) const;
 
 public:
     SmithWaterman() : substitution_matrix_{}, gap_opening_penalty_{}, gap_extension_penalty_{} {};
     SmithWaterman(SubstitutionMatrix, const double&, const double&);
 
-    double forward(const std::string&, const std::string&);
-    double operator() (const std::string& a, const std::string& b) {
-        double out {this->forward(a, b)};
+    double forward(const std::string&, const std::string&) const;
+    double operator() (const std::string& a, const std::string& b) const {
+        auto&& out  = this->forward(a, b);
 
         return out;
     };
 
     // special case: identity score
-    double identity_score(const std::string&);
+    double identity_score(const std::string&) const;
 };
 
 

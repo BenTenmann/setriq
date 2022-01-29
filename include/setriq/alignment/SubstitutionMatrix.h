@@ -6,7 +6,7 @@
 #define METRICS_SUBSTITUTIONMATRIX_H
 
 #include <string>
-#include "utils/typeDefs.h"
+#include "utils/type_defs.h"
 
 class SubstitutionMatrix {
 private:
@@ -17,8 +17,8 @@ public:
     SubstitutionMatrix() : scoring_matrix_{}, token_map_{} {};
     SubstitutionMatrix(const double_matrix_t&, const token_index_map_t&);
 
-    double forward (const char&, const char&);
-    double operator () (const char& a, const char &b) { return this->forward(a, b); };
+    double forward (const char&, const char&) const;
+    double operator () (const char& a, const char &b) const { return this->forward(a, b); };
 };
 
 

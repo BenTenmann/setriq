@@ -21,7 +21,7 @@ metric::CdrDist::CdrDist(const double_matrix_t& matrix,
     this->algorithm_ = SmithWaterman (substitution_matrix, gap_opening_penalty, gap_extension_penalty);
 }
 
-double metric::CdrDist::forward(const std::string &a, const std::string &b) {
+double metric::CdrDist::forward(const std::string &a, const std::string &b) const {
     /**
      * Compute the CdrDist metric between two input strings.
      *

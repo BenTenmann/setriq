@@ -7,11 +7,11 @@
 
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
-#include "PairwiseDistanceComputer.h"
+#include "pairwise_distance_computation.h"
 #include "metrics/CdrDist.h"
 #include "metrics/Levenshtein.h"
 #include "metrics/TcrDist.h"
-#include "utils/typeDefs.h"
+#include "utils/type_defs.h"
 
 namespace py = pybind11;
 
@@ -21,17 +21,15 @@ py::list cdr_dist(const string_vector_t& sequences,
                   const double& gap_opening_penalty,
                   const double& gap_extension_penalty) {
     metric::CdrDist metric {substitution_matrix, index, gap_opening_penalty, gap_extension_penalty};
-    PairwiseDistanceComputer computer { &metric };
 
-    double_vector_t out = computer.compute_distance(sequences);
+    double_vector_t out = pairwise_distance_computation(metric, sequences);
     return py::cast(out);
 }
 
 py::list levenshtein(const string_vector_t& sequences, const double& extra_cost) {
     metric::Levenshtein metric {extra_cost};
-    PairwiseDistanceComputer computer { &metric };
 
-    double_vector_t out = computer.compute_distance(sequences);
+    double_vector_t out = pairwise_distance_computation(metric, sequences);
     return py::cast(out);
 }
 
@@ -42,9 +40,8 @@ py::list tcr_dist_component(const string_vector_t& sequences,
                             const char& gap_symbol,
                             const double& distance_weight) {
     metric::TcrDist metric {substitution_matrix, index, gap_penalty, gap_symbol, distance_weight};
-    PairwiseDistanceComputer computer { &metric };
 
-    double_vector_t out = computer.compute_distance(sequences);
+    double_vector_t out = pairwise_distance_computation(metric, sequences);
     return py::cast(out);
 }
 

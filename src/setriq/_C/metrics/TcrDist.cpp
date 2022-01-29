@@ -22,7 +22,7 @@ metric::TcrDist::TcrDist(const double_matrix_t& scoring_matrix,
     this->substitution_matrix_ = SubstitutionMatrix (scoring_matrix, index);
 }
 
-double metric::TcrDist::forward(const std::string &a, const std::string &b) {
+double metric::TcrDist::forward(const std::string &a, const std::string &b) const {
     /**
      * Compute the TcrDist metric (Dash et al) between two provided sequences. Be sure to provide sequences of equal
      * length. Errors are handled in the Python API for speed and interpretability considerations.
@@ -36,6 +36,7 @@ double metric::TcrDist::forward(const std::string &a, const std::string &b) {
 
     const auto* ptr_a = &a.front();
     const auto* ptr_b = &b.front();
+
     auto &&distance = 0.f;
     for (size_t i = 0; i < n; i++) {
         const auto& _a = *(ptr_a + i);

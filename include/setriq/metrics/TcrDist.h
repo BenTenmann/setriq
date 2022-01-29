@@ -7,11 +7,10 @@
 
 #include <string>
 #include <vector>
-#include "metrics/Metric.h"
 #include "alignment/SubstitutionMatrix.h"
 
 namespace metric {
-    class TcrDist : public Metric {
+    class TcrDist {
     private:
         SubstitutionMatrix substitution_matrix_;
         double gap_penalty_;
@@ -26,7 +25,7 @@ namespace metric {
                 char gap_symbol,
                 double weight);
 
-        double forward(const std::string &, const std::string &) override;
+        double forward(const std::string &, const std::string &) const;
     };
 }
 
