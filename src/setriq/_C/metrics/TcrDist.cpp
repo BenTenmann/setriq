@@ -22,7 +22,7 @@ metric::TcrDist::TcrDist(const double_matrix_t& scoring_matrix,
     this->substitution_matrix_ = SubstitutionMatrix (scoring_matrix, index);
 }
 
-double metric::TcrDist::forward(const std::string &a, const std::string &b) {
+double metric::TcrDist::forward(const std::string &a, const std::string &b) const {
     /**
      * Compute the TcrDist metric (Dash et al) between two provided sequences. Be sure to provide sequences of equal
      * length. Errors are handled in the Python API for speed and interpretability considerations.
@@ -31,18 +31,25 @@ double metric::TcrDist::forward(const std::string &a, const std::string &b) {
      * @param b: another string to be compared
      * @return TcrDist metric between the two strings
      */
-    const auto& max_distance {4.};
+    constexpr auto max_distance = 4.;
+    const auto& n = a.size();
 
-    double distance {0}, substitution;
-    for (size_t i = 0; i < a.size(); i++) {
-        if (a[i] == b[i]) continue;
+    const auto* ptr_a = &a.front();
+    const auto* ptr_b = &b.front();
 
-        if (a[i] == this->gap_symbol_ || b[i] == this->gap_symbol_) {
+    auto&& distance = 0.;
+    for (size_t i = 0; i < n; i++) {
+        const auto& _a = *(ptr_a + i);
+        const auto& _b = *(ptr_b + i);
+        if (_a == _b)
+            continue;
+
+        if (_a == this->gap_symbol_ || _b == this->gap_symbol_) {
             distance += this->gap_penalty_;
             continue;
         }
 
-        substitution = max_distance - this->substitution_matrix_(a[i], b[i]);
+        const auto& substitution = max_distance - this->substitution_matrix_(_a, _b);
         distance += std::min(max_distance, substitution);
     }
     return distance * this->distance_weight_;

@@ -8,7 +8,7 @@
 #include <vector>
 #include "metrics/Levenshtein.h"
 
-double metric::Levenshtein::forward(const std::string &a, const std::string &b) {
+double metric::Levenshtein::forward(const std::string &a, const std::string &b) const {
     /**
      * Compute the Levenshtein distance between two input strings. This is a C++ refactor of the `python-Levenshtein`
      * implementation (https://github.com/ztane/python-Levenshtein).

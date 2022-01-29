@@ -5,12 +5,11 @@
 #ifndef METRICS_CDRDIST_H
 #define METRICS_CDRDIST_H
 
-#include "Metric.h"
 #include "alignment/SmithWaterman.h"
 
 namespace metric {
 
-    class CdrDist : public Metric {
+    class CdrDist {
     private:
         SmithWaterman algorithm_;
 
@@ -18,7 +17,7 @@ namespace metric {
         CdrDist() : algorithm_{} {};
         explicit CdrDist(const double_matrix_t&, const token_index_map_t&, const double&, const double&);
 
-        double forward(const std::string &, const std::string &) override;
+        double forward(const std::string &, const std::string &) const;
     };
 
 }

@@ -6,17 +6,16 @@
 #define SETRIQ_LEVENSHTEIN_H
 
 #include <string>
-#include "Metric.h"
 
 namespace metric {
-    class Levenshtein : public Metric {
-        double extra_cost_ {0};
+    class Levenshtein {
+        double extra_cost_ = 0;
 
     public:
-        Levenshtein() : extra_cost_ {} {};
-        explicit Levenshtein(double xCost) : extra_cost_ {xCost} {};
+        Levenshtein() : extra_cost_{} {};
+        explicit Levenshtein(double x_cost) : extra_cost_ {x_cost} {};
 
-        double forward(const std::string &, const std::string &) override;
+        double forward(const std::string &, const std::string &) const;
 
     };
 }
