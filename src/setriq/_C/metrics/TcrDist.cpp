@@ -31,7 +31,7 @@ double metric::TcrDist::forward(const std::string &a, const std::string &b) cons
      * @param b: another string to be compared
      * @return TcrDist metric between the two strings
      */
-    constexpr double max_distance = 4;
+    constexpr auto max_distance = 4.;
     const auto& n = a.size();
 
     const auto* ptr_a = &a.front();
