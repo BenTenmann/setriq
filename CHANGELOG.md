@@ -1,3 +1,14 @@
+## [1.4.1](https://github.com/BenTenmann/setriq/compare/deploy-1.4.0...deploy-1.4.1) (2022-01-29)
+
+
+### Bug Fixes
+
+* implicit conversion ([9720c4e](https://github.com/BenTenmann/setriq/commit/9720c4e9891a36947c469dd02e2e906bf0404339))
+* implicit conversion ([b965d3f](https://github.com/BenTenmann/setriq/commit/b965d3f790fdc3ab4375bd6a0d40334fc92adba0))
+* major refactor ([6735f13](https://github.com/BenTenmann/setriq/commit/6735f13b29bf23b0a0d264967718be3f98f3df7f))
+* pass metric by value ([ba8f7b6](https://github.com/BenTenmann/setriq/commit/ba8f7b6817de73d5862c401ffdd16b240a27ff84))
+* update string indexing ([145430b](https://github.com/BenTenmann/setriq/commit/145430bfb3ab62e53f1b54ddcb4b2fe7513ca3da))
+
 # [1.4.0](https://github.com/BenTenmann/setriq/compare/deploy-1.3.1...deploy-1.4.0) (2022-01-15)
 
 
