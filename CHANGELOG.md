@@ -1,3 +1,10 @@
+## [1.4.2](https://github.com/BenTenmann/setriq/compare/deploy-1.4.1...deploy-1.4.2) (2022-01-29)
+
+
+### Bug Fixes
+
+* setup.py refactor ([663ad3d](https://github.com/BenTenmann/setriq/commit/663ad3da308ff32f8a38f67fee71fed647961e02))
+
 ## [1.4.1](https://github.com/BenTenmann/setriq/compare/deploy-1.4.0...deploy-1.4.1) (2022-01-29)
 
 
