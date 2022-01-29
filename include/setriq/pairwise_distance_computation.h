@@ -10,7 +10,7 @@
 template<typename T>
 double_vector_t pairwise_distance_computation(const T& metric, const string_vector_t& input_strings) {
     const auto& n = input_strings.size();
-    double_vector_t distance_matrix (n * (n - 1) / 2);
+    auto&& distance_matrix = double_vector_t (n * (n - 1) / 2);
 
 #pragma omp parallel for default(none) firstprivate(n, metric) shared(input_strings, distance_matrix)
     for (size_t i = 0; i < (n - 1); i++) {
