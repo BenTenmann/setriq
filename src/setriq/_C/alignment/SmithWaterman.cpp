@@ -32,7 +32,7 @@ double SmithWaterman::fill_scoring_matrix_(const std::string &a,
     constexpr auto k_axis = 0;
     constexpr auto l_axis = 1;
 
-    auto&& max_score = 0.f;
+    auto&& max_score = 0.;
     auto&& scoring_matrix = double_matrix_t (n + 1, double_vector_t (m + 1, 0));
     for (size_t i = 1; i < (n + 1); i++) {
         for (size_t j = 1; j < (m + 1); j++) {
@@ -63,7 +63,7 @@ double SmithWaterman::calculate_gap_penalty_(const double_matrix_t &scoring_matr
      * @param axis: the axis over which to iterate
      * @return the maximum gap-score
      */
-    auto&& max_score = 0.f;
+    auto&& max_score = 0.;
     for (size_t i = 1; i < (max_gap_length + 1); i++) {
         const auto& k = max_gap_length - i;
         const auto& elem = axis ? scoring_matrix[index][k] : scoring_matrix[k][index];
@@ -111,7 +111,7 @@ double SmithWaterman::identity_score(const std::string &input_string) const {
      */
     const auto* end = &input_string.back() + 1;
 
-    auto&& score = 0.f;
+    auto&& score = 0.;
     for (auto* ptr = &input_string.front(); ptr != end; ptr++) {
         score += this->substitution_matrix_(*ptr, *ptr);
     }
