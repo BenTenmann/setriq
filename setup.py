@@ -33,20 +33,11 @@ logging.basicConfig(
 )
 
 # find the sem-rel version
-dirname = pathlib.Path(__file__).parent
-long_description = (dirname / 'README.md').read_text()
-
-try:
-    changelog = (dirname / 'CHANGELOG.md').read_text()
-    __version__, *_ = re.findall(r"\[([0-9.]+)]", changelog)
-except (FileNotFoundError, ValueError) as ex:
-    __version__ = '0.1.0'
-    logging.error(ex)
-    logging.error(traceback.print_exc())
-    logging.warning(f'Unable to get semantic release version. Setting version to {__version__}.')
+DIR = pathlib.Path(__file__).parent
 
 SOURCE_DIR = 'src'
 PROJECT_NAME = 'setriq'
+EXTENSION_NAME = '_C'
 
 ParallelCompile('NPY_NUM_BUILD_JOBS').install()
 
@@ -96,49 +87,68 @@ class BuildFlags:
         return None
 
 
-flags = BuildFlags()
-extensions = [
-    Pybind11Extension(
-        f'{PROJECT_NAME}._C',
-        sources=sorted(glob(f'{SOURCE_DIR}/{PROJECT_NAME}/_C/**/*.cpp', recursive=True)),
-        cxx_std=14,
-        define_macros=[('VERSION_INFO', __version__)],
-        include_dirs=['include/setriq'],
-        extra_compile_args=flags.compiler,
-        extra_link_args=flags.linker
-    ),
-]
+def main():
+    long_description = (DIR / 'README.md').read_text()
 
-setup(
-    name=PROJECT_NAME,
-    version=__version__,
-    description='Python package written in C++ for pairwise distance computation for sequences.',
-    long_description=long_description,
-    long_description_content_type='text/markdown',
-    author='benjamin-tenmann',
-    author_email='b.tenmann@me.com',
-    url='https://github.com/BenTenmann/setriq',
-    ext_modules=extensions,
-    license='MIT',
-    python_requires='>=3.7,<3.10',
-    install_requires=[
-        'glom>=20.0.0,<21.0.0',
-        'numpy>=1.0.0,<2.0.0',
-        'pandas>=1.0.0,<2.0.0',
-        'srsly>=2.0.0,<3.0.0',
-    ],
-    package_dir={f'{PROJECT_NAME}': f'{SOURCE_DIR}/{PROJECT_NAME}'},
-    packages=find_packages(where=f'{SOURCE_DIR}', exclude=['tests', 'scripts']),
-    package_data={f'{PROJECT_NAME}': ['data/*.json']},
-    include_package_data=True,
-    classifiers=[
-        'Development Status :: 3 - Alpha',
-        'Intended Audience :: Developers',
-        'Topic :: Software Development :: Build Tools',
-        'License :: OSI Approved :: MIT License',
-        'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.7',
-        'Programming Language :: Python :: 3.8',
-        'Programming Language :: Python :: 3.9',
+    try:
+        changelog = (DIR / 'CHANGELOG.md').read_text()
+        __version__, *_ = re.findall(r"\[([0-9.]+)]", changelog)
+    except (FileNotFoundError, ValueError) as ex:
+        __version__ = '0.1.0'
+        logging.error(ex)
+        logging.error(traceback.print_exc())
+        logging.warning(f'Unable to get semantic release version. Setting version to {__version__}.')
+
+    flags = BuildFlags()
+    extensions = [
+        Pybind11Extension(
+            f'{PROJECT_NAME}.{EXTENSION_NAME}',
+            sources=sorted(glob(f'{SOURCE_DIR}/{PROJECT_NAME}/{EXTENSION_NAME}/**/*.cpp', recursive=True)),
+            cxx_std=14,
+            define_macros=[
+                ('VERSION_INFO', __version__),
+                ('EXTENSION_NAME', EXTENSION_NAME)
+            ],
+            include_dirs=['include/setriq'],
+            extra_compile_args=flags.compiler,
+            extra_link_args=flags.linker
+        ),
     ]
-)
+
+    setup(
+        name=PROJECT_NAME,
+        version=__version__,
+        description='Python package written in C++ for pairwise distance computation for sequences.',
+        long_description=long_description,
+        long_description_content_type='text/markdown',
+        author='benjamin-tenmann',
+        author_email='b.tenmann@me.com',
+        url='https://github.com/BenTenmann/setriq',
+        ext_modules=extensions,
+        license='MIT',
+        python_requires='>=3.7,<3.10',
+        install_requires=[
+            'glom>=20.0.0,<21.0.0',
+            'numpy>=1.0.0,<2.0.0',
+            'pandas>=1.0.0,<2.0.0',
+            'srsly>=2.0.0,<3.0.0',
+        ],
+        package_dir={f'{PROJECT_NAME}': f'{SOURCE_DIR}/{PROJECT_NAME}'},
+        packages=find_packages(where=f'{SOURCE_DIR}', exclude=['tests', 'scripts']),
+        package_data={f'{PROJECT_NAME}': ['data/*.json']},
+        include_package_data=True,
+        classifiers=[
+            'Development Status :: 3 - Alpha',
+            'Intended Audience :: Developers',
+            'Topic :: Software Development :: Build Tools',
+            'License :: OSI Approved :: MIT License',
+            'Programming Language :: Python :: 3',
+            'Programming Language :: Python :: 3.7',
+            'Programming Language :: Python :: 3.8',
+            'Programming Language :: Python :: 3.9',
+        ]
+    )
+
+
+if __name__ == '__main__':
+    main()

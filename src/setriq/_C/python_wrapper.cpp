@@ -2,6 +2,10 @@
 // Created by Benjamin Tenmann on 22/11/2021.
 //
 
+#ifndef EXTENSION_NAME
+#define EXTENSION_NAME _C
+#endif
+
 #define STRINGIFY(x) #x
 #define MACRO_STRINGIFY(x) STRINGIFY(x)
 
@@ -45,7 +49,7 @@ py::list tcr_dist_component(const string_vector_t& sequences,
     return py::cast(out);
 }
 
-PYBIND11_MODULE(_C, m) {
+PYBIND11_MODULE(EXTENSION_NAME, m) {
     m.doc() = "Python module written in C++ for pairwise distance computation for sequences.";
 
     m.def("cdr_dist", &cdr_dist, "Compute the pairwise CDR-dist metric for a set of CDR3 sequences.",
