@@ -8,7 +8,7 @@
 #include "utils/type_defs.h"
 
 template<typename T>
-double_vector_t pairwise_distance_computation(const T& metric, const string_vector_t& input_strings) {
+double_vector_t pairwise_distance_computation(T metric, const string_vector_t& input_strings) {
     const auto& n = input_strings.size();
     auto&& distance_matrix = double_vector_t (n * (n - 1) / 2);
 
