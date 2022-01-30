@@ -4,6 +4,7 @@
 
 #include <cmath>
 #include <utility>
+
 #include "metrics/CdrDist.h"
 
 metric::CdrDist::CdrDist(const double_matrix_t& matrix,

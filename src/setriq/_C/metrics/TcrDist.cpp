@@ -3,6 +3,7 @@
 //
 
 #include <stdexcept>
+
 #include "metrics/TcrDist.h"
 
 metric::TcrDist::TcrDist(const double_matrix_t& scoring_matrix,

@@ -6,6 +6,7 @@
 #define METRICS_SUBSTITUTIONMATRIX_H
 
 #include <string>
+
 #include "utils/type_defs.h"
 
 class SubstitutionMatrix {

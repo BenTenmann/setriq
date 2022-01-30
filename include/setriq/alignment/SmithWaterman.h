@@ -17,7 +17,7 @@ private:
     // scoring matrix creation
     double calculate_gap_penalty_(const double_matrix_t& scoring_matrix,
                                   const size_t& max_gap_length,
-                                  const size_t& index,
+                                  const size_t& idx,
                                   const size_t& axis) const;
     double fill_scoring_matrix_(const std::string&a, const std::string&b) const;
     double compute_best_alignment_score_(const std::string&a, const std::string&b) const;
