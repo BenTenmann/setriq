@@ -4,8 +4,8 @@
 
 #include <cstring>
 #include <numeric>
-#include <string>
 #include <vector>
+
 #include "metrics/Levenshtein.h"
 
 double metric::Levenshtein::forward(const std::string &a, const std::string &b) const {

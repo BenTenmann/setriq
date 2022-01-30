@@ -4,6 +4,7 @@
 
 
 #include <utility>
+
 #include "alignment/SmithWaterman.h"
 
 SmithWaterman::SmithWaterman(SubstitutionMatrix matrix, const double& gap_opening_penalty, const double& gap_extension_penalty)
