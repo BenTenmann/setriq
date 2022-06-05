@@ -38,6 +38,20 @@ tcr_dist_results = [
     [dc.Decimal('0.0')],
 ]
 
+hamming_results = [
+    [dc.Decimal('1.0')],
+    [dc.Decimal('2.0'), dc.Decimal('3.0'), dc.Decimal('3.0')],
+    [dc.Decimal('0.0')],
+]
+
+jaro_results = [
+    [dc.Decimal('0.1667')],
+    [dc.Decimal('0.4444'), dc.Decimal('1.0'), dc.Decimal('1.0')],
+    [dc.Decimal('0.0')],
+]
+
+jaro_winkler_results = jaro_results  # change this in the future
+
 
 # ------ Fixtures ---------------------------------------------------------------------------------------------------- #
 @pytest.fixture()
@@ -204,3 +218,39 @@ def test_tcr_dist_custom_error():
     butterflies = {'wings': 'beat'}
     with pytest.raises(TypeError):
         setriq.TcrDist(rainbows=rainbows, butterflies=butterflies)
+
+
+@pytest.mark.parametrize(['sequences', 'distances'], zip(test_cases, hamming_results))
+def test_hamming(sequences, distances):
+    metric = setriq.Hamming()
+    response = metric(sequences)
+
+    n = len(sequences)
+    assert len(response) == (n * (n - 1) / 2)
+
+    res = response_to_decimal(response)
+    assert all(r == tgt for r, tgt in zip(res, distances))
+
+
+@pytest.mark.parametrize(['sequences', 'distances'], zip(test_cases, jaro_results))
+def test_jaro(sequences, distances):
+    metric = setriq.Jaro()
+    response = metric(sequences)
+
+    n = len(sequences)
+    assert len(response) == (n * (n - 1) / 2)
+
+    res = response_to_decimal(response)
+    assert all(r == tgt for r, tgt in zip(res, distances))
+
+
+@pytest.mark.parametrize(['sequences', 'distances'], zip(test_cases, jaro_winkler_results))
+def test_jaro_winkler(sequences, distances):
+    metric = setriq.JaroWinkler(p=0.10)
+    response = metric(sequences)
+
+    n = len(sequences)
+    assert len(response) == (n * (n - 1) / 2)
+
+    res = response_to_decimal(response)
+    assert all(r == tgt for r, tgt in zip(res, distances))
