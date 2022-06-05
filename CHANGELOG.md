@@ -1,3 +1,11 @@
+# [1.5.0](https://github.com/BenTenmann/setriq/compare/deploy-1.4.2...deploy-1.5.0) (2022-06-05)
+
+
+### Features
+
+* **distances:** add hamming, jaro and jaro-winkler ([d9f7154](https://github.com/BenTenmann/setriq/commit/d9f7154fac2787ff80300be8c840c8ba9e5f989b))
+* add landau vishkin algo ([87783fe](https://github.com/BenTenmann/setriq/commit/87783fe0044fab9c2b7142277aa464294912f89b))
+
 ## [1.4.2](https://github.com/BenTenmann/setriq/compare/deploy-1.4.1...deploy-1.4.2) (2022-01-29)
 
 
