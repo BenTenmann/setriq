@@ -17,12 +17,22 @@ from .substitution import (
     BLOSUM62,
     SubstitutionMatrix
 )
+from .utils import (
+    enforce_list,
+    ensure_equal_sequence_length,
+    check_jaro_weights,
+    check_jaro_winkler_params,
+    TCR_DIST_DEFAULT
+)
 
 __all__ = [
     'CdrDist',
     'Levenshtein',
     'TcrDist',
     'TcrDistComponent',
+    'Hamming',
+    'Jaro',
+    'JaroWinkler'
 ]
 
 
@@ -43,6 +53,7 @@ class Metric(abc.ABC):
     def forward(self, *args, **kwargs):
         pass
 
+    @enforce_list(argnum=1, convert_iterable=True)
     def __call__(self, *args, **kwargs):
         out = self.forward(*args, **kwargs)
 
@@ -151,9 +162,8 @@ class TcrDistComponent(Metric):
         }
         self.fn = C.tcr_dist_component
 
+    @ensure_equal_sequence_length(argnum=1)
     def forward(self, sequences: List[str]) -> List[float]:
-        if not (len(sequences[0]) == pd.Series(sequences).str.len()).all():
-            raise ValueError('Sequences must be of equal length')
         out = self.fn(sequences, **self.call_args)
 
         return out
@@ -185,12 +195,7 @@ class TcrDist(Metric):
         Nguyen, T.H., Kedzierska, K. and La Gruta, N.L., 2017. Quantifiable predictive features define
         epitope-specific T cell receptor repertoires. Nature, 547(7661), pp.89-93. (https://doi.org/10.1038/nature22383)
     """
-    _default = [
-        ('cdr_1', {'substitution_matrix': BLOSUM62, 'gap_penalty': 4., 'weight': 1.}),
-        ('cdr_2', {'substitution_matrix': BLOSUM62, 'gap_penalty': 4., 'weight': 1.}),
-        ('cdr_2_5', {'substitution_matrix': BLOSUM62, 'gap_penalty': 4., 'weight': 1.}),
-        ('cdr_3', {'substitution_matrix': BLOSUM62, 'gap_penalty': 8., 'weight': 3.})
-    ]
+    _default = TCR_DIST_DEFAULT
     _default_msg = (
         'TcrDist has been initialized using the default configuration. '
         'Please ensure that the input is a list of dictionaries, each with keys: {}'
@@ -302,3 +307,82 @@ class TcrDist(Metric):
         # aggregate the component outputs
         out = np.array(out).sum(axis=0)
         return out.tolist()
+
+
+class Hamming(Metric):
+    """
+    Hamming distance class. Inherits from Metric. Sequences must be of equal length.
+
+    Examples
+    --------
+    >>> metric = Hamming(mismatch_score=2.0)
+    >>> sequences = ['CASSLKPNTEAFF', 'CASSAHIANYGYTF', 'CASRGATETQYF']
+    >>> distances = metric(sequences)
+
+    References
+    ----------
+    [1] ...
+    """
+    # TODO: add reference
+    def __init__(self, mismatch_score: float = 1.0):
+        self.call_args = {
+            'mismatch_score': mismatch_score
+        }
+        self.fn = C.hamming
+
+    @ensure_equal_sequence_length(argnum=1)
+    def forward(self, sequences: List[str]) -> List[float]:
+        out = self.fn(sequences, **self.call_args)
+        return out
+
+
+class Jaro(Metric):
+    """
+    Jaro distance class. Inherits from Metric. Adapted from [2].
+
+    Examples
+    --------
+    >>> metric = Jaro()
+    >>> sequences = ['CASSLKPNTEAFF', 'CASSAHIANYGYTF', 'CASRGATETQYF']
+    >>> distances = metric(sequences)
+
+    References
+    ----------
+    [1] Jaro, M.A., 1989. Advances in record-linkage methodology as applied to matching the 1985 census of Tampa,
+        Florida. Journal of the American Statistical Association, 84(406), pp.414-420.
+    [2] Van der Loo, M.P., 2014. The stringdist package for approximate string matching. R J., 6(1), p.111.
+    """
+    @check_jaro_weights
+    def __init__(self, jaro_weights: List[float] = None):
+        self.call_args = {
+            'jaro_weights': jaro_weights
+        }
+        self.fn = C.jaro
+
+    def forward(self, sequences: List[str]) -> List[float]:
+        out = self.fn(sequences, **self.call_args)
+        return out
+
+
+class JaroWinkler(Jaro):
+    """
+    Jaro-Winkler distance class. Inherits from Jaro.
+
+    Examples
+    --------
+    >>> metric = JaroWinkler(p=0.10)
+    >>> sequences = ['CASSLKPNTEAFF', 'CASSAHIANYGYTF', 'CASRGATETQYF']
+    >>> distances = metric(sequences)
+
+    References
+    ----------
+    [1] Winkler, W.E., 1990. String comparator metrics and enhanced decision rules in the Fellegi-Sunter model of record
+        linkage.
+
+    """
+    @check_jaro_winkler_params
+    def __init__(self, p: float, max_l: int = 4, jaro_weights: List[float] = None):
+        super(JaroWinkler, self).__init__(jaro_weights)
+        self.call_args['p'] = p
+        self.call_args['max_l'] = max_l
+        self.fn = C.jaro_winkler

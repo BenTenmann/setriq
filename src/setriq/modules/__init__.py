@@ -22,8 +22,13 @@ from .substitution import (
 from .distances import (
     CdrDist,
     Levenshtein,
-    TcrDist
+    TcrDist,
+    Hamming,
+    Jaro,
+    JaroWinkler
 )
+
+from . import single_dispatch
 
 __all__ = [
     'SubstitutionMatrix',
@@ -33,4 +38,8 @@ __all__ = [
     'CdrDist',
     'Levenshtein',
     'TcrDist',
+    'Hamming',
+    'Jaro',
+    'JaroWinkler',
+    'single_dispatch'
 ]

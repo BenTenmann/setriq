@@ -181,5 +181,8 @@ cython_debug/
 # scripts
 scripts
 
-### IDE
+# IDE
 .idea
+
+# notes
+notes/
