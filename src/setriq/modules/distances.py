@@ -12,27 +12,25 @@ import pandas as pd
 from glom import glom
 
 import setriq._C as C
-from .substitution import (
-    BLOSUM45,
-    BLOSUM62,
-    SubstitutionMatrix
-)
+from .substitution import BLOSUM45, BLOSUM62, SubstitutionMatrix
 from .utils import (
     enforce_list,
     ensure_equal_sequence_length,
     check_jaro_weights,
     check_jaro_winkler_params,
-    TCR_DIST_DEFAULT
+    TCR_DIST_DEFAULT,
 )
 
 __all__ = [
-    'CdrDist',
-    'Levenshtein',
-    'TcrDist',
-    'TcrDistComponent',
-    'Hamming',
-    'Jaro',
-    'JaroWinkler'
+    "CdrDist",
+    "Levenshtein",
+    "TcrDist",
+    "TcrDistComponent",
+    "Hamming",
+    "Jaro",
+    "JaroWinkler",
+    "LongestCommonSubstring",
+    "OptimalStringAlignment",
 ]
 
 
@@ -76,14 +74,17 @@ class CdrDist(Metric):
     [1] Thakkar, N. and Bailey-Kellogg, C., 2019. Balancing sensitivity and specificity in distinguishing TCR groups by
         CDR sequence similarity. BMC bioinformatics, 20(1), pp.1-14. (https://doi.org/10.1186/s12859-019-2864-8)
     """
-    def __init__(self,
-                 substitution_matrix: SubstitutionMatrix = BLOSUM45,
-                 gap_opening_penalty: float = 10.,
-                 gap_extension_penalty: float = 1.):
+
+    def __init__(
+        self,
+        substitution_matrix: SubstitutionMatrix = BLOSUM45,
+        gap_opening_penalty: float = 10.0,
+        gap_extension_penalty: float = 1.0,
+    ):
         self.call_args = {
             **substitution_matrix,
-            'gap_opening_penalty': gap_opening_penalty,
-            'gap_extension_penalty': gap_extension_penalty
+            "gap_opening_penalty": gap_opening_penalty,
+            "gap_extension_penalty": gap_extension_penalty,
         }
         self.fn = C.cdr_dist
 
@@ -111,10 +112,9 @@ class Levenshtein(Metric):
         Soviet physics doklady (Vol. 10, No. 8, pp. 707-710).
     [2] python-Levenshtein (https://github.com/ztane/python-Levenshtein)
     """
-    def __init__(self, extra_cost: float = 0.):
-        self.call_args = {
-            'extra_cost': extra_cost
-        }
+
+    def __init__(self, extra_cost: float = 0.0):
+        self.call_args = {"extra_cost": extra_cost}
         self.fn = C.levenshtein
 
     def forward(self, sequences: List[str]):
@@ -135,11 +135,13 @@ class TcrDistComponent(Metric):
     >>> distances = metric(sequences)
     """
 
-    def __init__(self, 
-                 substitution_matrix: SubstitutionMatrix, 
-                 gap_penalty: float,
-                 gap_symbol: str = '-',
-                 weight: float = 1.):
+    def __init__(
+        self,
+        substitution_matrix: SubstitutionMatrix,
+        gap_penalty: float,
+        gap_symbol: str = "-",
+        weight: float = 1.0,
+    ):
         """
         Initialize a TcrDistComponent object.
 
@@ -156,9 +158,9 @@ class TcrDistComponent(Metric):
         """
         self.call_args = {
             **substitution_matrix,
-            'gap_penalty': gap_penalty,
-            'gap_symbol': gap_symbol,
-            'weight': weight
+            "gap_penalty": gap_penalty,
+            "gap_symbol": gap_symbol,
+            "weight": weight,
         }
         self.fn = C.tcr_dist_component
 
@@ -195,12 +197,13 @@ class TcrDist(Metric):
         Nguyen, T.H., Kedzierska, K. and La Gruta, N.L., 2017. Quantifiable predictive features define
         epitope-specific T cell receptor repertoires. Nature, 547(7661), pp.89-93. (https://doi.org/10.1038/nature22383)
     """
+
     _default = TCR_DIST_DEFAULT
     _default_msg = (
-        'TcrDist has been initialized using the default configuration. '
-        'Please ensure that the input is a list of dictionaries, each with keys: {}'
-    ).format(', '.join(repr(key) for key, _ in _default))
-    
+        "TcrDist has been initialized using the default configuration. "
+        "Please ensure that the input is a list of dictionaries, each with keys: {}"
+    ).format(", ".join(repr(key) for key, _ in _default))
+
     def __init__(self, **components):
         """
         Initialize a TcrDist object. Initialization can happen in two ways:
@@ -240,7 +243,9 @@ class TcrDist(Metric):
             for name, component in components.items():
                 # some type checking
                 if not isinstance(component, TcrDistComponent):
-                    raise TypeError(f'{repr(name)} is not of type {TcrDistComponent.__class__.__name__}')
+                    raise TypeError(
+                        f"{repr(name)} is not of type {TcrDistComponent.__class__.__name__}"
+                    )
 
                 self.__setattr__(name, component)
                 parts.append(name)
@@ -253,7 +258,7 @@ class TcrDist(Metric):
 
             # warn user that default has been initialised and inform required input format
             warnings.warn(self._default_msg, UserWarning)
-        
+
         self.components = parts
 
     def _check_input_format(self, ipt):
@@ -261,7 +266,7 @@ class TcrDist(Metric):
 
         diff = pts.difference(ipt)
         if diff:
-            raise ValueError('Missing key(s): {}'.format(', '.join(map(repr, diff))))
+            raise ValueError("Missing key(s): {}".format(", ".join(map(repr, diff))))
 
     @property
     def required_input_keys(self) -> List[str]:
@@ -323,11 +328,10 @@ class Hamming(Metric):
     ----------
     [1] ...
     """
+
     # TODO: add reference
     def __init__(self, mismatch_score: float = 1.0):
-        self.call_args = {
-            'mismatch_score': mismatch_score
-        }
+        self.call_args = {"mismatch_score": mismatch_score}
         self.fn = C.hamming
 
     @ensure_equal_sequence_length(argnum=1)
@@ -352,11 +356,10 @@ class Jaro(Metric):
         Florida. Journal of the American Statistical Association, 84(406), pp.414-420.
     [2] Van der Loo, M.P., 2014. The stringdist package for approximate string matching. R J., 6(1), p.111.
     """
+
     @check_jaro_weights
     def __init__(self, jaro_weights: List[float] = None):
-        self.call_args = {
-            'jaro_weights': jaro_weights
-        }
+        self.call_args = {"jaro_weights": jaro_weights}
         self.fn = C.jaro
 
     def forward(self, sequences: List[str]) -> List[float]:
@@ -380,9 +383,58 @@ class JaroWinkler(Jaro):
         linkage.
 
     """
+
     @check_jaro_winkler_params
     def __init__(self, p: float, max_l: int = 4, jaro_weights: List[float] = None):
         super(JaroWinkler, self).__init__(jaro_weights)
-        self.call_args['p'] = p
-        self.call_args['max_l'] = max_l
+        self.call_args["p"] = p
+        self.call_args["max_l"] = max_l
         self.fn = C.jaro_winkler
+
+
+class LongestCommonSubstring(Metric):
+    """
+    Longest common substring distance class. Inherits from Metric.
+
+    Examples
+    --------
+    >>> metric = LongestCommonSubstring()
+    >>> sequences = ['CASSLKPNTEAFF', 'CASSAHIANYGYTF', 'CASRGATETQYF']
+    >>> distances = metric(sequences)
+
+    References
+    ----------
+    [1] https://en.wikipedia.org/wiki/Longest_common_substring_problem
+
+    """
+
+    def __init__(self):
+        self.fn = C.longest_common_substring
+
+    def forward(self, sequences: List[str]) -> List[float]:
+        out = self.fn(sequences)
+        return out
+
+
+class OptimalStringAlignment(Metric):
+    """ "
+    Optimal string alignment distance class. Inherits from Metric.
+
+    Examples
+    --------
+    >>> metric = OptimalStringAlignment()
+    >>> sequences = ['CASSLKPNTEAFF', 'CASSAHIANYGYTF', 'CASRGATETQYF']
+    >>> distances = metric(sequences)
+
+    References
+    ----------
+    [1] https://en.wikipedia.org/wiki/Damerau%E2%80%93Levenshtein_distance
+
+    """
+
+    def __init__(self):
+        self.fn = C.optimal_string_alignment
+
+    def forward(self, sequences: List[str]) -> List[float]:
+        out = self.fn(sequences)
+        return out

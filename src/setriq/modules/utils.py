@@ -10,22 +10,22 @@ from typing import Callable, Iterable
 from .substitution import SubstitutionMatrix, BLOSUM62
 
 __all__ = [
-    'enforce_list',
-    'ensure_equal_sequence_length',
-    'single_dispatch',
-    'tcr_dist_sd_component_check',
-    'ensure_equal_sequence_length_sd',
-    'check_jaro_weights',
-    'check_jaro_winkler_params',
-    'TCR_DIST_DEFAULT'
+    "enforce_list",
+    "ensure_equal_sequence_length",
+    "single_dispatch",
+    "tcr_dist_sd_component_check",
+    "ensure_equal_sequence_length_sd",
+    "check_jaro_weights",
+    "check_jaro_winkler_params",
+    "TCR_DIST_DEFAULT",
 ]
 
-WRAPPER_ASSIGNMENTS = (*WRAPPER_ASSIGNMENTS, '__signature__')
+WRAPPER_ASSIGNMENTS = (*WRAPPER_ASSIGNMENTS, "__signature__")
 TCR_DIST_DEFAULT = [
-    ('cdr_1', {'substitution_matrix': BLOSUM62, 'gap_penalty': 4., 'weight': 1.}),
-    ('cdr_2', {'substitution_matrix': BLOSUM62, 'gap_penalty': 4., 'weight': 1.}),
-    ('cdr_2_5', {'substitution_matrix': BLOSUM62, 'gap_penalty': 4., 'weight': 1.}),
-    ('cdr_3', {'substitution_matrix': BLOSUM62, 'gap_penalty': 8., 'weight': 3.})
+    ("cdr_1", {"substitution_matrix": BLOSUM62, "gap_penalty": 4.0, "weight": 1.0}),
+    ("cdr_2", {"substitution_matrix": BLOSUM62, "gap_penalty": 4.0, "weight": 1.0}),
+    ("cdr_2_5", {"substitution_matrix": BLOSUM62, "gap_penalty": 4.0, "weight": 1.0}),
+    ("cdr_3", {"substitution_matrix": BLOSUM62, "gap_penalty": 8.0, "weight": 3.0}),
 ]
 
 
@@ -55,7 +55,15 @@ def _get_argument(params, argname: str, argnum: int, args: tuple, kwargs: dict):
     return params[argname].default, Argument.DEFAULT
 
 
-def _put_argument(params, argname: str, argnum: int, arg_type: enum.Enum, argval, args: tuple, kwargs: dict):
+def _put_argument(
+    params,
+    argname: str,
+    argnum: int,
+    arg_type: enum.Enum,
+    argval,
+    args: tuple,
+    kwargs: dict,
+):
     # this function is the complement to `_get_argument`
     if arg_type == Argument.POSITIONAL:
         args = tuple(arg if argnum != idx else argval for idx, arg in enumerate(args))
@@ -84,9 +92,9 @@ def _get_func_argument_info_from_name(fn: Callable, argname: str):
 
 
 def _add_func_signature(fn: Callable, signature: inspect.Signature) -> Callable:
-    if not hasattr(fn, '__signature__'):
+    if not hasattr(fn, "__signature__"):
         fn.__signature__ = None
-    fn.__signature__ = (fn.__signature__ or signature)
+    fn.__signature__ = fn.__signature__ or signature
     return fn
 
 
@@ -138,7 +146,9 @@ def enforce_list(argnum: int = 0, convert_iterable: bool = True):
 
     """
     if callable(argnum):
-        raise TypeError(f'Make sure to call {repr(enforce_list.__name__)} before decorating.')
+        raise TypeError(
+            f"Make sure to call {repr(enforce_list.__name__)} before decorating."
+        )
 
     def decorator(fn):
         signature, params, argname = _get_func_argument_info(fn, argnum)
@@ -153,7 +163,9 @@ def enforce_list(argnum: int = 0, convert_iterable: bool = True):
                     argument = list(argument)
             else:
                 argument = [argname]
-            args, kwargs = _put_argument(params, argname, argidx, arg_type, argument, args, kwargs)
+            args, kwargs = _put_argument(
+                params, argname, argidx, arg_type, argument, args, kwargs
+            )
             out = fn(*args, **kwargs)
             return out
 
@@ -200,7 +212,7 @@ def ensure_equal_sequence_length(argnum: int):
         def _fn(*args, **kwargs):
             argument, _ = _get_argument(params, argname, argidx, args, kwargs)
             if not (len(argument[0]) == pd.Series(argument).str.len()).all():
-                raise ValueError('Sequences must be of equal length')
+                raise ValueError("Sequences must be of equal length")
             out = fn(*args, **kwargs)
             return out
 
@@ -218,12 +230,12 @@ def ensure_equal_sequence_length_sd(fn: Callable) -> Callable:
     `a` and `b` must be of equal length.
     """
 
-    fn.__doc__ = (fn.__doc__ or '') + add_doc
+    fn.__doc__ = (fn.__doc__ or "") + add_doc
 
     @wraps(fn, assigned=WRAPPER_ASSIGNMENTS)
     def _fn(a, b, *args, **kwargs):
         if len(a) != len(b):
-            raise ValueError('Sequences must be of equal length')
+            raise ValueError("Sequences must be of equal length")
         out = fn(a, b, *args, **kwargs)
         return out
 
@@ -260,7 +272,7 @@ def single_dispatch(fn: Callable) -> Callable:
     @wraps(fn, assigned=WRAPPER_ASSIGNMENTS)
     def _fn(a, b, *args, **kwargs):
         if any(not isinstance(sequence, str) for sequence in (a, b)):
-            raise TypeError(f'`a` and `b` must be of type str')
+            raise TypeError(f"`a` and `b` must be of type str")
         out = fn(a, b, *args, **kwargs)
         return out
 
@@ -275,29 +287,33 @@ def tcr_dist_sd_component_check(fn):
     fn = _add_func_signature(fn, signature)
 
     def _check_component(name, component: dict):
-        essential_keys = ['substitution_matrix', 'gap_penalty']
-        optional_keys = ['gap_symbol', 'weight']
+        essential_keys = ["substitution_matrix", "gap_penalty"]
+        optional_keys = ["gap_symbol", "weight"]
         missing_keys = set(essential_keys).difference(component)
         if missing_keys:
-            msg = ', '.join(map(repr, missing_keys))
-            raise ValueError(f'missing keys in component def {repr(name)}: {msg}')
+            msg = ", ".join(map(repr, missing_keys))
+            raise ValueError(f"missing keys in component def {repr(name)}: {msg}")
 
         init_types = [SubstitutionMatrix, (float, int), str, (float, int)]
         for key, _type in zip(essential_keys + optional_keys, init_types):
             elem = component.get(key)
             if elem is not None and not isinstance(elem, _type):
                 given_type = type(elem)
-                raise TypeError(f'{repr(key)} needs to be of type {repr(_type)}, not {repr(given_type)}')
+                raise TypeError(
+                    f"{repr(key)} needs to be of type {repr(_type)}, not {repr(given_type)}"
+                )
 
     @wraps(fn, assigned=WRAPPER_ASSIGNMENTS)
     def _fn(a, b, **component_def):
-        if not os.environ.get('SKIP_TCR_DIST_COMPONENT_CHECK'):
+        if not os.environ.get("SKIP_TCR_DIST_COMPONENT_CHECK"):
             for name, component in component_def.items():
                 _check_component(name, component)
             if not component_def:
                 component_def = dict(TCR_DIST_DEFAULT)
             if set(component_def).difference(set(a).union(b)):
-                raise ValueError(f'key mismatch between payloads (`a` and `b`) and defined components.')
+                raise ValueError(
+                    f"key mismatch between payloads (`a` and `b`) and defined components."
+                )
         out = fn(a, b, **component_def)
         return out
 
@@ -306,7 +322,7 @@ def tcr_dist_sd_component_check(fn):
 
 def check_jaro_weights(fn: Callable):
     # checks that jaro weights are sensibly defined
-    argname = 'jaro_weights'
+    argname = "jaro_weights"
     signature, params, argnum = _get_func_argument_info_from_name(fn, argname)
     fn = _add_func_signature(fn, signature)
 
@@ -316,11 +332,13 @@ def check_jaro_weights(fn: Callable):
         if jaro_weights is None:
             jaro_weights = [1 / 3] * 3
         if len(jaro_weights) != 3:
-            raise ValueError('`jaro_weights` has to be of length 3')
+            raise ValueError("`jaro_weights` has to be of length 3")
         if sum(jaro_weights) != 1.0:
-            raise ValueError('`jaro_weights` has to sum to 1.0')
+            raise ValueError("`jaro_weights` has to sum to 1.0")
 
-        args, kwargs = _put_argument(params, argname, argnum, arg_type, jaro_weights, args, kwargs)
+        args, kwargs = _put_argument(
+            params, argname, argnum, arg_type, jaro_weights, args, kwargs
+        )
         out = fn(*args, **kwargs)
         return out
 
@@ -329,8 +347,8 @@ def check_jaro_weights(fn: Callable):
 
 def check_jaro_winkler_params(fn: Callable):
     # checks that Jaro-Winkler parameters are sensibly defined
-    argname_p = 'p'
-    argname_l = 'max_l'
+    argname_p = "p"
+    argname_l = "max_l"
     signature, params, argnum_p = _get_func_argument_info_from_name(fn, argname_p)
     _, _, argnum_l = _get_func_argument_info_from_name(fn, argname_l)
     fn = _add_func_signature(fn, signature)
@@ -341,9 +359,9 @@ def check_jaro_winkler_params(fn: Callable):
         max_l, _ = _get_argument(params, argname_l, argnum_l, args, kwargs)
 
         if not (0.0 <= p <= 0.25):
-            raise ValueError('`p` must be in range [0.0, 0.25]')
+            raise ValueError("`p` must be in range [0.0, 0.25]")
         if max_l < 0 or not isinstance(max_l, int):
-            raise ValueError('`max_l` must be a non-negative integer')
+            raise ValueError("`max_l` must be a non-negative integer")
         out = fn(*args, **kwargs)
         return out
 
