@@ -13,33 +13,32 @@ Examples
 
 """
 
-from .substitution import (
-    SubstitutionMatrix,
-    BLOSUM45,
-    BLOSUM62,
-    BLOSUM90
-)
+from .substitution import SubstitutionMatrix, BLOSUM45, BLOSUM62, BLOSUM90
 from .distances import (
     CdrDist,
     Levenshtein,
     TcrDist,
     Hamming,
     Jaro,
-    JaroWinkler
+    JaroWinkler,
+    LongestCommonSubstring,
+    OptimalStringAlignment,
 )
 
 from . import single_dispatch
 
 __all__ = [
-    'SubstitutionMatrix',
-    'BLOSUM45',
-    'BLOSUM62',
-    'BLOSUM90',
-    'CdrDist',
-    'Levenshtein',
-    'TcrDist',
-    'Hamming',
-    'Jaro',
-    'JaroWinkler',
-    'single_dispatch'
+    "SubstitutionMatrix",
+    "BLOSUM45",
+    "BLOSUM62",
+    "BLOSUM90",
+    "CdrDist",
+    "Levenshtein",
+    "TcrDist",
+    "Hamming",
+    "Jaro",
+    "JaroWinkler",
+    "LongestCommonSubstring",
+    "OptimalStringAlignment",
+    "single_dispatch",
 ]

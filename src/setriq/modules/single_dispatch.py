@@ -49,24 +49,29 @@ from .utils import (
     single_dispatch,
     tcr_dist_sd_component_check,
     check_jaro_weights,
-    check_jaro_winkler_params
+    check_jaro_winkler_params,
 )
 
 __all__ = [
-    'cdr_dist',
-    'levenshtein',
-    'tcr_dist',
-    'hamming',
-    'jaro',
-    'jaro_winkler'
+    "cdr_dist",
+    "levenshtein",
+    "tcr_dist",
+    "hamming",
+    "jaro",
+    "jaro_winkler",
+    "longest_common_substring",
+    "optimal_string_alignment",
 ]
 
 
 @single_dispatch
-def cdr_dist(a: str, b: str,
-             substitution_matrix: SubstitutionMatrix = BLOSUM45,
-             gap_opening_penalty: float = 10.0,
-             gap_extension_penalty: float = 1.0) -> float:
+def cdr_dist(
+    a: str,
+    b: str,
+    substitution_matrix: SubstitutionMatrix = BLOSUM45,
+    gap_opening_penalty: float = 10.0,
+    gap_extension_penalty: float = 1.0,
+) -> float:
     """
     Compute the CDRdist [1] metric between two sequences.
 
@@ -94,9 +99,13 @@ def cdr_dist(a: str, b: str,
         CDR sequence similarity. BMC bioinformatics, 20(1), pp.1-14. (https://doi.org/10.1186/s12859-019-2864-8)
 
     """
-    distance = C.cdr_dist_sd(a, b, **substitution_matrix,
-                             gap_opening_penalty=gap_opening_penalty,
-                             gap_extension_penalty=gap_extension_penalty)
+    distance = C.cdr_dist_sd(
+        a,
+        b,
+        **substitution_matrix,
+        gap_opening_penalty=gap_opening_penalty,
+        gap_extension_penalty=gap_extension_penalty
+    )
     return distance
 
 
@@ -128,16 +137,22 @@ def levenshtein(a: str, b: str, extra_cost: float = 0.0) -> float:
 
 @single_dispatch
 @ensure_equal_sequence_length_sd
-def tcr_dist_component(a: str, b: str,
-                       substitution_matrix: SubstitutionMatrix,
-                       gap_penalty: float,
-                       gap_symbol: str = '-',
-                       weight: float = 1.) -> float:
-    distance = C.tcr_dist_component_sd(a, b,
-                                       **substitution_matrix,
-                                       gap_penalty=gap_penalty,
-                                       gap_symbol=gap_symbol,
-                                       weight=weight)
+def tcr_dist_component(
+    a: str,
+    b: str,
+    substitution_matrix: SubstitutionMatrix,
+    gap_penalty: float,
+    gap_symbol: str = "-",
+    weight: float = 1.0,
+) -> float:
+    distance = C.tcr_dist_component_sd(
+        a,
+        b,
+        **substitution_matrix,
+        gap_penalty=gap_penalty,
+        gap_symbol=gap_symbol,
+        weight=weight
+    )
     return distance
 
 
@@ -226,7 +241,9 @@ def jaro(a: str, b: str, jaro_weights: List[float] = None) -> float:
 @single_dispatch
 @check_jaro_weights
 @check_jaro_winkler_params
-def jaro_winkler(a: str, b: str, p: float, max_l: int = 4, jaro_weights: List[float] = None) -> float:
+def jaro_winkler(
+    a: str, b: str, p: float, max_l: int = 4, jaro_weights: List[float] = None
+) -> float:
     """
     Compute the Jaro-Winkler [1] distance between two sequences.
 
@@ -251,4 +268,48 @@ def jaro_winkler(a: str, b: str, p: float, max_l: int = 4, jaro_weights: List[fl
 
     """
     distance = C.jaro_winkler_sd(a, b, p=p, max_l=max_l, jaro_weights=jaro_weights)
+    return distance
+
+
+@single_dispatch
+def longest_common_substring(a: str, b: str) -> float:
+    """
+    Compute the LCS distance between two sequences.
+
+    {params}
+
+    {returns}
+
+    Examples
+    --------
+    >>> longest_common_substring('AASQ', 'PASQ')
+
+    References
+    ----------
+    [1] ...
+
+    """
+    distance = C.longest_common_substring_sd(a, b)
+    return distance
+
+
+@single_dispatch
+def optimal_string_alignment(a: str, b: str) -> float:
+    """
+    Compute the OSA between two sequences.
+
+    {params}
+
+    {returns}
+
+    Examples
+    --------
+    >>> optimal_string_alignment('AASQ', 'PASQ')
+
+    References
+    ----------
+    [1] ...
+
+    """
+    distance = C.optimal_string_alignment_sd(a, b)
     return distance

@@ -19,6 +19,8 @@
 #include "metrics/Hamming.h"
 #include "metrics/Jaro.h"
 #include "metrics/JaroWinkler.h"
+#include "metrics/LongestCommonSubstring.h"
+#include "metrics/OptimalStringAlignment.h"
 #include "utils/type_defs.h"
 
 namespace py = pybind11;
@@ -78,6 +80,20 @@ py::list jaro_winkler(const string_vector_t& sequences,
     return py::cast(out);
 }
 
+py::list longest_common_substring(const string_vector_t& sequences) {
+    metric::LongestCommonSubstring metric {};
+
+    double_vector_t out = pairwise_distance_computation(metric, sequences);
+    return py::cast(out);
+}
+
+py::list optimal_string_alignment(const string_vector_t& sequences) {
+    metric::OptimalStringAlignment metric {};
+
+    double_vector_t out = pairwise_distance_computation(metric, sequences);
+    return py::cast(out);
+}
+
 // ----- single dispatch -------------------------------------------------------------------------------------------- //
 py::float_ cdr_dist_sd(const std::string& a, std::string& b,
                        const double_matrix_t& substitution_matrix,
@@ -127,6 +143,18 @@ py::float_ jaro_winkler_sd(const std::string& a, const std::string& b,
     return py::cast(out);
 }
 
+py::float_ longest_common_substring_sd(const std::string& a, const std::string& b) {
+    metric::LongestCommonSubstring metric {};
+    double out = metric.forward(a, b);
+    return py::cast(out);
+}
+
+py::float_ optimal_string_alignment_sd(const std::string& a, const std::string& b) {
+    metric::OptimalStringAlignment metric {};
+    double out = metric.forward(a, b);
+    return py::cast(out);
+}
+
 // ----- module def ------------------------------------------------------------------------------------------------- //
 PYBIND11_MODULE(EXTENSION_NAME, m) {
     m.doc() = "Python module written in C++ for pairwise distance computation for sequences.";
@@ -152,6 +180,12 @@ PYBIND11_MODULE(EXTENSION_NAME, m) {
     m.def("jaro_winkler", &jaro_winkler, "Compute pairwise Jaro-Winkler distance for a set of sequences.",
           py::arg("sequences"), py::arg("p"), py::arg("max_l"), py::arg("jaro_weights"));
 
+    m.def("longest_common_substring", &longest_common_substring, "Compute pairwise LCS for a set of sequences.",
+          py::arg("sequences"));
+
+    m.def("optimal_string_alignment", &optimal_string_alignment, "Compute pairwise OSA for a set of sequences.",
+          py::arg("sequences"));
+
     // single dispatch
     m.def("cdr_dist_sd", &cdr_dist_sd, "Compute the CDR-dist metric between two CDR3 sequences.",
           py::arg("a"), py::arg("b"), py::arg("substitution_matrix"), py::arg("index"),
@@ -172,6 +206,12 @@ PYBIND11_MODULE(EXTENSION_NAME, m) {
 
     m.def("jaro_winkler_sd", &jaro_winkler_sd, "Compute the Jaro-Winkler distance between two sequences.",
           py::arg("a"), py::arg("b"), py::arg("p"), py::arg("max_l"), py::arg("jaro_weights"));
+
+    m.def("longest_common_substring_sd", &longest_common_substring_sd, "Compute the LCS between two sequences.",
+          py::arg("a"), py::arg("b"));
+
+    m.def("optimal_string_alignment_sd", &optimal_string_alignment_sd, "Compute the OSA between two strings.",
+          py::arg("a"), py::arg("b"));
 
 #ifdef VERSION_INFO
     m.attr("__version__") = MACRO_STRINGIFY(VERSION_INFO);

@@ -7,19 +7,15 @@ import abc
 import copy
 import pathlib
 import pkg_resources as pkg
-from typing import (
-    Dict,
-    List,
-    Union
-)
+from typing import Dict, List, Union
 
 import srsly
 
 __all__ = [
-    'BLOSUM45',
-    'BLOSUM62',
-    'BLOSUM90',
-    'SubstitutionMatrix',
+    "BLOSUM45",
+    "BLOSUM62",
+    "BLOSUM90",
+    "SubstitutionMatrix",
 ]
 
 
@@ -55,13 +51,19 @@ class SubstitutionMatrix(abc.ABC):
     these are just instances of `SubstitutionMatrix`, initialised through `from_json`
     """
     _required_keys = (
-        'index',
-        'substitution_matrix',
+        "index",
+        "substitution_matrix",
     )
     index: Dict[str, int]
     substitution_matrix: List[List[float]]
 
-    def __init__(self, index: Dict[str, int], substitution_matrix: List[List[float]], *args, **kwargs):
+    def __init__(
+        self,
+        index: Dict[str, int],
+        substitution_matrix: List[List[float]],
+        *args,
+        **kwargs,
+    ):
         """
         Construct an instance of a SubstitutionMatrix object.
 
@@ -103,7 +105,9 @@ class SubstitutionMatrix(abc.ABC):
         values = srsly.read_json(file_path)
         for key in cls._required_keys:
             if key not in values:
-                raise ValueError(f'required key {repr(key)} not in provided file: {file_path}')
+                raise ValueError(
+                    f"required key {repr(key)} not in provided file: {file_path}"
+                )
 
         model = cls(**values)
         return model
@@ -147,11 +151,9 @@ class SubstitutionMatrix(abc.ABC):
         out = self.substitution_matrix[i][j]
         return out
 
-    def add_token(self,
-                  token: str,
-                  values: Union[float, List[float]],
-                  inplace: bool = False
-                  ) -> Union["SubstitutionMatrix", None]:
+    def add_token(
+        self, token: str, values: Union[float, List[float]], inplace: bool = False
+    ) -> Union["SubstitutionMatrix", None]:
         """
         Add a special token to the substitution matrix with a given value or list of values.
 
@@ -184,7 +186,7 @@ class SubstitutionMatrix(abc.ABC):
 
         """
         if token in self.index:
-            raise ValueError('`token` already exists')
+            raise ValueError("`token` already exists")
 
         # generate the full row in case of single value
         if isinstance(values, float):
@@ -192,7 +194,9 @@ class SubstitutionMatrix(abc.ABC):
 
         # check if first dimension fits
         if len(values) - 1 != len(self.substitution_matrix):
-            raise ValueError('`values` and `substitution_matrix` must have same dimension 0')
+            raise ValueError(
+                "`values` and `substitution_matrix` must have same dimension 0"
+            )
 
         # generate deep copies to make inplace operation optional
         substitution_matrix = copy.deepcopy(self.substitution_matrix)
@@ -218,9 +222,9 @@ class SubstitutionMatrix(abc.ABC):
 
 # below we load the matrices which come with the package -- this exposes them to the user
 # they will be used for default settings in a number of metrics
-PKG_NAME = __name__.split('.')[0]
-DATA_DIR = pathlib.Path(pkg.resource_filename(PKG_NAME, 'data/'))
+PKG_NAME = __name__.split(".")[0]
+DATA_DIR = pathlib.Path(pkg.resource_filename(PKG_NAME, "data/"))
 
-BLOSUM45 = SubstitutionMatrix.from_json(DATA_DIR / 'blosum-45.json')
-BLOSUM62 = SubstitutionMatrix.from_json(DATA_DIR / 'blosum-62.json')
-BLOSUM90 = SubstitutionMatrix.from_json(DATA_DIR / 'blosum-90.json')
+BLOSUM45 = SubstitutionMatrix.from_json(DATA_DIR / "blosum-45.json")
+BLOSUM62 = SubstitutionMatrix.from_json(DATA_DIR / "blosum-62.json")
+BLOSUM90 = SubstitutionMatrix.from_json(DATA_DIR / "blosum-90.json")
