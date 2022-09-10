@@ -29,6 +29,11 @@ def test_enforce_list(test_case):
 
     assert isinstance(f(test_case), list)
 
+    with pytest.raises(TypeError):
+        @utils.enforce_list
+        def g(x):
+            return x
+
 
 @pytest.mark.parametrize("test_case", Cases.ENSURE_SEQ_LEN)
 def test_ensure_equal_sequence_length(test_case):
@@ -38,6 +43,13 @@ def test_ensure_equal_sequence_length(test_case):
 
     with pytest.raises(ValueError):
         f(test_case)
+
+    @utils.ensure_equal_sequence_length(argnum=-1)
+    def g(a, b):
+        return [a] + b
+
+    with pytest.raises(ValueError):
+        g("a", test_case)
 
 
 @pytest.mark.parametrize("test_case", Cases.SINGLE_DISPATCH)

@@ -128,6 +128,11 @@ def tcr_dist_custom():
     return _method
 
 
+@pytest.fixture()
+def mock_abc(monkeypatch):
+    monkeypatch.setattr('setriq.modules.distances.Metric.__abstractmethods__', set())
+
+
 # ------ Helper Functions -------------------------------------------------------------------------------------------- #
 def response_to_decimal(response):
     res = [
@@ -150,6 +155,12 @@ def convert_to_tcr_dist_format(tc, rs):
 
 
 # ------ Tests ------------------------------------------------------------------------------------------------------- #
+def test_metric(mock_abc):
+    # test abstract class passes
+    metric = setriq.modules.distances.Metric()
+    metric.forward()
+
+
 @pytest.mark.parametrize(["sequences", "distances"], zip(test_cases, cdr_dist_results))
 def test_cdr_dist(cdr_dist, sequences, distances):
     metric = cdr_dist()

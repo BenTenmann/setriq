@@ -112,6 +112,9 @@ def test_substitution_matrix_add_token_single_value(
     assert len(sm) == (n + 1)
     assert sm(token, token) == value
 
+    with pytest.raises(ValueError):
+        sm.add_token(token, value)
+
 
 @pytest.mark.parametrize(["token", "values"], add_tokens_multiple_values)
 def test_substitution_matrix_add_token_multiple_values(
