@@ -47,6 +47,8 @@ Available distance functions:
 * Hamming
 * Jaro
 * Jaro-Winkler
+* Longest Common Substring
+* Optimal String Alignment
 
 These distance functions are available either through the object-based API (as seen above), which provides the CPU-based
 parallelism, or the functional API in `setriq.single_dispatch`. Unlike the object-based API, the functional API does a
