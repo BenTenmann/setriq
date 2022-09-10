@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/BenTenmann/setriq/compare/deploy-1.5.0...deploy-1.6.0) (2022-09-10)
+
+
+### Features
+
+* **lcs:** add new metrics ([b87f77e](https://github.com/BenTenmann/setriq/commit/b87f77e0429050bbb3bda70834e9874e1715221a))
+
 # [1.5.0](https://github.com/BenTenmann/setriq/compare/deploy-1.4.2...deploy-1.5.0) (2022-06-05)
 
 
