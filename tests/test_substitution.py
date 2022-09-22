@@ -146,9 +146,7 @@ def test_substitution_matrix_add_token_existing(
 
 
 @pytest.mark.parametrize(["token", "values"], add_tokens_multiple_values_wrong_dim)
-def test_substitution_matrix_add_token_existing(
-    substitution_matrix_parts, token, values
-):
+def test_substitution_matrix_add_wrong_dim(substitution_matrix_parts, token, values):
     idx, scoring = substitution_matrix_parts()
 
     sm = setriq.SubstitutionMatrix(index=idx, substitution_matrix=scoring)
