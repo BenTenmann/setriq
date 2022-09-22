@@ -22,14 +22,14 @@ __all__ = [
 class SubstitutionMatrix(abc.ABC):
     r"""
     The SubstitutionMatrix abstract base class. It holds convenience methods for loading and using the classic
-    biological sequence substitution matrices (e.g. `BLOSUM`).
+    biological sequence substitution matrices (e.g. ``BLOSUM``).
 
     Attributes
     ----------
     index : Dict[str, int]
         a mapping of strings (amino acids) to integers (matrix index)
     substitution_matrix : List[List[float]]
-        the substitution scoring ($N \times N$) matrix
+        the substitution scoring (:math:`N \times N`) matrix
 
     Methods
     -------
@@ -38,7 +38,9 @@ class SubstitutionMatrix(abc.ABC):
 
     Examples
     --------
+
     suppose we have a token index `idx` and a substitution matrix `scores`
+
     >>> idx = {'hello': 0, 'world': 1}
     >>> scores = [[1., -1.],
     ...           [-1., 1.]]
@@ -46,9 +48,11 @@ class SubstitutionMatrix(abc.ABC):
 
     here we can see that we can provide any arbitrary substitution matrix, but in general it is advised to use the
     pre-loaded BLOSUM matrices
+
     >>> [BLOSUM45, BLOSUM62, BLOSUM90]  # choose one of the following
 
-    these are just instances of `SubstitutionMatrix`, initialised through `from_json`
+    these are just instances of ``SubstitutionMatrix``, initialised through ``from_json``
+
     """
     _required_keys = (
         "index",
@@ -92,7 +96,7 @@ class SubstitutionMatrix(abc.ABC):
         Returns
         -------
         substitution_matrix : SubstitutionMatrix
-            returns an instance of the SubstitutionMatrix class, holding the values found at `file_path`
+            returns an instance of the SubstitutionMatrix class, holding the values found at ``file_path``
 
         Examples
         --------
@@ -160,12 +164,13 @@ class SubstitutionMatrix(abc.ABC):
         Parameters
         ----------
         token : str
-            a special token to be added
+            a special token to be added.
         values : Union[float, List[float]]
             a value or list of values to which the token will correspond. If a list of floats is provided, the list must
-            have a length of `len(substitution_matrix) + 1`, i.e. there must be number of rows + 1 elements in the list
+            have a length of ``len(substitution_matrix) + 1``, i.e. there must be number of rows + 1 elements in the
+            list.
         inplace : bool
-            boolean whether to add token inplace
+            boolean whether to add token inplace.
 
         Returns
         -------
@@ -175,10 +180,12 @@ class SubstitutionMatrix(abc.ABC):
         Examples
         --------
         Single value example. The value is repeated to fit the required shape
+
         >>> sm = BLOSUM62
         >>> sm.add_token('-', 4.)
 
         List of floats example
+
         >>> sm = BLOSUM62
         >>> len(sm)
         ... 24

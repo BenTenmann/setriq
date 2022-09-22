@@ -108,7 +108,7 @@ def enforce_list(argnum: int = 0, convert_iterable: bool = True):
         The positional (integer) index of the argument to be forced into list format. Works like regular positional
         indexing. (default=0)
     convert_iterable: bool
-        Boolean defining whether to force convert any iterable (except `str`) into a list.
+        Boolean defining whether to force convert any iterable (except ``str``) into a list.
 
     Returns
     -------
@@ -117,7 +117,9 @@ def enforce_list(argnum: int = 0, convert_iterable: bool = True):
 
     Examples
     --------
+
     A basic example:
+
     >>> @enforce_list()
     ... def f(x):
     ...     return x * 3
@@ -126,16 +128,19 @@ def enforce_list(argnum: int = 0, convert_iterable: bool = True):
     ... [3, 3, 3]
     >>> f(3)
     ... [3, 3, 3]
-    Notice, that we ommit the `argnum` parameter here. This is because `argnum` is 0 by default, i.e. it looks at the
-    first argument passed to `f`. Note, that `enforce_list` needs to be called before decorating a function.
+
+    Notice, that we ommit the ``argnum`` parameter here. This is because ``argnum`` is 0 by default, i.e. it looks at
+    the first argument passed to ``f``. Note, that ``enforce_list`` needs to be called before decorating a function.
 
     Enforce list can also be composed arbitrarily, to enforce multiple arguments to be lists:
+
     >>> @enforce_list(argnum=0)
     ... @enforce_list(argnum=1)
     ... def f(x, y):
     ...     return x + y
 
-    Finally, `enforce_list` can also force convert other iterables (excluding str) into lists:
+    Finally, ``enforce_list`` can also force convert other iterables (excluding str) into lists:
+
     >>> @enforce_list(argnum=0, convert_iterable=True)
     ... def f(x):
     ...     return x * 3
@@ -182,7 +187,7 @@ def ensure_equal_sequence_length(argnum: int):
     ----------
     argnum: int
         The positional (integer) index of the argument to be forced into list format. Works like regular positional
-        indexing. (default=0)
+        indexing. (``default=0``)
 
     Returns
     -------
@@ -200,6 +205,7 @@ def ensure_equal_sequence_length(argnum: int):
     >>>
     >>> f(a)  # no error
     >>> f(b)  # error!
+
     """
     import pandas as pd
 

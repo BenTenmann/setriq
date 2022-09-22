@@ -42,8 +42,8 @@ class Metric(abc.ABC):
     Methods
     -------
     forward(self, *args, **kwargs):
-        an abstract method which needs to be implemented in every subclass. It is accessed via the `__call__` method of
-        the base class
+        an abstract method which needs to be implemented in every subclass. It is accessed via the ``__call__`` method
+        of the base class.
 
     """
 
@@ -60,7 +60,7 @@ class Metric(abc.ABC):
 
 class CdrDist(Metric):
     """
-    The CdrDist class. Inherits from Metric.
+    The CdrDist [1]_ class. Inherits from Metric.
 
     Examples
     --------
@@ -71,8 +71,9 @@ class CdrDist(Metric):
 
     References
     ----------
-    [1] Thakkar, N. and Bailey-Kellogg, C., 2019. Balancing sensitivity and specificity in distinguishing TCR groups by
-        CDR sequence similarity. BMC bioinformatics, 20(1), pp.1-14. (https://doi.org/10.1186/s12859-019-2864-8)
+    .. [1] Thakkar, N. and Bailey-Kellogg, C., 2019. Balancing sensitivity and specificity in distinguishing TCR groups by
+       CDR sequence similarity. BMC bioinformatics, 20(1), pp.1-14. (https://doi.org/10.1186/s12859-019-2864-8)
+
     """
 
     def __init__(
@@ -96,8 +97,8 @@ class CdrDist(Metric):
 
 class Levenshtein(Metric):
     """
-    The Levenshtein class. Inherits from Metric. It uses a refactor of the `python-Levenshtein` implementation in the
-    backend.
+    The Levenshtein [1]_ class. Inherits from Metric. It uses a refactor of the ``python-Levenshtein`` [2]_
+    implementation in the backend.
 
     Examples
     --------
@@ -108,9 +109,10 @@ class Levenshtein(Metric):
 
     References
     ----------
-    [1] Levenshtein, V.I., 1966, February. Binary codes capable of correcting deletions, insertions, and reversals. In
-        Soviet physics doklady (Vol. 10, No. 8, pp. 707-710).
-    [2] python-Levenshtein (https://github.com/ztane/python-Levenshtein)
+    .. [1] Levenshtein, V.I., 1966, February. Binary codes capable of correcting deletions, insertions, and reversals. In
+       Soviet physics doklady (Vol. 10, No. 8, pp. 707-710).
+    .. [2] python-Levenshtein (https://github.com/ztane/python-Levenshtein)
+
     """
 
     def __init__(self, extra_cost: float = 0.0):
@@ -133,6 +135,7 @@ class TcrDistComponent(Metric):
     >>>
     >>> metric = TcrDistComponent(substitution_matrix=BLOSUM62, gap_penalty=4., gap_symbol='-', weight=1.)
     >>> distances = metric(sequences)
+
     """
 
     def __init__(
@@ -155,6 +158,7 @@ class TcrDistComponent(Metric):
             the gap symbol (default = '-')
         weight : float
             the weighting of the component weight
+
         """
         self.call_args = {
             **substitution_matrix,
@@ -173,8 +177,8 @@ class TcrDistComponent(Metric):
 
 class TcrDist(Metric):
     """
-    TcrDist class. Inherits from Metric. It is a container class for individual TcrDistComponent instances. Components
-    are executed sequentially and their results aggregated at the end (summation).
+    TcrDist [1]_ class. Inherits from Metric. It is a container class for individual TcrDistComponent instances.
+    Components are executed sequentially and their results aggregated at the end (summation).
 
     Attributes
     ----------
@@ -193,9 +197,10 @@ class TcrDist(Metric):
 
     References
     ----------
-    [1] Dash, P., Fiore-Gartland, A.J., Hertz, T., Wang, G.C., Sharma, S., Souquette, A., Crawford, J.C., Clemens, E.B.,
-        Nguyen, T.H., Kedzierska, K. and La Gruta, N.L., 2017. Quantifiable predictive features define
-        epitope-specific T cell receptor repertoires. Nature, 547(7661), pp.89-93. (https://doi.org/10.1038/nature22383)
+    .. [1] Dash, P., Fiore-Gartland, A.J., Hertz, T., Wang, G.C., Sharma, S., Souquette, A., Crawford, J.C., Clemens,
+       E.B., Nguyen, T.H., Kedzierska, K. and La Gruta, N.L., 2017. Quantifiable predictive features define
+       epitope-specific T cell receptor repertoires. Nature, 547(7661), pp.89-93. (https://doi.org/10.1038/nature22383)
+
     """
 
     _default = TCR_DIST_DEFAULT
@@ -221,10 +226,13 @@ class TcrDist(Metric):
 
         Examples
         --------
+
         Initialize with default parameters
+
         >>> metric = TcrDist()  # will produce a warning
 
         Initialize with custom components
+
         >>> component_1 = TcrDistComponent(substitution_matrix=BLOSUM45, gap_penalty=3, weight=1)
         >>> component_2 = TcrDistComponent(substitution_matrix=BLOSUM45, gap_penalty=5, weight=10)
         >>>
@@ -232,9 +240,11 @@ class TcrDist(Metric):
 
         Keep in mind that the keys will be used to assiociate the components to the relevant input fields, i.e. in this
         case the input should take the shape of:
+
         >>> [{'cmp_1': '...', 'cmp_2': '...'}, ...]
 
         additional keys will have no effect.
+
         """
         parts = []
 
@@ -326,7 +336,7 @@ class Hamming(Metric):
 
     References
     ----------
-    [1] ...
+    .. [1] https://en.wikipedia.org/wiki/Hamming_distance
     """
 
     # TODO: add reference
@@ -379,8 +389,8 @@ class JaroWinkler(Jaro):
 
     References
     ----------
-    [1] Winkler, W.E., 1990. String comparator metrics and enhanced decision rules in the Fellegi-Sunter model of record
-        linkage.
+    .. [1] Winkler, W.E., 1990. String comparator metrics and enhanced decision rules in the Fellegi-Sunter model of
+       record linkage.
 
     """
 
@@ -404,7 +414,7 @@ class LongestCommonSubstring(Metric):
 
     References
     ----------
-    [1] https://en.wikipedia.org/wiki/Longest_common_substring_problem
+    .. [1] https://en.wikipedia.org/wiki/Longest_common_substring_problem
 
     """
 
@@ -428,7 +438,7 @@ class OptimalStringAlignment(Metric):
 
     References
     ----------
-    [1] https://en.wikipedia.org/wiki/Damerau%E2%80%93Levenshtein_distance
+    .. [1] https://en.wikipedia.org/wiki/Damerau%E2%80%93Levenshtein_distance
 
     """
 
