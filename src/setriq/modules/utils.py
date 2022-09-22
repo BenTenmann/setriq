@@ -254,9 +254,9 @@ def single_dispatch(fn: Callable) -> Callable:
 
     empty_doc = f"""
     Compute the `{fn.__name__}` metric between two sequences.
-    
+
     {{params}}
-    
+
     {{returns}}
     """
 

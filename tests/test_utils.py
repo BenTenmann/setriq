@@ -1,6 +1,5 @@
-import pytest
-
 import numpy as np
+import pytest
 
 from setriq.modules import utils
 
@@ -30,6 +29,7 @@ def test_enforce_list(test_case):
     assert isinstance(f(test_case), list)
 
     with pytest.raises(TypeError):
+
         @utils.enforce_list
         def g(x):
             return x

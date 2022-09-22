@@ -130,7 +130,7 @@ def tcr_dist_custom():
 
 @pytest.fixture()
 def mock_abc(monkeypatch):
-    monkeypatch.setattr('setriq.modules.distances.Metric.__abstractmethods__', set())
+    monkeypatch.setattr("setriq.modules.distances.Metric.__abstractmethods__", set())
 
 
 # ------ Helper Functions -------------------------------------------------------------------------------------------- #

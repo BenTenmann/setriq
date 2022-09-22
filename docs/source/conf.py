@@ -76,11 +76,11 @@ extensions.append("autoapi.extension")
 autoapi_dirs = [(SETRIQ_HOME / "src").as_posix()]
 
 autoapi_options = [
-    'members',
-    'undoc-members',
-    'show-inheritance',
-    'show-module-summary',
-    'imported-members',
+    "members",
+    "undoc-members",
+    "show-inheritance",
+    "show-module-summary",
+    "imported-members",
 ]
 
 
@@ -91,7 +91,7 @@ extensions.append("myst_parser")
 # -- External links -----------------------------------------------------------
 extensions.append("sphinx.ext.extlinks")
 extlinks = {
-    'doi': ('https://dx.doi.org/%s', 'doi:'),
+    "doi": ("https://dx.doi.org/%s", "doi:"),
 }
 
 html_theme_options = {
