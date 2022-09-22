@@ -13,7 +13,7 @@ from glom import glom
 
 import setriq._C as C
 
-from .substitution import BLOSUM45, BLOSUM62, SubstitutionMatrix
+from .substitution import BLOSUM45, SubstitutionMatrix
 from .utils import (
     TCR_DIST_DEFAULT,
     check_jaro_weights,
@@ -72,8 +72,8 @@ class CdrDist(Metric):
 
     References
     ----------
-    .. [1] Thakkar, N. and Bailey-Kellogg, C., 2019. Balancing sensitivity and specificity in distinguishing TCR groups by
-       CDR sequence similarity. BMC bioinformatics, 20(1), pp.1-14. (https://doi.org/10.1186/s12859-019-2864-8)
+    .. [1] Thakkar, N. and Bailey-Kellogg, C., 2019. Balancing sensitivity and specificity in distinguishing TCR groups
+       by CDR sequence similarity. BMC bioinformatics, 20(1), pp.1-14. (https://doi.org/10.1186/s12859-019-2864-8)
 
     """
 
@@ -110,8 +110,8 @@ class Levenshtein(Metric):
 
     References
     ----------
-    .. [1] Levenshtein, V.I., 1966, February. Binary codes capable of correcting deletions, insertions, and reversals. In
-       Soviet physics doklady (Vol. 10, No. 8, pp. 707-710).
+    .. [1] Levenshtein, V.I., 1966, February. Binary codes capable of correcting deletions, insertions, and reversals.
+       In Soviet physics doklady (Vol. 10, No. 8, pp. 707-710).
     .. [2] python-Levenshtein (https://github.com/ztane/python-Levenshtein)
 
     """
@@ -132,6 +132,7 @@ class TcrDistComponent(Metric):
 
     Examples
     --------
+    >>> from setriq import BLOSUM62
     >>> sequences = ['CASSLKPNTE', 'CASS-HIANY', 'CASRGAT--Q']
     >>>
     >>> metric = TcrDistComponent(substitution_matrix=BLOSUM62, gap_penalty=4., gap_symbol='-', weight=1.)

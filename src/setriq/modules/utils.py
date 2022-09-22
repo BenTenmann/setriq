@@ -278,7 +278,7 @@ def single_dispatch(fn: Callable) -> Callable:
     @wraps(fn, assigned=WRAPPER_ASSIGNMENTS)
     def _fn(a, b, *args, **kwargs):
         if any(not isinstance(sequence, str) for sequence in (a, b)):
-            raise TypeError(f"`a` and `b` must be of type str")
+            raise TypeError("`a` and `b` must be of type str")
         out = fn(a, b, *args, **kwargs)
         return out
 
@@ -318,7 +318,7 @@ def tcr_dist_sd_component_check(fn):
                 component_def = dict(TCR_DIST_DEFAULT)
             if set(component_def).difference(set(a).union(b)):
                 raise ValueError(
-                    f"key mismatch between payloads (`a` and `b`) and defined components."
+                    "key mismatch between payloads (`a` and `b`) and defined components."
                 )
         out = fn(a, b, **component_def)
         return out

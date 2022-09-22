@@ -55,3 +55,19 @@ from .modules import (
     TcrDist,
     single_dispatch,
 )
+
+__all__ = [
+    "BLOSUM45",
+    "BLOSUM62",
+    "BLOSUM90",
+    "CdrDist",
+    "Hamming",
+    "Jaro",
+    "JaroWinkler",
+    "Levenshtein",
+    "LongestCommonSubstring",
+    "OptimalStringAlignment",
+    "SubstitutionMatrix",
+    "TcrDist",
+    "single_dispatch",
+]
