@@ -12,13 +12,14 @@ import pandas as pd
 from glom import glom
 
 import setriq._C as C
+
 from .substitution import BLOSUM45, BLOSUM62, SubstitutionMatrix
 from .utils import (
-    enforce_list,
-    ensure_equal_sequence_length,
+    TCR_DIST_DEFAULT,
     check_jaro_weights,
     check_jaro_winkler_params,
-    TCR_DIST_DEFAULT,
+    enforce_list,
+    ensure_equal_sequence_length,
 )
 
 __all__ = [

@@ -46,13 +46,14 @@ An example for computing the pairwise sequence distances using PySpark and setri
 from typing import List
 
 import setriq._C as C
-from .substitution import SubstitutionMatrix, BLOSUM45
+
+from .substitution import BLOSUM45, SubstitutionMatrix
 from .utils import (
+    check_jaro_weights,
+    check_jaro_winkler_params,
     ensure_equal_sequence_length_sd,
     single_dispatch,
     tcr_dist_sd_component_check,
-    check_jaro_weights,
-    check_jaro_winkler_params,
 )
 
 __all__ = [

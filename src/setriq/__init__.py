@@ -41,17 +41,17 @@ References
 """
 
 from .modules import (
-    CdrDist,
-    Levenshtein,
-    TcrDist,
-    Hamming,
-    Jaro,
-    JaroWinkler,
-    LongestCommonSubstring,
-    OptimalStringAlignment,
-    SubstitutionMatrix,
     BLOSUM45,
     BLOSUM62,
     BLOSUM90,
+    CdrDist,
+    Hamming,
+    Jaro,
+    JaroWinkler,
+    Levenshtein,
+    LongestCommonSubstring,
+    OptimalStringAlignment,
+    SubstitutionMatrix,
+    TcrDist,
     single_dispatch,
 )

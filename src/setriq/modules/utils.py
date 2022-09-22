@@ -4,10 +4,10 @@ Package utilities. Not meant for outside use.
 
 import enum
 import inspect
-from functools import wraps, WRAPPER_ASSIGNMENTS
+from functools import WRAPPER_ASSIGNMENTS, wraps
 from typing import Callable, Iterable
 
-from .substitution import SubstitutionMatrix, BLOSUM62
+from .substitution import BLOSUM62, SubstitutionMatrix
 
 __all__ = [
     "enforce_list",

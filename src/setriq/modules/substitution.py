@@ -6,9 +6,9 @@ Substitution matrix convenience interface.
 import abc
 import copy
 import pathlib
-import pkg_resources as pkg
 from typing import Dict, List, Union
 
+import pkg_resources as pkg
 import srsly
 
 __all__ = [
