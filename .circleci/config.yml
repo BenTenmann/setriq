@@ -39,7 +39,6 @@ jobs:
             echo "setting up OpenMP"
             sudo apt install libomp-dev && sudo apt show libomp-dev
 
-            export OMP_NUM_THREADS="2"
             python -m pip install . --user
       - save_cache:
           paths:
