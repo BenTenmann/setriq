@@ -52,6 +52,46 @@ jobs:
       - codecov/upload:
           file: coverage.xml
 
+  docs-build:
+    executor: python-3-7
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - python-cache-{{ checksum "requirements.txt" }}
+      - run:
+          name: install dependencies
+          command: |
+            python -m pip install -r requirements.txt --user
+            python -m pip install -r docs/requirements.txt --user
+
+            sudo apt install libomp-dev
+            python -m pip install . --user
+      - run:
+          name: build documentation
+          command: |
+            sphinx-build -b html docs/source public
+      - persist_to_workspace:
+          root: public
+          paths:
+            - .
+
+  docs-deploy:
+    executor: node-docker
+    steps:
+      - checkout
+      - attach_workspace:
+          at: public
+      - run:
+          name: Install and configure dependencies
+          command: |
+            npm install -g --silent gh-pages@4.0.0
+            git config user.email "${GITHUB_EMAIL}"
+            git config user.name "${GITHUB_USERNAME}"
+      - run:
+          name: Deploy docs to gh-pages branch
+          command: gh-pages --dist public
+
   release:
     executor: python-3-7
     steps:
@@ -96,6 +136,14 @@ workflows:
               only: /.*/
             branches:
               ignore: "main"
+      - docs-build
+      - docs-deploy:
+          requires:
+            - build-and-test
+            - docs-build
+          filters:
+            branches:
+              only: main
       - release:
           requires:
             - build-and-test
