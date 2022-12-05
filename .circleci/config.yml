@@ -193,13 +193,13 @@ workflows:
       - test-tox
       - linux-wheels:
           requires:
-            - test-hox
+            - test-tox
       - linux-aarch64-wheels:
           requires:
-            - test-hox
+            - test-tox
       - osx-wheels:
           requires:
-            - test-hox
+            - test-tox
       - docs-build
       - docs-deploy:
           requires:
