@@ -103,8 +103,8 @@ jobs:
       - image: themattrix/tox
     steps:
       - checkout
-      - run: pip install tox
-      - run: tox -r
+      - run: pip install 'tox>=4.0.0a2'
+      - run: tox
 
   docs-build:
     executor: python-3-7

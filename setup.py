@@ -1,4 +1,4 @@
-from __future__ import print_function
+from __future__ import annotations, print_function
 
 import sys
 
@@ -19,6 +19,7 @@ import shutil
 import subprocess
 import traceback
 from glob import glob
+from typing import List
 
 from pybind11.setup_helpers import ParallelCompile, Pybind11Extension
 from setuptools import find_packages, setup
@@ -81,7 +82,7 @@ class BuildFlags:
             self.__setattr__(key, val)
 
     @staticmethod
-    def _libomp_check(tool, formula):
+    def _libomp_check(tool, formula) -> None:
         if shutil.which(tool) is None:
             return tool
 
@@ -90,6 +91,12 @@ class BuildFlags:
             return formula
 
         return None
+
+
+def get_requirements() -> List[str]:
+    return (
+        (pathlib.Path(".") / "requirements.txt").read_text().splitlines(keepends=False)
+    )
 
 
 def main():
@@ -139,14 +146,7 @@ def main():
         ext_modules=extensions,
         license="MIT",
         python_requires=">=3.7,<3.10",
-        install_requires=[
-            "glom>=20.0.0,<21.0.0",
-            "numpy>=1.0.0,<2.0.0",
-            "pandas>=1.0.0,<2.0.0",
-            "scipy>=1.0.0,<2.0.0",
-            "scikit-learn>=1.0.0,<2.0.0",
-            "srsly>=2.0.0,<3.0.0",
-        ],
+        install_requires=get_requirements(),
         package_dir={f"{PROJECT_NAME}": f"{SOURCE_DIR}/{PROJECT_NAME}"},
         packages=find_packages(where=f"{SOURCE_DIR}", exclude=["tests", "scripts"]),
         package_data={f"{PROJECT_NAME}": ["data/*.json"]},
