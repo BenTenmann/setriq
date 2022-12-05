@@ -1,7 +1,10 @@
 import decimal as dc
+import itertools
 import warnings
 
+import numpy as np
 import pytest
+from sklearn import preprocessing
 
 import setriq
 
@@ -158,7 +161,7 @@ def convert_to_tcr_dist_format(tc, rs):
 def test_metric(mock_abc):
     # test abstract class passes
     metric = setriq.modules.distances.Metric()
-    metric.forward()
+    metric.forward([])
 
 
 @pytest.mark.parametrize(["sequences", "distances"], zip(test_cases, cdr_dist_results))
@@ -315,3 +318,27 @@ def test_optimal_string_alignment(sequences, distances):
 
     res = response_to_decimal(response)
     assert all(r == tgt for r, tgt in zip(res, distances))
+
+
+@pytest.mark.parametrize(
+    ["metric", "case"],
+    itertools.product(
+        [mt(return_squareform=True) for mt in (setriq.CdrDist,)], test_cases
+    ),
+)
+def test_squareform(metric, case):
+    res = metric(case)
+    assert isinstance(res, np.ndarray)
+    assert np.allclose(res, res.T)
+    assert np.all(res >= 0.0)
+    assert np.all(np.diag(res) == 0.0)
+
+
+@pytest.mark.parametrize(
+    ["metric", "case"],
+    itertools.product([mt() for mt in (setriq.CdrDist,)], test_cases),
+)
+def test_to_sklearn(metric, case):
+    estimator = metric.to_sklearn()
+    assert isinstance(estimator, preprocessing.FunctionTransformer)
+    assert isinstance(estimator.transform(case), np.ndarray)

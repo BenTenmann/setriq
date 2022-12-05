@@ -6,7 +6,7 @@ Substitution matrix convenience interface.
 import abc
 import copy
 import pathlib
-from typing import Dict, List, Union
+from typing import Any, Dict, List, Tuple, Union
 
 import pkg_resources as pkg
 import srsly
@@ -54,7 +54,7 @@ class SubstitutionMatrix(abc.ABC):
     these are just instances of ``SubstitutionMatrix``, initialised through ``from_json``
 
     """
-    _required_keys = (
+    _required_keys: Tuple[str, str] = (
         "index",
         "substitution_matrix",
     )
@@ -106,7 +106,7 @@ class SubstitutionMatrix(abc.ABC):
         if isinstance(file_path, str):
             file_path = pathlib.Path(file_path)
 
-        values = srsly.read_json(file_path)
+        values: Dict[str, Any] = srsly.read_json(file_path)
         for key in cls._required_keys:
             if key not in values:
                 raise ValueError(
@@ -116,14 +116,13 @@ class SubstitutionMatrix(abc.ABC):
         model = cls(**values)
         return model
 
-    def __len__(self):
+    def __len__(self) -> int:
         return len(self.substitution_matrix)
 
-    def __getitem__(self, key: str):
-        out = self.__getattribute__(key)
-        return out
+    def __getitem__(self, key: str) -> Any:
+        return getattr(self, key)
 
-    def keys(self):
+    def keys(self) -> Tuple[str, str]:
         return self._required_keys
 
     def __call__(self, a: str, b: str) -> float:

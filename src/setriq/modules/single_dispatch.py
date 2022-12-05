@@ -43,7 +43,7 @@ An example for computing the pairwise sequence distances using PySpark and setri
 
 """
 
-from typing import List
+from typing import List, Optional
 
 import setriq._C as C
 
@@ -106,7 +106,7 @@ def cdr_dist(
     distance = C.cdr_dist_sd(
         a,
         b,
-        **substitution_matrix,
+        **substitution_matrix,  # type: ignore[arg-type]
         gap_opening_penalty=gap_opening_penalty,
         gap_extension_penalty=gap_extension_penalty
     )
@@ -152,7 +152,7 @@ def tcr_dist_component(
     distance = C.tcr_dist_component_sd(
         a,
         b,
-        **substitution_matrix,
+        **substitution_matrix,  # type: ignore[arg-type]
         gap_penalty=gap_penalty,
         gap_symbol=gap_symbol,
         weight=weight
@@ -217,8 +217,7 @@ def hamming(a: str, b: str, mismatch_score: float = 1.0) -> float:
 
 
 @single_dispatch
-@check_jaro_weights
-def jaro(a: str, b: str, jaro_weights: List[float] = None) -> float:
+def jaro(a: str, b: str, jaro_weights: Optional[List[float]] = None) -> float:
     """
     Compute the Jaro [1] distance between two sequences. Adapted from [2].
 
@@ -238,15 +237,15 @@ def jaro(a: str, b: str, jaro_weights: List[float] = None) -> float:
     .. [2] Van der Loo, M.P., 2014. The stringdist package for approximate string matching. R J., 6(1), p.111.
 
     """
+    jaro_weights = check_jaro_weights(jaro_weights)
     distance = C.jaro_sd(a, b, jaro_weights=jaro_weights)
     return distance
 
 
 @single_dispatch
-@check_jaro_weights
 @check_jaro_winkler_params
 def jaro_winkler(
-    a: str, b: str, p: float, max_l: int = 4, jaro_weights: List[float] = None
+    a: str, b: str, p: float, max_l: int = 4, jaro_weights: Optional[List[float]] = None
 ) -> float:
     """
     Compute the Jaro-Winkler [1]_ distance between two sequences.
@@ -271,6 +270,7 @@ def jaro_winkler(
        record linkage.
 
     """
+    jaro_weights = check_jaro_weights(jaro_weights)
     distance = C.jaro_winkler_sd(a, b, p=p, max_l=max_l, jaro_weights=jaro_weights)
     return distance
 

@@ -143,6 +143,8 @@ def main():
             "glom>=20.0.0,<21.0.0",
             "numpy>=1.0.0,<2.0.0",
             "pandas>=1.0.0,<2.0.0",
+            "scipy>=1.0.0,<2.0.0",
+            "scikit-learn>=1.0.0,<2.0.0",
             "srsly>=2.0.0,<3.0.0",
         ],
         package_dir={f"{PROJECT_NAME}": f"{SOURCE_DIR}/{PROJECT_NAME}"},

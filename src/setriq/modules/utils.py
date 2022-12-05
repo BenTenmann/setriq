@@ -5,7 +5,7 @@ Package utilities. Not meant for outside use.
 import enum
 import inspect
 from functools import WRAPPER_ASSIGNMENTS, wraps
-from typing import Callable, Iterable
+from typing import Callable, Dict, Iterable, List, Optional, Tuple, Union
 
 from .substitution import BLOSUM62, SubstitutionMatrix
 
@@ -18,10 +18,15 @@ __all__ = [
     "check_jaro_weights",
     "check_jaro_winkler_params",
     "TCR_DIST_DEFAULT",
+    "TcrDistDef",
 ]
 
-WRAPPER_ASSIGNMENTS = (*WRAPPER_ASSIGNMENTS, "__signature__")
-TCR_DIST_DEFAULT = [
+TcrDistComponentDef = Dict[str, Union[float, SubstitutionMatrix]]
+NamedTCRDD = Tuple[str, TcrDistComponentDef]
+TcrDistDef = List[NamedTCRDD]
+
+WRAPPER_ASSIGNMENTS = (*WRAPPER_ASSIGNMENTS, "__signature__")  # type: ignore[assignment]
+TCR_DIST_DEFAULT: TcrDistDef = [
     ("cdr_1", {"substitution_matrix": BLOSUM62, "gap_penalty": 4.0, "weight": 1.0}),
     ("cdr_2", {"substitution_matrix": BLOSUM62, "gap_penalty": 4.0, "weight": 1.0}),
     ("cdr_2_5", {"substitution_matrix": BLOSUM62, "gap_penalty": 4.0, "weight": 1.0}),
@@ -92,9 +97,7 @@ def _get_func_argument_info_from_name(fn: Callable, argname: str):
 
 
 def _add_func_signature(fn: Callable, signature: inspect.Signature) -> Callable:
-    if not hasattr(fn, "__signature__"):
-        fn.__signature__ = None
-    fn.__signature__ = fn.__signature__ or signature
+    setattr(fn, "__signature__", getattr(fn, "__signature__", None) or signature)
     return fn
 
 
@@ -300,7 +303,12 @@ def tcr_dist_sd_component_check(fn):
             msg = ", ".join(map(repr, missing_keys))
             raise ValueError(f"missing keys in component def {repr(name)}: {msg}")
 
-        init_types = [SubstitutionMatrix, (float, int), str, (float, int)]
+        init_types: List[Union[type, Tuple[type, ...]]] = [
+            SubstitutionMatrix,
+            (float, int),
+            str,
+            (float, int),
+        ]
         for key, _type in zip(essential_keys + optional_keys, init_types):
             elem = component.get(key)
             if elem is not None and not isinstance(elem, _type):
@@ -326,29 +334,14 @@ def tcr_dist_sd_component_check(fn):
     return _fn
 
 
-def check_jaro_weights(fn: Callable):
-    # checks that jaro weights are sensibly defined
-    argname = "jaro_weights"
-    signature, params, argnum = _get_func_argument_info_from_name(fn, argname)
-    fn = _add_func_signature(fn, signature)
-
-    @wraps(fn, assigned=WRAPPER_ASSIGNMENTS)
-    def _fn(*args, **kwargs):
-        jaro_weights, arg_type = _get_argument(params, argname, argnum, args, kwargs)
-        if jaro_weights is None:
-            jaro_weights = [1 / 3] * 3
-        if len(jaro_weights) != 3:
-            raise ValueError("`jaro_weights` has to be of length 3")
-        if sum(jaro_weights) != 1.0:
-            raise ValueError("`jaro_weights` has to sum to 1.0")
-
-        args, kwargs = _put_argument(
-            params, argname, argnum, arg_type, jaro_weights, args, kwargs
-        )
-        out = fn(*args, **kwargs)
-        return out
-
-    return _fn
+def check_jaro_weights(weights: Optional[List[float]]) -> List[float]:
+    if weights is None:
+        weights = [1 / 3] * 3
+    if len(weights) != 3:
+        raise ValueError("`jaro_weights` has to be of length 3")
+    if sum(weights) != 1.0:
+        raise ValueError("`jaro_weights` has to sum to 1.0")
+    return weights
 
 
 def check_jaro_winkler_params(fn: Callable):

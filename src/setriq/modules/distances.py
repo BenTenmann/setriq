@@ -5,17 +5,31 @@ Python API for sequence distance functions.
 
 import abc
 import warnings
-from typing import Dict, List
+from typing import (
+    Any,
+    Dict,
+    Generic,
+    List,
+    Optional,
+    Sequence,
+    Set,
+    TypeVar,
+    Union,
+)
 
 import numpy as np
+import numpy.typing as npt
 import pandas as pd
 from glom import glom
+from scipy import spatial
+from sklearn import preprocessing
 
 import setriq._C as C
 
 from .substitution import BLOSUM45, SubstitutionMatrix
 from .utils import (
     TCR_DIST_DEFAULT,
+    TcrDistDef,
     check_jaro_weights,
     check_jaro_winkler_params,
     enforce_list,
@@ -34,8 +48,11 @@ __all__ = [
     "OptimalStringAlignment",
 ]
 
+FloatArray = npt.NDArray[np.float64]
+SeqRecord = TypeVar("SeqRecord", bound=Union[str, Dict[str, str]])
 
-class Metric(abc.ABC):
+
+class Metric(abc.ABC, Generic[SeqRecord]):
     """
     The Metric abstract base class. Users familiar with the torch paradigm will recognize the overall structure of
     the metric subclasses.
@@ -48,18 +65,40 @@ class Metric(abc.ABC):
 
     """
 
+    call_args: Dict[str, Any]
+
+    def __init__(self, return_squareform: bool = False):
+        self.return_squareform = return_squareform
+
     @abc.abstractmethod
-    def forward(self, *args, **kwargs):
+    def forward(self, sequences: Sequence[SeqRecord]) -> List[float]:
         pass
 
     @enforce_list(argnum=1, convert_iterable=True)
-    def __call__(self, *args, **kwargs):
-        out = self.forward(*args, **kwargs)
+    def __call__(self, sequences: Sequence[SeqRecord]) -> FloatArray:
+        out = np.array(self.forward(sequences))
+        if self.return_squareform:
+            out = spatial.distance.squareform(out)
 
         return out
 
+    def to_sklearn(self) -> preprocessing.FunctionTransformer:
+        """Creates a FunctionTransformer from a given Metric instance.
 
-class CdrDist(Metric):
+        This is useful for integrating the distance functions into scikit-learn pipelines.
+
+        Returns
+        -------
+        The FunctionTransformer which can be used with other scikit-learn tooling.
+
+        """
+        return preprocessing.FunctionTransformer(
+            func=self,
+            check_inverse=False,
+        )
+
+
+class CdrDist(Metric[str]):
     """
     The CdrDist [1]_ class. Inherits from Metric.
 
@@ -82,7 +121,9 @@ class CdrDist(Metric):
         substitution_matrix: SubstitutionMatrix = BLOSUM45,
         gap_opening_penalty: float = 10.0,
         gap_extension_penalty: float = 1.0,
+        return_squareform: bool = False,
     ):
+        super(CdrDist, self).__init__(return_squareform)
         self.call_args = {
             **substitution_matrix,
             "gap_opening_penalty": gap_opening_penalty,
@@ -90,13 +131,13 @@ class CdrDist(Metric):
         }
         self.fn = C.cdr_dist
 
-    def forward(self, sequences: List[str]) -> List[float]:
+    def forward(self, sequences: Sequence[str]) -> List[float]:
         out = self.fn(sequences, **self.call_args)
 
         return out
 
 
-class Levenshtein(Metric):
+class Levenshtein(Metric[str]):
     """
     The Levenshtein [1]_ class. Inherits from Metric. It uses a refactor of the ``python-Levenshtein`` [2]_
     implementation in the backend.
@@ -116,17 +157,18 @@ class Levenshtein(Metric):
 
     """
 
-    def __init__(self, extra_cost: float = 0.0):
+    def __init__(self, extra_cost: float = 0.0, return_squareform: bool = False):
+        super(Levenshtein, self).__init__(return_squareform)
         self.call_args = {"extra_cost": extra_cost}
         self.fn = C.levenshtein
 
-    def forward(self, sequences: List[str]):
+    def forward(self, sequences: Sequence[str]) -> List[float]:
         out = self.fn(sequences, **self.call_args)
 
         return out
 
 
-class TcrDistComponent(Metric):
+class TcrDistComponent(Metric[str]):
     """
     The TcrDistComponent class. Inherits from Metric.
 
@@ -146,6 +188,7 @@ class TcrDistComponent(Metric):
         gap_penalty: float,
         gap_symbol: str = "-",
         weight: float = 1.0,
+        return_squareform: bool = False,
     ):
         """
         Initialize a TcrDistComponent object.
@@ -162,6 +205,7 @@ class TcrDistComponent(Metric):
             the weighting of the component weight
 
         """
+        super(TcrDistComponent, self).__init__(return_squareform)
         self.call_args = {
             **substitution_matrix,
             "gap_penalty": gap_penalty,
@@ -171,13 +215,13 @@ class TcrDistComponent(Metric):
         self.fn = C.tcr_dist_component
 
     @ensure_equal_sequence_length(argnum=1)
-    def forward(self, sequences: List[str]) -> List[float]:
+    def forward(self, sequences: Sequence[str]) -> List[float]:
         out = self.fn(sequences, **self.call_args)
 
         return out
 
 
-class TcrDist(Metric):
+class TcrDist(Metric[Dict[str, str]]):
     """
     TcrDist [1]_ class. Inherits from Metric. It is a container class for individual TcrDistComponent instances.
     Components are executed sequentially and their results aggregated at the end (summation).
@@ -205,13 +249,13 @@ class TcrDist(Metric):
 
     """
 
-    _default = TCR_DIST_DEFAULT
-    _default_msg = (
+    _default: TcrDistDef = TCR_DIST_DEFAULT
+    _default_msg: str = (
         "TcrDist has been initialized using the default configuration. "
         "Please ensure that the input is a list of dictionaries, each with keys: {}"
     ).format(", ".join(repr(key) for key, _ in _default))
 
-    def __init__(self, **components):
+    def __init__(self, return_squareform: bool = False, **components: TcrDistComponent):
         """
         Initialize a TcrDist object. Initialization can happen in two ways:
             1. no arguments are passed, instantiating the default configuration of TcrDist -- i.e. the configuration
@@ -248,7 +292,8 @@ class TcrDist(Metric):
         additional keys will have no effect.
 
         """
-        parts = []
+        super(TcrDist, self).__init__(return_squareform)
+        parts: List[str] = []
 
         # user-defined configuration
         if components:
@@ -256,16 +301,16 @@ class TcrDist(Metric):
                 # some type checking
                 if not isinstance(component, TcrDistComponent):
                     raise TypeError(
-                        f"{repr(name)} is not of type {TcrDistComponent.__class__.__name__}"
+                        f"{name!r} is not of type {TcrDistComponent.__class__.__name__}"
                     )
 
-                self.__setattr__(name, component)
+                setattr(self, name, component)
                 parts.append(name)
 
         # default configuration
         else:
             for name, definition in self._default:
-                self.__setattr__(name, TcrDistComponent(**definition))
+                setattr(self, name, TcrDistComponent(**definition))  # type: ignore[arg-type]
                 parts.append(name)
 
             # warn user that default has been initialised and inform required input format
@@ -273,10 +318,10 @@ class TcrDist(Metric):
 
         self.components = parts
 
-    def _check_input_format(self, ipt):
-        pts = set(self.components)
+    def _check_input_format(self, ipt: pd.Index) -> None:
+        pts: Set[str] = set(self.components)
 
-        diff = pts.difference(ipt)
+        diff: Set[str] = pts.difference(ipt)
         if diff:
             raise ValueError("Missing key(s): {}".format(", ".join(map(repr, diff))))
 
@@ -294,7 +339,7 @@ class TcrDist(Metric):
         return self.components
 
     @property
-    def default_definition(self) -> List[tuple]:
+    def default_definition(self) -> TcrDistDef:
         """
         Get the default TcrDistComponent schema as defined by Dash et al.
 
@@ -306,27 +351,27 @@ class TcrDist(Metric):
         """
         return self._default
 
-    def forward(self, sequences: List[Dict[str, str]]) -> List[float]:
+    def forward(self, sequences: Sequence[Dict[str, str]]) -> List[float]:
         # check the input keys provided -- assumes consistency
         self._check_input_format(pd.DataFrame(sequences).columns)
 
         # iterate through components and collect component output
-        out = []
+        out: List[FloatArray] = []
         for part in self.components:
             # gather sequences of the associated field into a list
-            sqs = glom(sequences, [part])
-            component = self.__getattribute__(part)
+            sqs: List[str] = glom(sequences, [part])
+            component: TcrDistComponent = getattr(self, part)
 
             # execute component on list of associated sequences
-            result = component(sqs)
+            result: FloatArray = component(sqs)
             out.append(result)
 
         # aggregate the component outputs
-        out = np.array(out).sum(axis=0)
-        return out.tolist()
+        res: FloatArray = np.stack(out).sum(axis=0)
+        return res.tolist()
 
 
-class Hamming(Metric):
+class Hamming(Metric[str]):
     """
     Hamming distance class. Inherits from Metric. Sequences must be of equal length.
 
@@ -341,18 +386,18 @@ class Hamming(Metric):
     .. [1] https://en.wikipedia.org/wiki/Hamming_distance
     """
 
-    # TODO: add reference
-    def __init__(self, mismatch_score: float = 1.0):
+    def __init__(self, mismatch_score: float = 1.0, return_squareform: bool = False):
+        super(Hamming, self).__init__(return_squareform)
         self.call_args = {"mismatch_score": mismatch_score}
         self.fn = C.hamming
 
     @ensure_equal_sequence_length(argnum=1)
-    def forward(self, sequences: List[str]) -> List[float]:
+    def forward(self, sequences: Sequence[str]) -> List[float]:
         out = self.fn(sequences, **self.call_args)
         return out
 
 
-class Jaro(Metric):
+class Jaro(Metric[str]):
     """
     Jaro distance class. Inherits from Metric. Adapted from [2].
 
@@ -369,12 +414,17 @@ class Jaro(Metric):
     [2] Van der Loo, M.P., 2014. The stringdist package for approximate string matching. R J., 6(1), p.111.
     """
 
-    @check_jaro_weights
-    def __init__(self, jaro_weights: List[float] = None):
+    def __init__(
+        self,
+        jaro_weights: Optional[List[float]] = None,
+        return_squareform: bool = False,
+    ):
+        super(Jaro, self).__init__(return_squareform)
+        jaro_weights = check_jaro_weights(jaro_weights)
         self.call_args = {"jaro_weights": jaro_weights}
         self.fn = C.jaro
 
-    def forward(self, sequences: List[str]) -> List[float]:
+    def forward(self, sequences: Sequence[str]) -> List[float]:
         out = self.fn(sequences, **self.call_args)
         return out
 
@@ -397,14 +447,22 @@ class JaroWinkler(Jaro):
     """
 
     @check_jaro_winkler_params
-    def __init__(self, p: float, max_l: int = 4, jaro_weights: List[float] = None):
-        super(JaroWinkler, self).__init__(jaro_weights)
+    def __init__(
+        self,
+        p: float,
+        max_l: int = 4,
+        jaro_weights: Optional[List[float]] = None,
+        return_squareform: bool = False,
+    ):
+        super(JaroWinkler, self).__init__(
+            jaro_weights=jaro_weights, return_squareform=return_squareform
+        )
         self.call_args["p"] = p
         self.call_args["max_l"] = max_l
-        self.fn = C.jaro_winkler
+        self.fn = C.jaro_winkler  # type: ignore[assignment]
 
 
-class LongestCommonSubstring(Metric):
+class LongestCommonSubstring(Metric[str]):
     """
     Longest common substring distance class. Inherits from Metric.
 
@@ -420,16 +478,17 @@ class LongestCommonSubstring(Metric):
 
     """
 
-    def __init__(self):
+    def __init__(self, return_squareform: bool = False):
+        super(LongestCommonSubstring, self).__init__(return_squareform)
         self.fn = C.longest_common_substring
 
-    def forward(self, sequences: List[str]) -> List[float]:
+    def forward(self, sequences: Sequence[str]) -> List[float]:
         out = self.fn(sequences)
         return out
 
 
-class OptimalStringAlignment(Metric):
-    """ "
+class OptimalStringAlignment(Metric[str]):
+    """
     Optimal string alignment distance class. Inherits from Metric.
 
     Examples
@@ -444,9 +503,10 @@ class OptimalStringAlignment(Metric):
 
     """
 
-    def __init__(self):
+    def __init__(self, return_squareform: bool = False):
+        super(OptimalStringAlignment, self).__init__(return_squareform)
         self.fn = C.optimal_string_alignment
 
-    def forward(self, sequences: List[str]) -> List[float]:
+    def forward(self, sequences: Sequence[str]) -> List[float]:
         out = self.fn(sequences)
         return out

@@ -13,8 +13,8 @@ Welcome to setriq's documentation!
 
 Introduction
 ============
-.. include:: myst_include.md
-   :parser: myst_parser.sphinx_
+.. toctree::
+   myst_include.md
 
 
 Indices and tables
