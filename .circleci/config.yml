@@ -184,7 +184,7 @@ workflows:
           filters:
             branches:
               only: "main"
-      - build-and-test:
+      - test-coverage:
           filters:
             tags:
               only: /.*/
@@ -197,14 +197,14 @@ workflows:
       - docs-build
       - docs-deploy:
           requires:
-            - build-and-test
+            - test-coverage
             - docs-build
           filters:
             branches:
               only: main
       - release:
           requires:
-            - build-and-test
+            - test-coverage
           filters:
             branches:
               ignore: /.*/
