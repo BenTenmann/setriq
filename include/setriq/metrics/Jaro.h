@@ -13,7 +13,7 @@ typedef std::array<double, 3> jaro_weighting_t;
 namespace metric {
     class Jaro {
     private:
-        jaro_weighting_t weights_ = {1. / 3, 1. / 3, 1. / 3};
+        jaro_weighting_t weights_ = jaro_weighting_t {1. / 3, 1. / 3, 1. / 3};
 
     public:
         Jaro() = default;

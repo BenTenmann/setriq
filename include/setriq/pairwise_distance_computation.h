@@ -12,7 +12,7 @@ double_vector_t pairwise_distance_computation(T metric, const string_vector_t& i
     const auto& n = input_strings.size();
     auto&& distance_matrix = double_vector_t (n * (n - 1) / 2);
 
-#pragma omp parallel for default(none) firstprivate(n, metric) shared(input_strings, distance_matrix)
+#pragma omp parallel for default(none) shared(n, metric, input_strings, distance_matrix)
     for (size_t i = 0; i < (n - 1); i++) {
         for (size_t j = (i + 1); j < n; j++) {
             const auto& idx = (n * (n - 1)) / 2 - (n - i) * ((n - i) - 1) / 2 + j - i - 1;
