@@ -101,7 +101,7 @@ jobs:
 
   test-tox:
     docker:
-      - image: themattrix/tox
+      - image: btenmann/docker-tox:1.0.1
     steps:
       - checkout
       - run: pip install 'tox>=4.0.0a2'
