@@ -1,3 +1,12 @@
+## [1.6.1](https://github.com/BenTenmann/setriq/compare/deploy-1.6.0...deploy-1.6.1) (2022-12-18)
+
+
+### Bug Fixes
+
+* **ci:** bump semrel package versions ([dc076ec](https://github.com/BenTenmann/setriq/commit/dc076eca0638c7679aa573e1f0e7cf449869392e))
+* **ci:** trigger CI ([#21](https://github.com/BenTenmann/setriq/issues/21)) ([0830f4a](https://github.com/BenTenmann/setriq/commit/0830f4af538a3502fc104a4a38eb80c6aeb4dc47))
+* **ci:** update docker image to correct tag ([f02bac8](https://github.com/BenTenmann/setriq/commit/f02bac80306e6dca86a776f46b5b4cb7fc36bb08))
+
 # [1.6.0](https://github.com/BenTenmann/setriq/compare/deploy-1.5.0...deploy-1.6.0) (2022-09-10)
 
 
