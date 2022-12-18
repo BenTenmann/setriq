@@ -23,7 +23,106 @@ jobs:
           name: run semantic release
           command: npx semantic-release
 
-  build-and-test:
+  linux-wheels:
+    working_directory: ~/linux-wheels
+    docker:
+      - image: circleci/python:3.9
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Build the Linux wheels.
+          command: |
+            pip3 install --user cibuildwheel==2.11.2
+            cibuildwheel --output-dir wheelhouse
+      - run:
+          name: Upload
+          command: |
+            pip3 install --user twine
+            twine upload -u ${PYPI_USERNAME} -p ${PYPI_PASSWORD} wheelhouse/*
+      - store_artifacts:
+          path: wheelhouse/
+
+  linux-aarch64-wheels:
+    working_directory: ~/linux-aarch64-wheels
+    machine:
+      image: ubuntu-2004:2022.04.1
+    # resource_class is what tells CircleCI to use an ARM worker for native arm builds
+    # https://circleci.com/product/features/resource-classes/
+    resource_class: arm.medium
+    steps:
+      - checkout
+      - run:
+          name: Build the Linux aarch64 wheels.
+          command: |
+            python3 -m pip install --user cibuildwheel==2.11.2
+            python3 -m cibuildwheel --output-dir wheelhouse
+      - run:
+          name: Upload
+          command: |
+            python3 -m pip install --user twine
+            twine upload -u ${PYPI_USERNAME} -p ${PYPI_PASSWORD} wheelhouse/*
+      - store_artifacts:
+          path: wheelhouse/
+
+  osx-wheels:
+    working_directory: ~/osx-wheels
+    macos:
+      xcode: 12.5.1
+    steps:
+      - checkout
+      - run:
+          name: Build the OS X wheels.
+          command: |
+            pip3 install cibuildwheel==2.11.2
+            cibuildwheel --output-dir wheelhouse
+      - run:
+          name: Upload
+          command: |
+            pip3 install twine
+            twine upload -u ${PYPI_USERNAME} -p ${PYPI_PASSWORD} wheelhouse/*
+      - store_artifacts:
+          path: wheelhouse/
+
+  test-coverage:
+    executor: python-3-7
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - python-cache-{{ checksum "requirements.txt" }}
+      - run:
+          name: install dependencies
+          command: |
+            python -m pip install pytest pytest-cov
+            python -m pip install -r requirements.txt --user
+
+            # OpenMP setup
+            echo "setting up OpenMP"
+            sudo apt install libomp-dev && sudo apt show libomp-dev
+
+            python -m pip install . --user
+      - save_cache:
+          paths:
+            - ~/.cache/pip
+          key: python-cache-{{ checksum "requirements.txt" }}
+          when: always
+      - run:
+          name: run unit tests
+          command: |
+            python -m pytest -v tests --cov=${CIRCLE_PROJECT_REPONAME//-/_} --cov-report xml
+      - codecov/upload:
+          file: coverage.xml
+
+  test-tox:
+    docker:
+      - image: btenmann/docker-tox:1.0.2
+    steps:
+      - checkout
+      - run: pip install 'tox>=4.0.0a2'
+      - run: tox
+
+  docs-build:
     executor: python-3-7
     steps:
       - checkout
@@ -34,24 +133,34 @@ jobs:
           name: install dependencies
           command: |
             python -m pip install -r requirements.txt --user
+            python -m pip install -r docs/requirements.txt --user
 
-            # OpenMP setup
-            echo "setting up OpenMP"
-            sudo apt install libomp-dev && sudo apt show libomp-dev
-
-            export OMP_NUM_THREADS="2"
+            sudo apt install libomp-dev
             python -m pip install . --user
-      - save_cache:
-          paths:
-            - ~/.cache/pip
-          key: python-cache-{{ checksum "requirements.txt" }}
-          when: always
       - run:
-          name: run unit tests
+          name: build documentation
           command: |
-            python -m pytest -v tests --cov=${CIRCLE_PROJECT_REPONAME/-/_} --cov-report xml
-      - codecov/upload:
-          file: coverage.xml
+            sphinx-build -b html docs/source public
+      - persist_to_workspace:
+          root: public
+          paths:
+            - .
+
+  docs-deploy:
+    executor: node-docker
+    steps:
+      - checkout
+      - attach_workspace:
+          at: public
+      - run:
+          name: Install and configure dependencies
+          command: |
+            npm install -g --silent gh-pages@4.0.0
+            git config user.email "${GITHUB_EMAIL}"
+            git config user.name "${GITHUB_USERNAME}"
+      - run:
+          name: Deploy docs to gh-pages branch
+          command: gh-pages --dist public
 
   release:
     executor: python-3-7
@@ -91,15 +200,50 @@ workflows:
           filters:
             branches:
               only: "main"
-      - build-and-test:
+      - test-coverage:
           filters:
             tags:
               only: /.*/
             branches:
               ignore: "main"
+      - test-tox:
+          requires:
+            - test-coverage
+      - linux-wheels:
+          requires:
+            - test-tox
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^deploy-.*/
+      - linux-aarch64-wheels:
+          requires:
+            - test-tox
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^deploy-.*/
+      - osx-wheels:
+          requires:
+            - test-tox
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^deploy-.*/
+      - docs-build
+      - docs-deploy:
+          requires:
+            - test-coverage
+            - docs-build
+          filters:
+            branches:
+              only: main
       - release:
           requires:
-            - build-and-test
+            - test-tox
           filters:
             branches:
               ignore: /.*/

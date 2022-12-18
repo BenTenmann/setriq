@@ -1,7 +1,6 @@
 import pytest
 
-from setriq import BLOSUM62
-from setriq import single_dispatch
+from setriq import BLOSUM62, single_dispatch
 
 
 class Cases:

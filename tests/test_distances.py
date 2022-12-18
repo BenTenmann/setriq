@@ -1,49 +1,58 @@
 import decimal as dc
+import itertools
 import warnings
 
+import numpy as np
 import pytest
+from sklearn import preprocessing
 
 import setriq
 
 ROUNDING = dc.Decimal("0.0001")
 
 # ------ Test Examples ----------------------------------------------------------------------------------------------- #
-test_cases = [["AASQ", "PASQ"], ["GTA", "HLA", "KKR"], ["SEQVENCES", "SEQVENCES"]]
+test_cases = [["AASQ", "PASQ"], ["GTA", "HLA", "KKR"], ["SEQVENCES", "SEQVENCES"], []]
 
 cdr_dist_results = [
     [dc.Decimal("0.3153")],
     [dc.Decimal("0.7288"), dc.Decimal("1.0"), dc.Decimal("1.0")],
     [dc.Decimal("0.0")],
+    [],
 ]
 
 levensthein_test_results = [
     [dc.Decimal("1.0")],
     [dc.Decimal("2.0"), dc.Decimal("3.0"), dc.Decimal("3.0")],
     [dc.Decimal("0.0")],
+    [],
 ]
 
 tcr_dist_component_results = [
     [dc.Decimal("4.0")],
     [dc.Decimal("8.0"), dc.Decimal("12.0"), dc.Decimal("12.0")],
     [dc.Decimal("0.0")],
+    [],
 ]
 
 tcr_dist_results = [
     [dc.Decimal("24.0")],
     [dc.Decimal("48.0"), dc.Decimal("72.0"), dc.Decimal("72.0")],
     [dc.Decimal("0.0")],
+    [],
 ]
 
 hamming_results = [
     [dc.Decimal("1.0")],
     [dc.Decimal("2.0"), dc.Decimal("3.0"), dc.Decimal("3.0")],
     [dc.Decimal("0.0")],
+    [],
 ]
 
 jaro_results = [
     [dc.Decimal("0.1667")],
     [dc.Decimal("0.4444"), dc.Decimal("1.0"), dc.Decimal("1.0")],
     [dc.Decimal("0.0")],
+    [],
 ]
 
 jaro_winkler_results = jaro_results  # change this in the future
@@ -52,12 +61,14 @@ longest_common_substring_results = [
     [dc.Decimal("2.0")],
     [dc.Decimal("4.0"), dc.Decimal("6.0"), dc.Decimal("6.0")],
     [dc.Decimal("0.0")],
+    [],
 ]
 
 optimal_string_alignment_results = [
     [dc.Decimal("1.0")],
     [dc.Decimal("2.0"), dc.Decimal("3.0"), dc.Decimal("3.0")],
     [dc.Decimal("0.0")],
+    [],
 ]
 
 
@@ -130,7 +141,7 @@ def tcr_dist_custom():
 
 @pytest.fixture()
 def mock_abc(monkeypatch):
-    monkeypatch.setattr('setriq.modules.distances.Metric.__abstractmethods__', set())
+    monkeypatch.setattr("setriq.modules.distances.Metric.__abstractmethods__", set())
 
 
 # ------ Helper Functions -------------------------------------------------------------------------------------------- #
@@ -158,7 +169,7 @@ def convert_to_tcr_dist_format(tc, rs):
 def test_metric(mock_abc):
     # test abstract class passes
     metric = setriq.modules.distances.Metric()
-    metric.forward()
+    metric.forward([])
 
 
 @pytest.mark.parametrize(["sequences", "distances"], zip(test_cases, cdr_dist_results))
@@ -223,6 +234,8 @@ def test_tcr_dist(tcr_dist_base, tcr_dist_keys, sequences, distances):
 @pytest.mark.parametrize(["sequences", "distances"], zip(test_cases, tcr_dist_results))
 def test_tcr_dist_error(tcr_dist_base, sequences, distances):
     metric = tcr_dist_base()
+    if not sequences:
+        return
 
     with pytest.raises(ValueError):
         metric(sequences)
@@ -315,3 +328,27 @@ def test_optimal_string_alignment(sequences, distances):
 
     res = response_to_decimal(response)
     assert all(r == tgt for r, tgt in zip(res, distances))
+
+
+@pytest.mark.parametrize(
+    ["metric", "case"],
+    itertools.product(
+        [mt(return_squareform=True) for mt in (setriq.CdrDist,)], test_cases
+    ),
+)
+def test_squareform(metric, case):
+    res = metric(case)
+    assert isinstance(res, np.ndarray)
+    assert np.allclose(res, res.T)
+    assert np.all(res >= 0.0)
+    assert np.all(np.diag(res) == 0.0)
+
+
+@pytest.mark.parametrize(
+    ["metric", "case"],
+    itertools.product([mt() for mt in (setriq.CdrDist,)], test_cases),
+)
+def test_to_sklearn(metric, case):
+    estimator = metric.to_sklearn()
+    assert isinstance(estimator, preprocessing.FunctionTransformer)
+    assert isinstance(estimator.transform(case), np.ndarray)

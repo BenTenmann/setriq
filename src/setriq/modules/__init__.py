@@ -13,19 +13,18 @@ Examples
 
 """
 
-from .substitution import SubstitutionMatrix, BLOSUM45, BLOSUM62, BLOSUM90
+from . import single_dispatch
 from .distances import (
     CdrDist,
-    Levenshtein,
-    TcrDist,
     Hamming,
     Jaro,
     JaroWinkler,
+    Levenshtein,
     LongestCommonSubstring,
     OptimalStringAlignment,
+    TcrDist,
 )
-
-from . import single_dispatch
+from .substitution import BLOSUM45, BLOSUM62, BLOSUM90, SubstitutionMatrix
 
 __all__ = [
     "SubstitutionMatrix",

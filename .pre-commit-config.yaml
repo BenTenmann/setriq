@@ -1,0 +1,31 @@
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+repos:
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v3.2.0
+    hooks:
+    -   id: trailing-whitespace
+    -   id: end-of-file-fixer
+    -   id: check-yaml
+    -   id: check-added-large-files
+# TODO: add https://gitlab.com/daverona/pre-commit/cpp
+# TODO: add https://github.com/PyCQA/pylint
+# sort imports
+-   repo: https://github.com/PyCQA/isort
+    rev: 5.10.1
+    hooks:
+    -   id: isort
+        # these parameters make sure that the multi-line imports match the black style
+        args: ["-m=3", "--trailing-comma"]
+# format code using black
+-   repo: https://github.com/psf/black
+    rev: 22.8.0
+    hooks:
+    -   id: black
+# check code formatting with flake8
+-   repo: https://github.com/PyCQA/flake8
+    rev: 4.0.1
+    hooks:
+    -   id: flake8
+        # these parameters allow us to have a max line length of 120 chars
+        args: ["--max-line-length=120"]

@@ -6,7 +6,7 @@
 
 ![logo](fig/logo.png)
 
-A `Python` package written in `C++` for computing pairwise distances between (immunoglobulin) sequences. 
+A `Python` package written in `C++` for computing pairwise distances between (immunoglobulin) sequences.
 
 ## Install
 This package is available on PyPI
@@ -16,7 +16,7 @@ pip install setriq
 
 ## Quickstart
 
-`setriq` inherits from the `torch` philosophy of callable objects. Each `Metric` subclass is a callable upon 
+`setriq` inherits from the `torch` philosophy of callable objects. Each `Metric` subclass is a callable upon
 initialisation, taking a list of objects (usually `str`) and returning a list of `float` values.
 
 ```python
@@ -31,13 +31,13 @@ sequences = [
 distances = metric(sequences)
 ```
 
-The returned list is flat and contains `N * (N - 1) / 2` elements, i.e. the lower (or upper) triangle of the distance 
+The returned list is flat and contains `N * (N - 1) / 2` elements, i.e. the lower (or upper) triangle of the distance
 matrix. To get the square form of the matrix, use `scipy.spatial.distance.squareform` on the returned distances.
 
 ## About
 
 As the header suggests, `setriq` is a no-frills Python package for fast computation of pairwise sequence distances, with
-a focus on immunoglobulins. It is a declarative framework and borrows many concepts from the popular `torch` library. It 
+a focus on immunoglobulins. It is a declarative framework and borrows many concepts from the popular `torch` library. It
 has been optimized for parallel compute on CPU architectures.
 
 Available distance functions:
@@ -78,7 +78,7 @@ df.show()
 It is important to note, that for `setriq.single_dispatch` the returned value is always a single float value.
 
 ## Requirements
-A `Python` version of 3.7 or above is required, as well as a `C++` compiler equipped with OpenMP. The package has been 
+A `Python` version of 3.7 or above is required, as well as a `C++` compiler equipped with OpenMP. The package has been
 tested on Linux and macOS. To get the required OpenMP resources, run:
 
 On Linux:
@@ -94,7 +94,7 @@ brew install libomp llvm
 
 ## References
    1. Dash, P., Fiore-Gartland, A.J., Hertz, T., Wang, G.C., Sharma, S., Souquette, A., Crawford, J.C., Clemens, E.B.,
-      Nguyen, T.H., Kedzierska, K. and La Gruta, N.L., 2017. Quantifiable predictive features define epitope-specific T cell 
+      Nguyen, T.H., Kedzierska, K. and La Gruta, N.L., 2017. Quantifiable predictive features define epitope-specific T cell
       receptor repertoires. Nature, 547(7661), pp.89-93. (https://doi.org/10.1038/nature22383)
    2. Jaro, M.A., 1989. Advances in record-linkage methodology as applied to matching the 1985 census of Tampa,
       Florida. Journal of the American Statistical Association, 84(406), pp.414-420.

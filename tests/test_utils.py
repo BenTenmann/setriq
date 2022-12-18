@@ -1,6 +1,5 @@
-import pytest
-
 import numpy as np
+import pytest
 
 from setriq.modules import utils
 
@@ -30,6 +29,7 @@ def test_enforce_list(test_case):
     assert isinstance(f(test_case), list)
 
     with pytest.raises(TypeError):
+
         @utils.enforce_list
         def g(x):
             return x
@@ -84,19 +84,14 @@ def test_ensure_equal_sequence_length_sd(test_case):
 
 @pytest.mark.parametrize("test_case", Cases.JARO_WEIGHTS)
 def test_check_jaro_weights(test_case):
-    @utils.check_jaro_weights
-    def f(a, b, jaro_weights=None):
-        return jaro_weights
-
     (arg,) = test_case
-    assert f("", "", *test_case) == (arg or [1 / 3] * 3)
-    assert f("", "", jaro_weights=arg) == (arg or [1 / 3] * 3)
+    assert utils.check_jaro_weights(*test_case) == (arg or [1 / 3] * 3)
 
     with pytest.raises(ValueError, match="`jaro_weights` has to be of length 3"):
-        f("", "", (arg or [1 / 3] * 3)[:2])
+        utils.check_jaro_weights((arg or [1 / 3] * 3)[:2])
 
     with pytest.raises(ValueError, match="`jaro_weights` has to sum to 1.0"):
-        f("", "", [1] * 3 if not arg else [elem + 1 for elem in arg])
+        utils.check_jaro_weights([1] * 3 if not arg else [elem + 1 for elem in arg])
 
 
 @pytest.mark.parametrize(["arguments", "exception_message"], Cases.JARO_WINKLER_PARAMS)

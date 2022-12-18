@@ -4,10 +4,10 @@ Package utilities. Not meant for outside use.
 
 import enum
 import inspect
-from functools import wraps, WRAPPER_ASSIGNMENTS
-from typing import Callable, Iterable
+from functools import WRAPPER_ASSIGNMENTS, wraps
+from typing import Callable, Dict, Iterable, List, Optional, Tuple, Union
 
-from .substitution import SubstitutionMatrix, BLOSUM62
+from .substitution import BLOSUM62, SubstitutionMatrix
 
 __all__ = [
     "enforce_list",
@@ -18,10 +18,15 @@ __all__ = [
     "check_jaro_weights",
     "check_jaro_winkler_params",
     "TCR_DIST_DEFAULT",
+    "TcrDistDef",
 ]
 
-WRAPPER_ASSIGNMENTS = (*WRAPPER_ASSIGNMENTS, "__signature__")
-TCR_DIST_DEFAULT = [
+TcrDistComponentDef = Dict[str, Union[float, SubstitutionMatrix]]
+NamedTCRDD = Tuple[str, TcrDistComponentDef]
+TcrDistDef = List[NamedTCRDD]
+
+WRAPPER_ASSIGNMENTS = (*WRAPPER_ASSIGNMENTS, "__signature__")  # type: ignore[assignment]
+TCR_DIST_DEFAULT: TcrDistDef = [
     ("cdr_1", {"substitution_matrix": BLOSUM62, "gap_penalty": 4.0, "weight": 1.0}),
     ("cdr_2", {"substitution_matrix": BLOSUM62, "gap_penalty": 4.0, "weight": 1.0}),
     ("cdr_2_5", {"substitution_matrix": BLOSUM62, "gap_penalty": 4.0, "weight": 1.0}),
@@ -92,9 +97,7 @@ def _get_func_argument_info_from_name(fn: Callable, argname: str):
 
 
 def _add_func_signature(fn: Callable, signature: inspect.Signature) -> Callable:
-    if not hasattr(fn, "__signature__"):
-        fn.__signature__ = None
-    fn.__signature__ = fn.__signature__ or signature
+    setattr(fn, "__signature__", getattr(fn, "__signature__", None) or signature)
     return fn
 
 
@@ -108,7 +111,7 @@ def enforce_list(argnum: int = 0, convert_iterable: bool = True):
         The positional (integer) index of the argument to be forced into list format. Works like regular positional
         indexing. (default=0)
     convert_iterable: bool
-        Boolean defining whether to force convert any iterable (except `str`) into a list.
+        Boolean defining whether to force convert any iterable (except ``str``) into a list.
 
     Returns
     -------
@@ -117,7 +120,9 @@ def enforce_list(argnum: int = 0, convert_iterable: bool = True):
 
     Examples
     --------
+
     A basic example:
+
     >>> @enforce_list()
     ... def f(x):
     ...     return x * 3
@@ -126,16 +131,19 @@ def enforce_list(argnum: int = 0, convert_iterable: bool = True):
     ... [3, 3, 3]
     >>> f(3)
     ... [3, 3, 3]
-    Notice, that we ommit the `argnum` parameter here. This is because `argnum` is 0 by default, i.e. it looks at the
-    first argument passed to `f`. Note, that `enforce_list` needs to be called before decorating a function.
+
+    Notice, that we ommit the ``argnum`` parameter here. This is because ``argnum`` is 0 by default, i.e. it looks at
+    the first argument passed to ``f``. Note, that ``enforce_list`` needs to be called before decorating a function.
 
     Enforce list can also be composed arbitrarily, to enforce multiple arguments to be lists:
+
     >>> @enforce_list(argnum=0)
     ... @enforce_list(argnum=1)
     ... def f(x, y):
     ...     return x + y
 
-    Finally, `enforce_list` can also force convert other iterables (excluding str) into lists:
+    Finally, ``enforce_list`` can also force convert other iterables (excluding str) into lists:
+
     >>> @enforce_list(argnum=0, convert_iterable=True)
     ... def f(x):
     ...     return x * 3
@@ -182,7 +190,7 @@ def ensure_equal_sequence_length(argnum: int):
     ----------
     argnum: int
         The positional (integer) index of the argument to be forced into list format. Works like regular positional
-        indexing. (default=0)
+        indexing. (``default=0``)
 
     Returns
     -------
@@ -200,6 +208,7 @@ def ensure_equal_sequence_length(argnum: int):
     >>>
     >>> f(a)  # no error
     >>> f(b)  # error!
+
     """
     import pandas as pd
 
@@ -211,7 +220,10 @@ def ensure_equal_sequence_length(argnum: int):
         @wraps(fn, assigned=WRAPPER_ASSIGNMENTS)
         def _fn(*args, **kwargs):
             argument, _ = _get_argument(params, argname, argidx, args, kwargs)
-            if not (len(argument[0]) == pd.Series(argument).str.len()).all():
+            if (
+                argument
+                and not (len(argument[0]) == pd.Series(argument).str.len()).all()
+            ):
                 raise ValueError("Sequences must be of equal length")
             out = fn(*args, **kwargs)
             return out
@@ -248,9 +260,9 @@ def single_dispatch(fn: Callable) -> Callable:
 
     empty_doc = f"""
     Compute the `{fn.__name__}` metric between two sequences.
-    
+
     {{params}}
-    
+
     {{returns}}
     """
 
@@ -272,7 +284,7 @@ def single_dispatch(fn: Callable) -> Callable:
     @wraps(fn, assigned=WRAPPER_ASSIGNMENTS)
     def _fn(a, b, *args, **kwargs):
         if any(not isinstance(sequence, str) for sequence in (a, b)):
-            raise TypeError(f"`a` and `b` must be of type str")
+            raise TypeError("`a` and `b` must be of type str")
         out = fn(a, b, *args, **kwargs)
         return out
 
@@ -294,7 +306,12 @@ def tcr_dist_sd_component_check(fn):
             msg = ", ".join(map(repr, missing_keys))
             raise ValueError(f"missing keys in component def {repr(name)}: {msg}")
 
-        init_types = [SubstitutionMatrix, (float, int), str, (float, int)]
+        init_types: List[Union[type, Tuple[type, ...]]] = [
+            SubstitutionMatrix,
+            (float, int),
+            str,
+            (float, int),
+        ]
         for key, _type in zip(essential_keys + optional_keys, init_types):
             elem = component.get(key)
             if elem is not None and not isinstance(elem, _type):
@@ -312,7 +329,7 @@ def tcr_dist_sd_component_check(fn):
                 component_def = dict(TCR_DIST_DEFAULT)
             if set(component_def).difference(set(a).union(b)):
                 raise ValueError(
-                    f"key mismatch between payloads (`a` and `b`) and defined components."
+                    "key mismatch between payloads (`a` and `b`) and defined components."
                 )
         out = fn(a, b, **component_def)
         return out
@@ -320,29 +337,14 @@ def tcr_dist_sd_component_check(fn):
     return _fn
 
 
-def check_jaro_weights(fn: Callable):
-    # checks that jaro weights are sensibly defined
-    argname = "jaro_weights"
-    signature, params, argnum = _get_func_argument_info_from_name(fn, argname)
-    fn = _add_func_signature(fn, signature)
-
-    @wraps(fn, assigned=WRAPPER_ASSIGNMENTS)
-    def _fn(*args, **kwargs):
-        jaro_weights, arg_type = _get_argument(params, argname, argnum, args, kwargs)
-        if jaro_weights is None:
-            jaro_weights = [1 / 3] * 3
-        if len(jaro_weights) != 3:
-            raise ValueError("`jaro_weights` has to be of length 3")
-        if sum(jaro_weights) != 1.0:
-            raise ValueError("`jaro_weights` has to sum to 1.0")
-
-        args, kwargs = _put_argument(
-            params, argname, argnum, arg_type, jaro_weights, args, kwargs
-        )
-        out = fn(*args, **kwargs)
-        return out
-
-    return _fn
+def check_jaro_weights(weights: Optional[List[float]]) -> List[float]:
+    if weights is None:
+        weights = [1 / 3] * 3
+    if len(weights) != 3:
+        raise ValueError("`jaro_weights` has to be of length 3")
+    if sum(weights) != 1.0:
+        raise ValueError("`jaro_weights` has to sum to 1.0")
+    return weights
 
 
 def check_jaro_winkler_params(fn: Callable):
