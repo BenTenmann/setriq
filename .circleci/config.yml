@@ -8,7 +8,7 @@ executors:
       - image: circleci/python:3.7
   node-docker:
     docker:
-      - image: circleci/node:14.18
+      - image: circleci/node:16.14
 
 jobs:
   generate-version:
@@ -61,7 +61,7 @@ jobs:
           name: Upload
           command: |
             python3 -m pip install --user twine
-            twine upload -u ${PYPI_USERNAME} -p ${PYPI_PASSWORD} wheelhouse/*
+            python3 -m twine upload -u ${PYPI_USERNAME} -p ${PYPI_PASSWORD} wheelhouse/*
       - store_artifacts:
           path: wheelhouse/
 
@@ -80,7 +80,7 @@ jobs:
           name: Upload
           command: |
             pip3 install twine
-            twine upload -u ${PYPI_USERNAME} -p ${PYPI_PASSWORD} wheelhouse/*
+            python3 -m twine upload -u ${PYPI_USERNAME} -p ${PYPI_PASSWORD} wheelhouse/*
       - store_artifacts:
           path: wheelhouse/
 
@@ -208,14 +208,23 @@ workflows:
           requires:
             - test-tox
             - generate-version
+          filters:
+            branches:
+              only: "main"
       - linux-aarch64-wheels:
           requires:
             - test-tox
             - generate-version
+          filters:
+            branches:
+              only: "main"
       - osx-wheels:
           requires:
             - test-tox
             - generate-version
+          filters:
+            branches:
+              only: "main"
       - docs-build
       - docs-deploy:
           requires:
