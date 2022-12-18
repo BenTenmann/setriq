@@ -352,6 +352,9 @@ class TcrDist(Metric[Dict[str, str]]):
         return self._default
 
     def forward(self, sequences: Sequence[Dict[str, str]]) -> List[float]:
+        if not sequences:
+            return []
+
         # check the input keys provided -- assumes consistency
         self._check_input_format(pd.DataFrame(sequences).columns)
 
@@ -449,7 +452,7 @@ class JaroWinkler(Jaro):
     @check_jaro_winkler_params
     def __init__(
         self,
-        p: float,
+        p: float = 0.10,
         max_l: int = 4,
         jaro_weights: Optional[List[float]] = None,
         return_squareform: bool = False,

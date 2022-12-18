@@ -220,7 +220,10 @@ def ensure_equal_sequence_length(argnum: int):
         @wraps(fn, assigned=WRAPPER_ASSIGNMENTS)
         def _fn(*args, **kwargs):
             argument, _ = _get_argument(params, argname, argidx, args, kwargs)
-            if not (len(argument[0]) == pd.Series(argument).str.len()).all():
+            if (
+                argument
+                and not (len(argument[0]) == pd.Series(argument).str.len()).all()
+            ):
                 raise ValueError("Sequences must be of equal length")
             out = fn(*args, **kwargs)
             return out

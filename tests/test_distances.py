@@ -11,42 +11,48 @@ import setriq
 ROUNDING = dc.Decimal("0.0001")
 
 # ------ Test Examples ----------------------------------------------------------------------------------------------- #
-test_cases = [["AASQ", "PASQ"], ["GTA", "HLA", "KKR"], ["SEQVENCES", "SEQVENCES"]]
+test_cases = [["AASQ", "PASQ"], ["GTA", "HLA", "KKR"], ["SEQVENCES", "SEQVENCES"], []]
 
 cdr_dist_results = [
     [dc.Decimal("0.3153")],
     [dc.Decimal("0.7288"), dc.Decimal("1.0"), dc.Decimal("1.0")],
     [dc.Decimal("0.0")],
+    [],
 ]
 
 levensthein_test_results = [
     [dc.Decimal("1.0")],
     [dc.Decimal("2.0"), dc.Decimal("3.0"), dc.Decimal("3.0")],
     [dc.Decimal("0.0")],
+    [],
 ]
 
 tcr_dist_component_results = [
     [dc.Decimal("4.0")],
     [dc.Decimal("8.0"), dc.Decimal("12.0"), dc.Decimal("12.0")],
     [dc.Decimal("0.0")],
+    [],
 ]
 
 tcr_dist_results = [
     [dc.Decimal("24.0")],
     [dc.Decimal("48.0"), dc.Decimal("72.0"), dc.Decimal("72.0")],
     [dc.Decimal("0.0")],
+    [],
 ]
 
 hamming_results = [
     [dc.Decimal("1.0")],
     [dc.Decimal("2.0"), dc.Decimal("3.0"), dc.Decimal("3.0")],
     [dc.Decimal("0.0")],
+    [],
 ]
 
 jaro_results = [
     [dc.Decimal("0.1667")],
     [dc.Decimal("0.4444"), dc.Decimal("1.0"), dc.Decimal("1.0")],
     [dc.Decimal("0.0")],
+    [],
 ]
 
 jaro_winkler_results = jaro_results  # change this in the future
@@ -55,12 +61,14 @@ longest_common_substring_results = [
     [dc.Decimal("2.0")],
     [dc.Decimal("4.0"), dc.Decimal("6.0"), dc.Decimal("6.0")],
     [dc.Decimal("0.0")],
+    [],
 ]
 
 optimal_string_alignment_results = [
     [dc.Decimal("1.0")],
     [dc.Decimal("2.0"), dc.Decimal("3.0"), dc.Decimal("3.0")],
     [dc.Decimal("0.0")],
+    [],
 ]
 
 
@@ -226,6 +234,8 @@ def test_tcr_dist(tcr_dist_base, tcr_dist_keys, sequences, distances):
 @pytest.mark.parametrize(["sequences", "distances"], zip(test_cases, tcr_dist_results))
 def test_tcr_dist_error(tcr_dist_base, sequences, distances):
     metric = tcr_dist_base()
+    if not sequences:
+        return
 
     with pytest.raises(ValueError):
         metric(sequences)

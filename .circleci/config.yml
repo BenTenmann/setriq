@@ -35,6 +35,11 @@ jobs:
           command: |
             pip3 install --user cibuildwheel==2.11.2
             cibuildwheel --output-dir wheelhouse
+      - run:
+          name: Upload
+          command: |
+            pip3 install --user twine
+            twine upload -u ${PYPI_USERNAME} -p ${PYPI_PASSWORD} wheelhouse/*
       - store_artifacts:
           path: wheelhouse/
 
@@ -52,6 +57,11 @@ jobs:
           command: |
             python3 -m pip install --user cibuildwheel==2.11.2
             python3 -m cibuildwheel --output-dir wheelhouse
+      - run:
+          name: Upload
+          command: |
+            python3 -m pip install --user twine
+            twine upload -u ${PYPI_USERNAME} -p ${PYPI_PASSWORD} wheelhouse/*
       - store_artifacts:
           path: wheelhouse/
 
@@ -66,6 +76,11 @@ jobs:
           command: |
             pip3 install cibuildwheel==2.11.2
             cibuildwheel --output-dir wheelhouse
+      - run:
+          name: Upload
+          command: |
+            pip3 install twine
+            twine upload -u ${PYPI_USERNAME} -p ${PYPI_PASSWORD} wheelhouse/*
       - store_artifacts:
           path: wheelhouse/
 
@@ -191,16 +206,33 @@ workflows:
               only: /.*/
             branches:
               ignore: "main"
-      - test-tox
+      - test-tox:
+          requires:
+            - test-coverage
       - linux-wheels:
           requires:
             - test-tox
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^deploy-.*/
       - linux-aarch64-wheels:
           requires:
             - test-tox
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^deploy-.*/
       - osx-wheels:
           requires:
             - test-tox
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^deploy-.*/
       - docs-build
       - docs-deploy:
           requires:
@@ -211,7 +243,7 @@ workflows:
               only: main
       - release:
           requires:
-            - test-coverage
+            - test-tox
           filters:
             branches:
               ignore: /.*/
