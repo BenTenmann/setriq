@@ -8,7 +8,7 @@ executors:
       - image: circleci/python:3.7
   node-docker:
     docker:
-      - image: circleci/node:16.14
+      - image: cimg/node:16.14
 
 jobs:
   generate-version:
@@ -155,7 +155,7 @@ jobs:
       - run:
           name: Install and configure dependencies
           command: |
-            npm install -g --silent gh-pages@4.0.0
+            npm install -g gh-pages@4.0.0
             git config user.email "${GITHUB_EMAIL}"
             git config user.name "${GITHUB_USERNAME}"
       - run:
