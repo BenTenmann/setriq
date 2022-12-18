@@ -200,39 +200,22 @@ workflows:
           filters:
             branches:
               only: "main"
-      - test-coverage:
-          filters:
-            tags:
-              only: /.*/
-            branches:
-              ignore: "main"
+      - test-coverage
       - test-tox:
           requires:
             - test-coverage
       - linux-wheels:
           requires:
             - test-tox
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /^deploy-.*/
+            - generate-version
       - linux-aarch64-wheels:
           requires:
             - test-tox
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /^deploy-.*/
+            - generate-version
       - osx-wheels:
           requires:
             - test-tox
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /^deploy-.*/
+            - generate-version
       - docs-build
       - docs-deploy:
           requires:
