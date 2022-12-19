@@ -155,7 +155,7 @@ jobs:
       - run:
           name: Install and configure dependencies
           command: |
-            npm install -g gh-pages@4.0.0
+            sudo npm install -g gh-pages@4.0.0
             git config user.email "${GITHUB_EMAIL}"
             git config user.name "${GITHUB_USERNAME}"
       - run:
@@ -207,24 +207,27 @@ workflows:
       - linux-wheels:
           requires:
             - test-tox
-            - generate-version
           filters:
             branches:
-              only: "main"
+              ignore: /.*/
+            tags:
+              only: /^deploy-.*/
       - linux-aarch64-wheels:
           requires:
             - test-tox
-            - generate-version
           filters:
             branches:
-              only: "main"
+              ignore: /.*/
+            tags:
+              only: /^deploy-.*/
       - osx-wheels:
           requires:
             - test-tox
-            - generate-version
           filters:
             branches:
-              only: "main"
+              ignore: /.*/
+            tags:
+              only: /^deploy-.*/
       - docs-build
       - docs-deploy:
           requires:
