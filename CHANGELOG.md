@@ -1,3 +1,10 @@
+## [1.6.2](https://github.com/BenTenmann/setriq/compare/deploy-1.6.1...deploy-1.6.2) (2022-12-19)
+
+
+### Bug Fixes
+
+* **ci:** update triggers ([55958a2](https://github.com/BenTenmann/setriq/commit/55958a22b2b9093dacb11aa1d53e21081be69e09))
+
 ## [1.6.1](https://github.com/BenTenmann/setriq/compare/deploy-1.6.0...deploy-1.6.1) (2022-12-18)
 
 
