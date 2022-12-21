@@ -1,0 +1,835 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>setriq.modules.single_dispatch &#8212; setriq 1.6.2 documentation</title>
+  <script>
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../_static/styles/theme.css?digest=9b1a4fa89bdd0e95b23b" rel="stylesheet">
+<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=9b1a4fa89bdd0e95b23b" rel="stylesheet">
+
+  
+  <link rel="stylesheet"
+    href="../../../../_static/vendor/fontawesome/6.1.2/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=9b1a4fa89bdd0e95b23b">
+
+    <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+    <script src="../../../../_static/jquery.js"></script>
+    <script src="../../../../_static/underscore.js"></script>
+    <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/sphinx_highlight.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'autoapi/setriq/modules/single_dispatch/index';</script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en">
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+      
+<form class="bd-search d-flex align-items-center" action="../../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+  </div>
+
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fas fa-bars"></span>
+  </label>
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="../../../../index.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+    <p class="title logo__title">setriq 1.6.2 documentation</p>
+  
+</a>
+    
+  </div>
+
+  
+  <div class="col-lg-9 navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                <li class="nav-item">
+                    <a class="nav-link" href="../../../../myst_include.html">
+                        Install
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../../../index.html">
+                        API Reference
+                    </a>
+                </li>
+                
+    </ul>
+</nav>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      <div class="navbar-end-item navbar-end__search-button-container">
+        
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search">
+  <i class="fas fa-search"></i>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <span class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle">
+    <a class="theme-switch" data-mode="light"><i class="fas fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="far fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fas fa-adjust"></i></a>
+</span>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/BenTenmann/setriq" title="GitHub" class="nav-link" rel="noopener" target="_blank"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  <div class="search-button-container--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search">
+  <i class="fas fa-search"></i>
+</button>
+  </div>
+
+  
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fas fa-outdent"></span>
+  </label>
+  
+
+</div>
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                <li class="nav-item">
+                    <a class="nav-link" href="../../../../myst_include.html">
+                        Install
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../../../index.html">
+                        API Reference
+                    </a>
+                </li>
+                
+    </ul>
+</nav>
+      </div>
+      
+      </div>
+    
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        <span class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle">
+    <a class="theme-switch" data-mode="light"><i class="fas fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="far fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fas fa-adjust"></i></a>
+</span>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/BenTenmann/setriq" title="GitHub" class="nav-link" rel="noopener" target="_blank"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+  <div class="sidebar-start-items sidebar-primary__section">
+    <div class="sidebar-start-items__item"><nav class="bd-links" id="bd-docs-nav" aria-label="Section navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">
+    Section Navigation
+  </p>
+  <div class="bd-toc-item navbar-nav">
+    <ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="../index.html">
+   <code class="xref py py-mod docutils literal notranslate">
+    <span class="pre">
+     setriq.modules
+    </span>
+   </code>
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label class="toctree-toggle" for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../distances/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       setriq.modules.distances
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       setriq.modules.single_dispatch
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../substitution/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       setriq.modules.substitution
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../utils/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       setriq.modules.utils
+      </span>
+     </code>
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+  </div>
+</nav>
+    </div>
+  </div>
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+      </div>
+      <main class="bd-main">
+        
+        
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
+            </div>
+            
+            
+            <article class="bd-article" role="main">
+              
+  <section id="module-setriq.modules.single_dispatch">
+<span id="setriq-modules-single-dispatch"></span><h1><a class="reference internal" href="#module-setriq.modules.single_dispatch" title="setriq.modules.single_dispatch"><code class="xref py py-mod docutils literal notranslate"><span class="pre">setriq.modules.single_dispatch</span></code></a><a class="headerlink" href="#module-setriq.modules.single_dispatch" title="Permalink to this heading">#</a></h1>
+<section id="single-dispatch">
+<p>Functional implementations of the normal Metric classes, with the difference that the comparison happens only between
+two strings. This can be useful for integration with other tools such as PySpark, where we want to access the fast
+distance function implementations, without the forced pairwise comparisons.</p>
+<p class="rubric">Examples</p>
+<p>An example for computing the pairwise sequence distances using PySpark and setriq:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">SparkSession</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyspark.sql.functions</span> <span class="kn">import</span> <span class="n">udf</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyspark.sql.types</span> <span class="kn">import</span> <span class="n">DoubleType</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">spark</span> <span class="o">=</span> <span class="n">SparkSession</span> \
+<span class="gp">... </span>   <span class="o">.</span><span class="n">builder</span> \
+<span class="gp">... </span>   <span class="o">.</span><span class="n">master</span><span class="p">(</span><span class="s2">&quot;local[2]&quot;</span><span class="p">)</span> \
+<span class="gp">... </span>   <span class="o">.</span><span class="n">appName</span><span class="p">(</span><span class="s2">&quot;setriq-spark&quot;</span><span class="p">)</span> \
+<span class="gp">... </span>   <span class="o">.</span><span class="n">getOrCreate</span><span class="p">()</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">createDataFrame</span><span class="p">([(</span><span class="s1">&#39;CASSLKPNTEAFF&#39;</span><span class="p">,),</span> <span class="p">(</span><span class="s1">&#39;CASSAHIANYGYTF&#39;</span><span class="p">,),</span> <span class="p">(</span><span class="s1">&#39;CASRGATETQYF&#39;</span><span class="p">,)],</span> <span class="p">[</span><span class="s1">&#39;sequence&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">withColumnRenamed</span><span class="p">(</span><span class="s1">&#39;sequence&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">crossJoin</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">withColumnRenamed</span><span class="p">(</span><span class="s1">&#39;sequence&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">))</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lev_udf</span> <span class="o">=</span> <span class="n">udf</span><span class="p">(</span><span class="n">levenshtein</span><span class="p">,</span> <span class="n">returnType</span><span class="o">=</span><span class="n">DoubleType</span><span class="p">())</span>  <span class="c1"># single dispatch levenshtein distance</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">withColumn</span><span class="p">(</span><span class="s1">&#39;distance&#39;</span><span class="p">,</span> <span class="n">lev_udf</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="go">+--------------+--------------+--------+</span>
+<span class="go">|             a|             b|distance|</span>
+<span class="go">+--------------+--------------+--------+</span>
+<span class="go">| CASSLKPNTEAFF| CASSLKPNTEAFF|     0.0|</span>
+<span class="go">| CASSLKPNTEAFF|CASSAHIANYGYTF|     8.0|</span>
+<span class="go">| CASSLKPNTEAFF|  CASRGATETQYF|     8.0|</span>
+<span class="go">|CASSAHIANYGYTF| CASSLKPNTEAFF|     8.0|</span>
+<span class="go">|CASSAHIANYGYTF|CASSAHIANYGYTF|     0.0|</span>
+<span class="go">|CASSAHIANYGYTF|  CASRGATETQYF|     9.0|</span>
+<span class="go">|  CASRGATETQYF| CASSLKPNTEAFF|     8.0|</span>
+<span class="go">|  CASRGATETQYF|CASSAHIANYGYTF|     9.0|</span>
+<span class="go">|  CASRGATETQYF|  CASRGATETQYF|     0.0|</span>
+<span class="go">+--------------+--------------+--------+</span>
+</pre></div>
+</div>
+</section>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this heading">#</a></h2>
+<section id="functions">
+<h3>Functions<a class="headerlink" href="#functions" title="Permalink to this heading">#</a></h3>
+<table class="autosummary longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#setriq.modules.single_dispatch.cdr_dist" title="setriq.modules.single_dispatch.cdr_dist"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cdr_dist</span></code></a>(→ float)</p></td>
+<td><p>Compute the CDRdist <a href="#id27"><span class="problematic" id="id1">[1]_</span></a> metric between two sequences.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#setriq.modules.single_dispatch.levenshtein" title="setriq.modules.single_dispatch.levenshtein"><code class="xref py py-obj docutils literal notranslate"><span class="pre">levenshtein</span></code></a>(→ float)</p></td>
+<td><p>Compute the Levenshtein distance <a href="#id28"><span class="problematic" id="id2">[1]_</span></a> between two sequences. Based on the implementation in <a href="#id29"><span class="problematic" id="id3">[2]_</span></a>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#setriq.modules.single_dispatch.tcr_dist" title="setriq.modules.single_dispatch.tcr_dist"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tcr_dist</span></code></a>(→ float)</p></td>
+<td><p>Compute the TCRdist <a href="#id30"><span class="problematic" id="id4">[1]_</span></a> metric between two sequences.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#setriq.modules.single_dispatch.hamming" title="setriq.modules.single_dispatch.hamming"><code class="xref py py-obj docutils literal notranslate"><span class="pre">hamming</span></code></a>(→ float)</p></td>
+<td><p>Compute the Hamming <a href="#id31"><span class="problematic" id="id5">[1]_</span></a> distance between two sequences.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#setriq.modules.single_dispatch.jaro" title="setriq.modules.single_dispatch.jaro"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaro</span></code></a>(→ float)</p></td>
+<td><p>Compute the Jaro [1] distance between two sequences. Adapted from [2].</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#setriq.modules.single_dispatch.jaro_winkler" title="setriq.modules.single_dispatch.jaro_winkler"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaro_winkler</span></code></a>(→ float)</p></td>
+<td><p>Compute the Jaro-Winkler <a href="#id32"><span class="problematic" id="id6">[1]_</span></a> distance between two sequences.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#setriq.modules.single_dispatch.longest_common_substring" title="setriq.modules.single_dispatch.longest_common_substring"><code class="xref py py-obj docutils literal notranslate"><span class="pre">longest_common_substring</span></code></a>(→ float)</p></td>
+<td><p>Compute the LCS distance <a href="#id33"><span class="problematic" id="id7">[1]_</span></a> between two sequences.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#setriq.modules.single_dispatch.optimal_string_alignment" title="setriq.modules.single_dispatch.optimal_string_alignment"><code class="xref py py-obj docutils literal notranslate"><span class="pre">optimal_string_alignment</span></code></a>(→ float)</p></td>
+<td><p>Compute the OSA <a href="#id34"><span class="problematic" id="id8">[1]_</span></a> between two sequences.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py function">
+<dt class="sig sig-object py" id="setriq.modules.single_dispatch.cdr_dist">
+<span class="sig-prename descclassname"><span class="pre">setriq.modules.single_dispatch.</span></span><span class="sig-name descname"><span class="pre">cdr_dist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">substitution_matrix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../substitution/index.html#setriq.modules.substitution.SubstitutionMatrix" title="setriq.modules.substitution.SubstitutionMatrix"><span class="pre">setriq.modules.substitution.SubstitutionMatrix</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">BLOSUM45</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gap_opening_penalty</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gap_extension_penalty</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#setriq.modules.single_dispatch.cdr_dist" title="Permalink to this definition">#</a></dt>
+<dd><p>Compute the CDRdist <a href="#id35"><span class="problematic" id="id9">[1]_</span></a> metric between two sequences.</p>
+<p>{params}
+substitution_matrix: SubstitutionMatrix</p>
+<blockquote>
+<div><p>A substitution matrix object to inform the alignment scoring.</p>
+</div></blockquote>
+<dl class="simple">
+<dt>gap_opening_penalty: float</dt><dd><p>The penalty given to an alignment based on a gap opening. Values other than 0 give affine gap scoring.
+(default=10.0)</p>
+</dd>
+<dt>gap_extension_penalty: float</dt><dd><p>The penalty used to score the extension of the gap after opening. (default=1.0)</p>
+</dd>
+</dl>
+<p>{returns}</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">seq</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;AASQ&#39;</span><span class="p">,</span> <span class="s1">&#39;PASQ&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cdr_dist</span><span class="p">(</span><span class="o">*</span><span class="n">seq</span><span class="p">)</span>  <span class="c1"># default params</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cdr_dist</span><span class="p">(</span><span class="o">*</span><span class="n">seq</span><span class="p">,</span> <span class="n">substitution_matrix</span><span class="o">=</span><span class="n">BLOSUM45</span><span class="p">,</span>  <span class="c1"># custom params</span>
+<span class="gp">... </span>         <span class="n">gap_opening_penalty</span><span class="o">=</span><span class="mf">5.0</span><span class="p">,</span> <span class="n">gap_extension_penalty</span><span class="o">=</span><span class="mf">2.0</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="rubric">References</p>
+<dl class="footnote brackets">
+<dt class="label" id="id10"><span class="brackets">1</span></dt>
+<dd><p>Thakkar, N. and Bailey-Kellogg, C., 2019. Balancing sensitivity and specificity in distinguishing TCR groups
+by CDR sequence similarity. BMC bioinformatics, 20(1), pp.1-14. (<a class="reference external" href="https://doi.org/10.1186/s12859-019-2864-8">https://doi.org/10.1186/s12859-019-2864-8</a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="setriq.modules.single_dispatch.levenshtein">
+<span class="sig-prename descclassname"><span class="pre">setriq.modules.single_dispatch.</span></span><span class="sig-name descname"><span class="pre">levenshtein</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_cost</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#setriq.modules.single_dispatch.levenshtein" title="Permalink to this definition">#</a></dt>
+<dd><p>Compute the Levenshtein distance <a href="#id36"><span class="problematic" id="id11">[1]_</span></a> between two sequences. Based on the implementation in <a href="#id37"><span class="problematic" id="id12">[2]_</span></a>.</p>
+<p>{params}
+extra_cost: float</p>
+<blockquote>
+<div><p>Additional cost assigned by Levenshtein algorithm.</p>
+</div></blockquote>
+<p>{returns}</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">levenshtein</span><span class="p">(</span><span class="s1">&#39;AASQ&#39;</span><span class="p">,</span> <span class="s1">&#39;PASQ&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="rubric">References</p>
+<dl class="footnote brackets">
+<dt class="label" id="id13"><span class="brackets">1</span></dt>
+<dd><p>Levenshtein, V.I., 1966, February. Binary codes capable of correcting deletions, insertions, and reversals.
+In Soviet physics doklady (Vol. 10, No. 8, pp. 707-710).</p>
+</dd>
+<dt class="label" id="id14"><span class="brackets">2</span></dt>
+<dd><p>python-Levenshtein (<a class="reference external" href="https://github.com/ztane/python-Levenshtein">https://github.com/ztane/python-Levenshtein</a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="setriq.modules.single_dispatch.tcr_dist">
+<span class="sig-prename descclassname"><span class="pre">setriq.modules.single_dispatch.</span></span><span class="sig-name descname"><span class="pre">tcr_dist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">component_def</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#setriq.modules.single_dispatch.tcr_dist" title="Permalink to this definition">#</a></dt>
+<dd><p>Compute the TCRdist <a href="#id38"><span class="problematic" id="id15">[1]_</span></a> metric between two sequences.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>a</strong> (<em>dict</em>) – </p></li>
+<li><p><strong>b</strong> (<em>dict</em>) – </p></li>
+<li><p><strong>component_def</strong> – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>distance</strong> – The distance between the two sequences.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+<p class="rubric">References</p>
+<dl class="footnote brackets">
+<dt class="label" id="id16"><span class="brackets">1</span></dt>
+<dd><p>Dash, P., Fiore-Gartland, A.J., Hertz, T., Wang, G.C., Sharma, S., Souquette, A., Crawford, J.C., Clemens,
+E.B., Nguyen, T.H., Kedzierska, K. and La Gruta, N.L., 2017. Quantifiable predictive features define
+epitope-specific T cell receptor repertoires. Nature, 547(7661), pp.89-93. (<a class="reference external" href="https://doi.org/10.1038/nature22383">https://doi.org/10.1038/nature22383</a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="setriq.modules.single_dispatch.hamming">
+<span class="sig-prename descclassname"><span class="pre">setriq.modules.single_dispatch.</span></span><span class="sig-name descname"><span class="pre">hamming</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mismatch_score</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#setriq.modules.single_dispatch.hamming" title="Permalink to this definition">#</a></dt>
+<dd><p>Compute the Hamming <a href="#id39"><span class="problematic" id="id17">[1]_</span></a> distance between two sequences.</p>
+<p>{params}
+mismatch_score: float</p>
+<blockquote>
+<div><p>The weight given to a mismatch between the two sequence positions.</p>
+</div></blockquote>
+<p>{returns}</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hamming</span><span class="p">(</span><span class="s1">&#39;AASQ&#39;</span><span class="p">,</span> <span class="s1">&#39;PASQ&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hamming</span><span class="p">(</span><span class="s1">&#39;AASQ&#39;</span><span class="p">,</span> <span class="s1">&#39;PAS&#39;</span><span class="p">)</span>  <span class="c1"># error! different length sequences</span>
+</pre></div>
+</div>
+<p class="rubric">References</p>
+<dl class="footnote brackets">
+<dt class="label" id="id18"><span class="brackets">1</span></dt>
+<dd><p><a class="reference external" href="https://en.wikipedia.org/wiki/Hamming_distance">https://en.wikipedia.org/wiki/Hamming_distance</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="setriq.modules.single_dispatch.jaro">
+<span class="sig-prename descclassname"><span class="pre">setriq.modules.single_dispatch.</span></span><span class="sig-name descname"><span class="pre">jaro</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jaro_weights</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#setriq.modules.single_dispatch.jaro" title="Permalink to this definition">#</a></dt>
+<dd><p>Compute the Jaro [1] distance between two sequences. Adapted from [2].</p>
+<p>{params}
+jaro_weights: List[float]</p>
+<p>{returns}</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">jaro</span><span class="p">(</span><span class="s1">&#39;AASQ&#39;</span><span class="p">,</span> <span class="s1">&#39;PASQ&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="rubric">References</p>
+<dl class="footnote brackets">
+<dt class="label" id="id19"><span class="brackets">1</span></dt>
+<dd><p>Jaro, M.A., 1989. Advances in record-linkage methodology as applied to matching the 1985 census of Tampa,
+Florida. Journal of the American Statistical Association, 84(406), pp.414-420.</p>
+</dd>
+<dt class="label" id="id20"><span class="brackets">2</span></dt>
+<dd><p>Van der Loo, M.P., 2014. The stringdist package for approximate string matching. R J., 6(1), p.111.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="setriq.modules.single_dispatch.jaro_winkler">
+<span class="sig-prename descclassname"><span class="pre">setriq.modules.single_dispatch.</span></span><span class="sig-name descname"><span class="pre">jaro_winkler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_l</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jaro_weights</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#setriq.modules.single_dispatch.jaro_winkler" title="Permalink to this definition">#</a></dt>
+<dd><p>Compute the Jaro-Winkler <a href="#id40"><span class="problematic" id="id21">[1]_</span></a> distance between two sequences.</p>
+<p>{params}
+p: float</p>
+<blockquote>
+<div><p>The scaling factor applied to the common prefix re-weighting. The value needs to be in the range [0.0, 0.25]. If
+set to 0.0, Jaro-Winkler reduces down to Jaro.</p>
+</div></blockquote>
+<dl class="simple">
+<dt>max_l: int</dt><dd><p>The maximum length common prefix. (<code class="docutils literal notranslate"><span class="pre">default=4</span></code>)</p>
+</dd>
+</dl>
+<p>jaro_weights: List[float]</p>
+<p>{returns}</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">jaro_winkler</span><span class="p">(</span><span class="s1">&#39;AASQ&#39;</span><span class="p">,</span> <span class="s1">&#39;PASQ&#39;</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mf">0.10</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="rubric">References</p>
+<dl class="footnote brackets">
+<dt class="label" id="id22"><span class="brackets">1</span></dt>
+<dd><p>Winkler, W.E., 1990. String comparator metrics and enhanced decision rules in the Fellegi-Sunter model of
+record linkage.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="setriq.modules.single_dispatch.longest_common_substring">
+<span class="sig-prename descclassname"><span class="pre">setriq.modules.single_dispatch.</span></span><span class="sig-name descname"><span class="pre">longest_common_substring</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#setriq.modules.single_dispatch.longest_common_substring" title="Permalink to this definition">#</a></dt>
+<dd><p>Compute the LCS distance <a href="#id41"><span class="problematic" id="id23">[1]_</span></a> between two sequences.</p>
+<p>{params}</p>
+<p>{returns}</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">longest_common_substring</span><span class="p">(</span><span class="s1">&#39;AASQ&#39;</span><span class="p">,</span> <span class="s1">&#39;PASQ&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="rubric">References</p>
+<dl class="footnote brackets">
+<dt class="label" id="id24"><span class="brackets">1</span></dt>
+<dd><p><a class="reference external" href="https://en.wikipedia.org/wiki/Longest_common_substring_problem">https://en.wikipedia.org/wiki/Longest_common_substring_problem</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="setriq.modules.single_dispatch.optimal_string_alignment">
+<span class="sig-prename descclassname"><span class="pre">setriq.modules.single_dispatch.</span></span><span class="sig-name descname"><span class="pre">optimal_string_alignment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#setriq.modules.single_dispatch.optimal_string_alignment" title="Permalink to this definition">#</a></dt>
+<dd><p>Compute the OSA <a href="#id42"><span class="problematic" id="id25">[1]_</span></a> between two sequences.</p>
+<p>{params}</p>
+<p>{returns}</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">optimal_string_alignment</span><span class="p">(</span><span class="s1">&#39;AASQ&#39;</span><span class="p">,</span> <span class="s1">&#39;PASQ&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="rubric">References</p>
+<dl class="footnote brackets">
+<dt class="label" id="id26"><span class="brackets">1</span></dt>
+<dd><p><a class="reference external" href="https://en.wikipedia.org/wiki/Damerau%E2%80%93Levenshtein_distance">https://en.wikipedia.org/wiki/Damerau%E2%80%93Levenshtein_distance</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+
+            </article>
+            
+            
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+            </footer>
+            
+          </div>
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
+  
+<div class="tocsection onthispage">
+    <i class="fas fa-list"></i> On this page
+</div>
+<nav id="bd-toc-nav" class="page-toc">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#single-dispatch">
+   Functional implementations of the normal Metric classes, with the difference that the comparison happens only between
+two strings. This can be useful for integration with other tools such as PySpark, where we want to access the fast
+distance function implementations, without the forced pairwise comparisons.
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-contents">
+   Module Contents
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#functions">
+     Functions
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#setriq.modules.single_dispatch.cdr_dist">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         cdr_dist()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#setriq.modules.single_dispatch.levenshtein">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         levenshtein()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#setriq.modules.single_dispatch.tcr_dist">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         tcr_dist()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#setriq.modules.single_dispatch.hamming">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         hamming()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#setriq.modules.single_dispatch.jaro">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         jaro()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#setriq.modules.single_dispatch.jaro_winkler">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         jaro_winkler()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#setriq.modules.single_dispatch.longest_common_substring">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         longest_common_substring()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#setriq.modules.single_dispatch.optimal_string_alignment">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         optimal_string_alignment()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#setriq.modules.single_dispatch.cdr_dist">
+       cdr_dist
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#setriq.modules.single_dispatch.levenshtein">
+       levenshtein
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#setriq.modules.single_dispatch.tcr_dist">
+       tcr_dist
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#setriq.modules.single_dispatch.hamming">
+       hamming
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#setriq.modules.single_dispatch.jaro">
+       jaro
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#setriq.modules.single_dispatch.jaro_winkler">
+       jaro_winkler
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#setriq.modules.single_dispatch.longest_common_substring">
+       longest_common_substring
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#setriq.modules.single_dispatch.optimal_string_alignment">
+       optimal_string_alignment
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+</nav>
+</div>
+
+<div class="toc-item">
+  
+</div>
+
+<div class="toc-item">
+  
+<div class="tocsection sourcelink">
+    <a href="../../../../_sources/autoapi/setriq/modules/single_dispatch/index.rst.txt">
+        <i class="fas fa-file-alt"></i> Show Source
+    </a>
+</div>
+
+</div>
+
+            </div>
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+          </div>
+        </footer>
+        
+      </main>
+    </div>
+  </div>
+
+  
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=9b1a4fa89bdd0e95b23b"></script>
+
+  <footer class="bd-footer"><div class="bd-footer__inner container">
+  
+  <div class="footer-item">
+    
+<p class="copyright">
+
+    &copy; Copyright 2021-2022, Benjamin Tenmann.<br>
+
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+<p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.3.0.<br>
+</p>
+
+  </div>
+  
+</div>
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,401 @@
+:py:mod:`setriq`
+================
+
+.. py:module:: setriq
+
+.. autoapi-nested-parse::
+
+   setriq
+   ======
+
+   Provides:
+       1. fast computation of pairwise (immunoglobulin) sequence distances
+       2. parsed BLOSUM substitution matrices
+
+   About
+   -----
+   This package is a one-trick-pony which does its trick pretty well: efficient computation of pairwise sequence distances
+   on CPU. There are a number of distance functions available [1]_ [2]_ [3]_ [4]_, implemented in C++ and surfaced in
+   Python.
+
+   .. rubric:: Examples
+
+   >>> import setriq
+   >>> metric = setriq.CdrDist()
+   >>>
+   >>> sequences = [
+   ...     'CASSLKPNTEAFF',
+   ...     'CASSAHIANYGYTF',
+   ...     'CASRGATETQYF'
+   ... ]
+   >>> distances = metric(sequences)
+
+   .. rubric:: References
+
+   .. [1] Dash, P., Fiore-Gartland, A.J., Hertz, T., Wang, G.C., Sharma, S., Souquette, A., Crawford, J.C., Clemens, E.B.,
+      Nguyen, T.H., Kedzierska, K. and La Gruta, N.L., 2017. Quantifiable predictive features define epitope-specific
+      T cell receptor repertoires. Nature, 547(7661), pp.89-93. (https://doi.org/10.1038/nature22383)
+
+   .. [2] Levenshtein, V.I., 1966, February. Binary codes capable of correcting deletions, insertions, and reversals. In
+      Soviet physics doklady (Vol. 10, No. 8, pp. 707-710).
+
+   .. [3] python-Levenshtein (https://github.com/ztane/python-Levenshtein)
+
+   .. [4] Thakkar, N. and Bailey-Kellogg, C., 2019. Balancing sensitivity and specificity in distinguishing TCR groups by
+      CDR sequence similarity. BMC bioinformatics, 20(1), pp.1-14. (https://doi.org/10.1186/s12859-019-2864-8)
+
+
+
+Subpackages
+-----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 3
+
+   modules/index.rst
+
+
+Package Contents
+----------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   setriq.CdrDist
+   setriq.Hamming
+   setriq.Jaro
+   setriq.JaroWinkler
+   setriq.Levenshtein
+   setriq.LongestCommonSubstring
+   setriq.OptimalStringAlignment
+   setriq.SubstitutionMatrix
+   setriq.TcrDist
+
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   setriq.BLOSUM45
+   setriq.BLOSUM62
+   setriq.BLOSUM90
+
+
+.. py:data:: BLOSUM45
+   
+
+   
+
+.. py:data:: BLOSUM62
+   
+
+   
+
+.. py:data:: BLOSUM90
+   
+
+   
+
+.. py:class:: CdrDist(substitution_matrix: setriq.modules.substitution.SubstitutionMatrix = BLOSUM45, gap_opening_penalty: float = 10.0, gap_extension_penalty: float = 1.0, return_squareform: bool = False)
+
+   Bases: :py:obj:`Metric`\ [\ :py:obj:`str`\ ]
+
+   The CdrDist [1]_ class. Inherits from Metric.
+
+   .. rubric:: Examples
+
+   >>> sequences = ['CASSLKPNTEAFF', 'CASSAHIANYGYTF', 'CASRGATETQYF']
+   >>>
+   >>> metric = CdrDist()
+   >>> distances = metric(sequences)
+
+   .. rubric:: References
+
+   .. [1] Thakkar, N. and Bailey-Kellogg, C., 2019. Balancing sensitivity and specificity in distinguishing TCR groups
+      by CDR sequence similarity. BMC bioinformatics, 20(1), pp.1-14. (https://doi.org/10.1186/s12859-019-2864-8)
+
+   .. py:method:: forward(sequences: Sequence[str]) -> List[float]
+
+
+
+.. py:class:: Hamming(mismatch_score: float = 1.0, return_squareform: bool = False)
+
+   Bases: :py:obj:`Metric`\ [\ :py:obj:`str`\ ]
+
+   Hamming distance class. Inherits from Metric. Sequences must be of equal length.
+
+   .. rubric:: Examples
+
+   >>> metric = Hamming(mismatch_score=2.0)
+   >>> sequences = ['CASSLKPNTEAFF', 'CASSAHIANYGYTF', 'CASRGATETQYF']
+   >>> distances = metric(sequences)
+
+   .. rubric:: References
+
+   .. [1] https://en.wikipedia.org/wiki/Hamming_distance
+
+   .. py:method:: forward(sequences: Sequence[str]) -> List[float]
+
+
+
+.. py:class:: Jaro(jaro_weights: Optional[List[float]] = None, return_squareform: bool = False)
+
+   Bases: :py:obj:`Metric`\ [\ :py:obj:`str`\ ]
+
+   Jaro distance class. Inherits from Metric. Adapted from [2].
+
+   .. rubric:: Examples
+
+   >>> metric = Jaro()
+   >>> sequences = ['CASSLKPNTEAFF', 'CASSAHIANYGYTF', 'CASRGATETQYF']
+   >>> distances = metric(sequences)
+
+   .. rubric:: References
+
+   [1] Jaro, M.A., 1989. Advances in record-linkage methodology as applied to matching the 1985 census of Tampa,
+       Florida. Journal of the American Statistical Association, 84(406), pp.414-420.
+   [2] Van der Loo, M.P., 2014. The stringdist package for approximate string matching. R J., 6(1), p.111.
+
+   .. py:method:: forward(sequences: Sequence[str]) -> List[float]
+
+
+
+.. py:class:: JaroWinkler(p: float = 0.1, max_l: int = 4, jaro_weights: Optional[List[float]] = None, return_squareform: bool = False)
+
+   Bases: :py:obj:`Jaro`
+
+   Jaro-Winkler distance class. Inherits from Jaro.
+
+   .. rubric:: Examples
+
+   >>> metric = JaroWinkler(p=0.10)
+   >>> sequences = ['CASSLKPNTEAFF', 'CASSAHIANYGYTF', 'CASRGATETQYF']
+   >>> distances = metric(sequences)
+
+   .. rubric:: References
+
+   .. [1] Winkler, W.E., 1990. String comparator metrics and enhanced decision rules in the Fellegi-Sunter model of
+      record linkage.
+
+
+.. py:class:: Levenshtein(extra_cost: float = 0.0, return_squareform: bool = False)
+
+   Bases: :py:obj:`Metric`\ [\ :py:obj:`str`\ ]
+
+   The Levenshtein [1]_ class. Inherits from Metric. It uses a refactor of the ``python-Levenshtein`` [2]_
+   implementation in the backend.
+
+   .. rubric:: Examples
+
+   >>> sequences = ['CASSLKPNTEAFF', 'CASSAHIANYGYTF', 'CASRGATETQYF']
+   >>>
+   >>> metric = Levenshtein()
+   >>> distances = metric(sequences)
+
+   .. rubric:: References
+
+   .. [1] Levenshtein, V.I., 1966, February. Binary codes capable of correcting deletions, insertions, and reversals.
+      In Soviet physics doklady (Vol. 10, No. 8, pp. 707-710).
+   .. [2] python-Levenshtein (https://github.com/ztane/python-Levenshtein)
+
+   .. py:method:: forward(sequences: Sequence[str]) -> List[float]
+
+
+
+.. py:class:: LongestCommonSubstring(return_squareform: bool = False)
+
+   Bases: :py:obj:`Metric`\ [\ :py:obj:`str`\ ]
+
+   Longest common substring distance class. Inherits from Metric.
+
+   .. rubric:: Examples
+
+   >>> metric = LongestCommonSubstring()
+   >>> sequences = ['CASSLKPNTEAFF', 'CASSAHIANYGYTF', 'CASRGATETQYF']
+   >>> distances = metric(sequences)
+
+   .. rubric:: References
+
+   .. [1] https://en.wikipedia.org/wiki/Longest_common_substring_problem
+
+   .. py:method:: forward(sequences: Sequence[str]) -> List[float]
+
+
+
+.. py:class:: OptimalStringAlignment(return_squareform: bool = False)
+
+   Bases: :py:obj:`Metric`\ [\ :py:obj:`str`\ ]
+
+   Optimal string alignment distance class. Inherits from Metric.
+
+   .. rubric:: Examples
+
+   >>> metric = OptimalStringAlignment()
+   >>> sequences = ['CASSLKPNTEAFF', 'CASSAHIANYGYTF', 'CASRGATETQYF']
+   >>> distances = metric(sequences)
+
+   .. rubric:: References
+
+   .. [1] https://en.wikipedia.org/wiki/Damerau%E2%80%93Levenshtein_distance
+
+   .. py:method:: forward(sequences: Sequence[str]) -> List[float]
+
+
+
+.. py:class:: SubstitutionMatrix(index: Dict[str, int], substitution_matrix: List[List[float]], *args, **kwargs)
+
+   Bases: :py:obj:`abc.ABC`
+
+   The SubstitutionMatrix abstract base class. It holds convenience methods for loading and using the classic
+   biological sequence substitution matrices (e.g. ``BLOSUM``).
+
+   .. attribute:: index
+
+      a mapping of strings (amino acids) to integers (matrix index)
+
+      :type: Dict[str, int]
+
+   .. attribute:: substitution_matrix
+
+      the substitution scoring (:math:`N \times N`) matrix
+
+      :type: List[List[float]]
+
+   .. method:: from_json(self, file_path: Union[str, Path]) -> SubstitutionMatrix:
+
+      load a substitution matrix from a json file
+
+
+   .. rubric:: Examples
+
+   suppose we have a token index `idx` and a substitution matrix `scores`
+
+   >>> idx = {'hello': 0, 'world': 1}
+   >>> scores = [[1., -1.],
+   ...           [-1., 1.]]
+   >>> matrix = SubstitutionMatrix(index=idx, substitution_matrix=scores)
+
+   here we can see that we can provide any arbitrary substitution matrix, but in general it is advised to use the
+   pre-loaded BLOSUM matrices
+
+   >>> [BLOSUM45, BLOSUM62, BLOSUM90]  # choose one of the following
+
+   these are just instances of ``SubstitutionMatrix``, initialised through ``from_json``
+
+   .. py:attribute:: index
+      :annotation: :Dict[str, int]
+
+      
+
+   .. py:attribute:: substitution_matrix
+      :annotation: :List[List[float]]
+
+      
+
+   .. py:method:: from_json(file_path: Union[str, pathlib.Path]) -> SubstitutionMatrix
+      :classmethod:
+
+      Load a SubstitutionMatrix from a json file.
+
+      :param file_path: a path to a json file holding at least the token index and the substitution scoring matrix
+      :type file_path: Union[str, Path]
+
+      :returns: **substitution_matrix** -- returns an instance of the SubstitutionMatrix class, holding the values found at ``file_path``
+      :rtype: SubstitutionMatrix
+
+      .. rubric:: Examples
+
+      >>> sub_mat = SubstitutionMatrix.from_json('/path/to/file.json')
+
+
+   .. py:method:: keys() -> Tuple[str, str]
+
+
+   .. py:method:: add_token(token: str, values: Union[float, List[float]], inplace: bool = False) -> Union[SubstitutionMatrix, None]
+
+      Add a special token to the substitution matrix with a given value or list of values.
+
+      :param token: a special token to be added.
+      :type token: str
+      :param values: a value or list of values to which the token will correspond. If a list of floats is provided, the list must
+                     have a length of ``len(substitution_matrix) + 1``, i.e. there must be number of rows + 1 elements in the
+                     list.
+      :type values: Union[float, List[float]]
+      :param inplace: boolean whether to add token inplace.
+      :type inplace: bool
+
+      :returns: this is an inplace operation
+      :rtype: None
+
+      .. rubric:: Examples
+
+      Single value example. The value is repeated to fit the required shape
+
+      >>> sm = BLOSUM62
+      >>> sm.add_token('-', 4.)
+
+      List of floats example
+
+      >>> sm = BLOSUM62
+      >>> len(sm)
+      ... 24
+      >>> sm.add_token('setriq', [*range(26)])  # ints implicitly converted to floats
+
+
+
+.. py:class:: TcrDist(return_squareform: bool = False, **components: TcrDistComponent)
+
+   Bases: :py:obj:`Metric`\ [\ :py:obj:`Dict`\ [\ :py:obj:`str`\ , :py:obj:`str`\ ]\ ]
+
+   TcrDist [1]_ class. Inherits from Metric. It is a container class for individual TcrDistComponent instances.
+   Components are executed sequentially and their results aggregated at the end (summation).
+
+   .. attribute:: components
+
+      holds the names of the components to be executed
+
+      :type: List[str]
+
+   .. rubric:: Examples
+
+   >>> sequences = [
+   ...     {'cdr_1': 'TSG------FNG', 'cdr_2': 'VVL----DGL', 'cdr_2_5': 'SRSN-GY', 'cdr_3': 'CAVR-----'},
+   ...     {'cdr_1': 'TSG------FYG', 'cdr_2': 'NGL----DGL', 'cdr_2_5': 'SRSD-SY', 'cdr_3': 'CA-------'},
+   ...     {'cdr_1': 'NSA------FQY', 'cdr_2': 'TYS----SGN', 'cdr_2_5': 'DKSSKY-', 'cdr_3': 'CAMS-----'}
+   ... ]
+   >>> metric = TcrDist()  # will produce a warning stating default configuration (Dash et al)
+   >>> distances = metric(sequences)
+
+   .. rubric:: References
+
+   .. [1] Dash, P., Fiore-Gartland, A.J., Hertz, T., Wang, G.C., Sharma, S., Souquette, A., Crawford, J.C., Clemens,
+      E.B., Nguyen, T.H., Kedzierska, K. and La Gruta, N.L., 2017. Quantifiable predictive features define
+      epitope-specific T cell receptor repertoires. Nature, 547(7661), pp.89-93. (https://doi.org/10.1038/nature22383)
+
+   .. py:method:: required_input_keys() -> List[str]
+      :property:
+
+      Get the keys (=fields) required in the input to TcrDist instance.
+
+      :returns: **required_input_keys** -- returns a list of strings signifying the keys required in the input
+      :rtype: List[str]
+
+
+   .. py:method:: default_definition() -> setriq.modules.utils.TcrDistDef
+      :property:
+
+      Get the default TcrDistComponent schema as defined by Dash et al.
+
+      :returns: **default_schema** -- returns the schema for the TcrDistComponent instances held in the default configuration
+      :rtype: List[tuple]
+
+
+   .. py:method:: forward(sequences: Sequence[Dict[str, str]]) -> List[float]
+
+
+

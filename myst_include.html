@@ -1,0 +1,494 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Install &#8212; setriq 1.6.2 documentation</title>
+  <script>
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=9b1a4fa89bdd0e95b23b" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=9b1a4fa89bdd0e95b23b" rel="stylesheet">
+
+  
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/6.1.2/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=9b1a4fa89bdd0e95b23b">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'myst_include';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Welcome to setriq’s documentation!" href="index.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en">
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+      
+<form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+  </div>
+
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fas fa-bars"></span>
+  </label>
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="index.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+    <p class="title logo__title">setriq 1.6.2 documentation</p>
+  
+</a>
+    
+  </div>
+
+  
+  <div class="col-lg-9 navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                <li class="nav-item current active">
+                    <a class="nav-link" href="#">
+                        Install
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="autoapi/index.html">
+                        API Reference
+                    </a>
+                </li>
+                
+    </ul>
+</nav>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      <div class="navbar-end-item navbar-end__search-button-container">
+        
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search">
+  <i class="fas fa-search"></i>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <span class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle">
+    <a class="theme-switch" data-mode="light"><i class="fas fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="far fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fas fa-adjust"></i></a>
+</span>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/BenTenmann/setriq" title="GitHub" class="nav-link" rel="noopener" target="_blank"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  <div class="search-button-container--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search">
+  <i class="fas fa-search"></i>
+</button>
+  </div>
+
+  
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fas fa-outdent"></span>
+  </label>
+  
+
+</div>
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                <li class="nav-item current active">
+                    <a class="nav-link" href="#">
+                        Install
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="autoapi/index.html">
+                        API Reference
+                    </a>
+                </li>
+                
+    </ul>
+</nav>
+      </div>
+      
+      </div>
+    
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        <span class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle">
+    <a class="theme-switch" data-mode="light"><i class="fas fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="far fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fas fa-adjust"></i></a>
+</span>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/BenTenmann/setriq" title="GitHub" class="nav-link" rel="noopener" target="_blank"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+      </div>
+      <main class="bd-main">
+        
+        
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
+            </div>
+            
+            
+            <article class="bd-article" role="main">
+              
+  <p><a class="reference external" href="https://circleci.com/gh/BenTenmann/setriq/tree/main"><img alt="CircleCI" src="https://circleci.com/gh/BenTenmann/setriq/tree/main.svg?style=shield&amp;circle-token=11d21cf82d1b29647f02543f6bfee9703a8f7bfe" /></a>
+<a class="reference external" href="https://codecov.io/gh/BenTenmann/setriq"><img alt="codecov" src="https://codecov.io/gh/BenTenmann/setriq/branch/main/graph/badge.svg?token=I8Q4RWPCMS" /></a>
+<a class="reference external" href="https://www.codefactor.io/repository/github/bentenmann/setriq"><img alt="CodeFactor" src="https://www.codefactor.io/repository/github/bentenmann/setriq/badge" /></a>
+<a class="reference external" href="https://opensource.org/licenses/MIT"><img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" /></a></p>
+<p><img alt="logo" src="_images/logo.png" /></p>
+<p>A <code class="docutils literal notranslate"><span class="pre">Python</span></code> package written in <code class="docutils literal notranslate"><span class="pre">C++</span></code> for computing pairwise distances between (immunoglobulin) sequences.</p>
+<section id="install">
+<h1>Install<a class="headerlink" href="#install" title="Permalink to this heading">#</a></h1>
+<p>This package is available on PyPI</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install setriq
+</pre></div>
+</div>
+</section>
+<section id="quickstart">
+<h1>Quickstart<a class="headerlink" href="#quickstart" title="Permalink to this heading">#</a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">setriq</span></code> inherits from the <code class="docutils literal notranslate"><span class="pre">torch</span></code> philosophy of callable objects. Each <code class="docutils literal notranslate"><span class="pre">Metric</span></code> subclass is a callable upon
+initialisation, taking a list of objects (usually <code class="docutils literal notranslate"><span class="pre">str</span></code>) and returning a list of <code class="docutils literal notranslate"><span class="pre">float</span></code> values.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">setriq</span>
+<span class="n">metric</span> <span class="o">=</span> <span class="n">setriq</span><span class="o">.</span><span class="n">CdrDist</span><span class="p">()</span>
+
+<span class="n">sequences</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;CASSLKPNTEAFF&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;CASSAHIANYGYTF&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;CASRGATETQYF&#39;</span>
+<span class="p">]</span>
+<span class="n">distances</span> <span class="o">=</span> <span class="n">metric</span><span class="p">(</span><span class="n">sequences</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The returned list is flat and contains <code class="docutils literal notranslate"><span class="pre">N</span> <span class="pre">*</span> <span class="pre">(N</span> <span class="pre">-</span> <span class="pre">1)</span> <span class="pre">/</span> <span class="pre">2</span></code> elements, i.e. the lower (or upper) triangle of the distance
+matrix. To get the square form of the matrix, use <code class="docutils literal notranslate"><span class="pre">scipy.spatial.distance.squareform</span></code> on the returned distances.</p>
+</section>
+<section id="about">
+<h1>About<a class="headerlink" href="#about" title="Permalink to this heading">#</a></h1>
+<p>As the header suggests, <code class="docutils literal notranslate"><span class="pre">setriq</span></code> is a no-frills Python package for fast computation of pairwise sequence distances, with
+a focus on immunoglobulins. It is a declarative framework and borrows many concepts from the popular <code class="docutils literal notranslate"><span class="pre">torch</span></code> library. It
+has been optimized for parallel compute on CPU architectures.</p>
+<p>Available distance functions:</p>
+<ul class="simple">
+<li><p>CDRdist</p></li>
+<li><p>Levenshtein</p></li>
+<li><p>TCRdist</p></li>
+<li><p>Hamming</p></li>
+<li><p>Jaro</p></li>
+<li><p>Jaro-Winkler</p></li>
+<li><p>Longest Common Substring</p></li>
+<li><p>Optimal String Alignment</p></li>
+</ul>
+<p>These distance functions are available either through the object-based API (as seen above), which provides the CPU-based
+parallelism, or the functional API in <code class="docutils literal notranslate"><span class="pre">setriq.single_dispatch</span></code>. Unlike the object-based API, the functional API does a
+single comparison between two sequences for every call, i.e. it exposes the <code class="docutils literal notranslate"><span class="pre">C++</span></code> distance functions without the
+parallelism wrapper. This can be useful for integration of <code class="docutils literal notranslate"><span class="pre">setriq</span></code> with other tools such as <code class="docutils literal notranslate"><span class="pre">PySpark</span></code>. For example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">SparkSession</span>
+<span class="kn">from</span> <span class="nn">pyspark.sql.functions</span> <span class="kn">import</span> <span class="n">udf</span>
+<span class="kn">from</span> <span class="nn">pyspark.sql.types</span> <span class="kn">import</span> <span class="n">DoubleType</span>
+
+<span class="kn">from</span> <span class="nn">setriq</span> <span class="kn">import</span> <span class="n">single_dispatch</span> <span class="k">as</span> <span class="n">sd</span>
+
+<span class="n">spark</span> <span class="o">=</span> <span class="n">SparkSession</span> \
+   <span class="o">.</span><span class="n">builder</span> \
+   <span class="o">.</span><span class="n">appName</span><span class="p">(</span><span class="s2">&quot;setriq-spark&quot;</span><span class="p">)</span> \
+   <span class="o">.</span><span class="n">getOrCreate</span><span class="p">()</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">createDataFrame</span><span class="p">([(</span><span class="s1">&#39;CASSLKPNTEAFF&#39;</span><span class="p">,),</span> <span class="p">(</span><span class="s1">&#39;CASSAHIANYGYTF&#39;</span><span class="p">,),</span> <span class="p">(</span><span class="s1">&#39;CASRGATETQYF&#39;</span><span class="p">,)],</span> <span class="p">[</span><span class="s1">&#39;sequence&#39;</span><span class="p">])</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">withColumnRenamed</span><span class="p">(</span><span class="s1">&#39;sequence&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">crossJoin</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">withColumnRenamed</span><span class="p">(</span><span class="s1">&#39;sequence&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">))</span>
+
+<span class="n">lev_udf</span> <span class="o">=</span> <span class="n">udf</span><span class="p">(</span><span class="n">sd</span><span class="o">.</span><span class="n">levenshtein</span><span class="p">,</span> <span class="n">returnType</span><span class="o">=</span><span class="n">DoubleType</span><span class="p">())</span>  <span class="c1"># single dispatch levenshtein distance</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">withColumn</span><span class="p">(</span><span class="s1">&#39;distance&#39;</span><span class="p">,</span> <span class="n">lev_udf</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">))</span>
+<span class="n">df</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>It is important to note, that for <code class="docutils literal notranslate"><span class="pre">setriq.single_dispatch</span></code> the returned value is always a single float value.</p>
+</section>
+<section id="requirements">
+<h1>Requirements<a class="headerlink" href="#requirements" title="Permalink to this heading">#</a></h1>
+<p>A <code class="docutils literal notranslate"><span class="pre">Python</span></code> version of 3.7 or above is required, as well as a <code class="docutils literal notranslate"><span class="pre">C++</span></code> compiler equipped with OpenMP. The package has been
+tested on Linux and macOS. To get the required OpenMP resources, run:</p>
+<p>On Linux:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo apt install libomp-dev <span class="o">&amp;&amp;</span> sudo apt show libomp-dev
+</pre></div>
+</div>
+<p>On macOS:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>brew install libomp llvm
+</pre></div>
+</div>
+</section>
+<section id="references">
+<h1>References<a class="headerlink" href="#references" title="Permalink to this heading">#</a></h1>
+<ol class="arabic simple">
+<li><p>Dash, P., Fiore-Gartland, A.J., Hertz, T., Wang, G.C., Sharma, S., Souquette, A., Crawford, J.C., Clemens, E.B.,
+Nguyen, T.H., Kedzierska, K. and La Gruta, N.L., 2017. Quantifiable predictive features define epitope-specific T cell
+receptor repertoires. Nature, 547(7661), pp.89-93. (https://doi.org/10.1038/nature22383)</p></li>
+<li><p>Jaro, M.A., 1989. Advances in record-linkage methodology as applied to matching the 1985 census of Tampa,
+Florida. Journal of the American Statistical Association, 84(406), pp.414-420.</p></li>
+<li><p>Levenshtein, V.I., 1966, February. Binary codes capable of correcting deletions, insertions, and reversals. In
+Soviet physics doklady (Vol. 10, No. 8, pp. 707-710).</p></li>
+<li><p>python-Levenshtein (https://github.com/ztane/python-Levenshtein)</p></li>
+<li><p>Thakkar, N. and Bailey-Kellogg, C., 2019. Balancing sensitivity and specificity in distinguishing TCR groups by CDR
+sequence similarity. BMC bioinformatics, 20(1), pp.1-14. (https://doi.org/10.1186/s12859-019-2864-8)</p></li>
+<li><p>Van der Loo, M.P., 2014. The stringdist package for approximate string matching. R J., 6(1), p.111.</p></li>
+<li><p>Winkler, W.E., 1990. String comparator metrics and enhanced decision rules in the Fellegi-Sunter model of record
+linkage.</p></li>
+</ol>
+</section>
+
+
+            </article>
+            
+            
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+  <a class='left-prev' id="prev-link" href="index.html" title="previous page">
+      <i class="fas fa-angle-left"></i>
+      <div class="prev-next-info">
+          <p class="prev-next-subtitle">previous</p>
+          <p class="prev-next-title">Welcome to setriq’s documentation!</p>
+      </div>
+  </a>
+</div>
+            </footer>
+            
+          </div>
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
+  
+<div class="tocsection onthispage">
+    <i class="fas fa-list"></i> On this page
+</div>
+<nav id="bd-toc-nav" class="page-toc">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Install
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#quickstart">
+   Quickstart
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#about">
+   About
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#requirements">
+   Requirements
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references">
+   References
+  </a>
+ </li>
+</ul>
+
+</nav>
+</div>
+
+<div class="toc-item">
+  
+</div>
+
+<div class="toc-item">
+  
+<div class="tocsection sourcelink">
+    <a href="_sources/myst_include.md.txt">
+        <i class="fas fa-file-alt"></i> Show Source
+    </a>
+</div>
+
+</div>
+
+            </div>
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+          </div>
+        </footer>
+        
+      </main>
+    </div>
+  </div>
+
+  
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/pydata-sphinx-theme.js?digest=9b1a4fa89bdd0e95b23b"></script>
+
+  <footer class="bd-footer"><div class="bd-footer__inner container">
+  
+  <div class="footer-item">
+    
+<p class="copyright">
+
+    &copy; Copyright 2021-2022, Benjamin Tenmann.<br>
+
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+<p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.3.0.<br>
+</p>
+
+  </div>
+  
+</div>
+  </footer>
+  </body>
+</html>

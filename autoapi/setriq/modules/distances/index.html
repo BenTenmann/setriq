@@ -1,0 +1,1057 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>setriq.modules.distances &#8212; setriq 1.6.2 documentation</title>
+  <script>
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../_static/styles/theme.css?digest=9b1a4fa89bdd0e95b23b" rel="stylesheet">
+<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=9b1a4fa89bdd0e95b23b" rel="stylesheet">
+
+  
+  <link rel="stylesheet"
+    href="../../../../_static/vendor/fontawesome/6.1.2/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=9b1a4fa89bdd0e95b23b">
+
+    <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+    <script src="../../../../_static/jquery.js"></script>
+    <script src="../../../../_static/underscore.js"></script>
+    <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/sphinx_highlight.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'autoapi/setriq/modules/distances/index';</script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en">
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+      
+<form class="bd-search d-flex align-items-center" action="../../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+  </div>
+
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fas fa-bars"></span>
+  </label>
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="../../../../index.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+    <p class="title logo__title">setriq 1.6.2 documentation</p>
+  
+</a>
+    
+  </div>
+
+  
+  <div class="col-lg-9 navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                <li class="nav-item">
+                    <a class="nav-link" href="../../../../myst_include.html">
+                        Install
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../../../index.html">
+                        API Reference
+                    </a>
+                </li>
+                
+    </ul>
+</nav>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      <div class="navbar-end-item navbar-end__search-button-container">
+        
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search">
+  <i class="fas fa-search"></i>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <span class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle">
+    <a class="theme-switch" data-mode="light"><i class="fas fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="far fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fas fa-adjust"></i></a>
+</span>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/BenTenmann/setriq" title="GitHub" class="nav-link" rel="noopener" target="_blank"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  <div class="search-button-container--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search">
+  <i class="fas fa-search"></i>
+</button>
+  </div>
+
+  
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fas fa-outdent"></span>
+  </label>
+  
+
+</div>
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                <li class="nav-item">
+                    <a class="nav-link" href="../../../../myst_include.html">
+                        Install
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../../../index.html">
+                        API Reference
+                    </a>
+                </li>
+                
+    </ul>
+</nav>
+      </div>
+      
+      </div>
+    
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        <span class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle">
+    <a class="theme-switch" data-mode="light"><i class="fas fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="far fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fas fa-adjust"></i></a>
+</span>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/BenTenmann/setriq" title="GitHub" class="nav-link" rel="noopener" target="_blank"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+  <div class="sidebar-start-items sidebar-primary__section">
+    <div class="sidebar-start-items__item"><nav class="bd-links" id="bd-docs-nav" aria-label="Section navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">
+    Section Navigation
+  </p>
+  <div class="bd-toc-item navbar-nav">
+    <ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="../index.html">
+   <code class="xref py py-mod docutils literal notranslate">
+    <span class="pre">
+     setriq.modules
+    </span>
+   </code>
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label class="toctree-toggle" for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       setriq.modules.distances
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../single_dispatch/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       setriq.modules.single_dispatch
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../substitution/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       setriq.modules.substitution
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../utils/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       setriq.modules.utils
+      </span>
+     </code>
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+  </div>
+</nav>
+    </div>
+  </div>
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+      </div>
+      <main class="bd-main">
+        
+        
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
+            </div>
+            
+            
+            <article class="bd-article" role="main">
+              
+  <section id="module-setriq.modules.distances">
+<span id="setriq-modules-distances"></span><h1><a class="reference internal" href="#module-setriq.modules.distances" title="setriq.modules.distances"><code class="xref py py-mod docutils literal notranslate"><span class="pre">setriq.modules.distances</span></code></a><a class="headerlink" href="#module-setriq.modules.distances" title="Permalink to this heading">#</a></h1>
+<p>Python API for sequence distance functions.</p>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this heading">#</a></h2>
+<section id="classes">
+<h3>Classes<a class="headerlink" href="#classes" title="Permalink to this heading">#</a></h3>
+<table class="autosummary longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#setriq.modules.distances.CdrDist" title="setriq.modules.distances.CdrDist"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CdrDist</span></code></a></p></td>
+<td><p>The CdrDist <a href="#id17"><span class="problematic" id="id1">[1]_</span></a> class. Inherits from Metric.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#setriq.modules.distances.Levenshtein" title="setriq.modules.distances.Levenshtein"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Levenshtein</span></code></a></p></td>
+<td><p>The Levenshtein <a href="#id18"><span class="problematic" id="id2">[1]_</span></a> class. Inherits from Metric. It uses a refactor of the <code class="docutils literal notranslate"><span class="pre">python-Levenshtein</span></code> <a class="footnote-reference brackets" href="#id10" id="id3">2</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#setriq.modules.distances.TcrDistComponent" title="setriq.modules.distances.TcrDistComponent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TcrDistComponent</span></code></a></p></td>
+<td><p>The TcrDistComponent class. Inherits from Metric.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#setriq.modules.distances.TcrDist" title="setriq.modules.distances.TcrDist"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TcrDist</span></code></a></p></td>
+<td><p>TcrDist <a href="#id19"><span class="problematic" id="id4">[1]_</span></a> class. Inherits from Metric. It is a container class for individual TcrDistComponent instances.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#setriq.modules.distances.Hamming" title="setriq.modules.distances.Hamming"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Hamming</span></code></a></p></td>
+<td><p>Hamming distance class. Inherits from Metric. Sequences must be of equal length.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#setriq.modules.distances.Jaro" title="setriq.modules.distances.Jaro"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Jaro</span></code></a></p></td>
+<td><p>Jaro distance class. Inherits from Metric. Adapted from [2].</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#setriq.modules.distances.JaroWinkler" title="setriq.modules.distances.JaroWinkler"><code class="xref py py-obj docutils literal notranslate"><span class="pre">JaroWinkler</span></code></a></p></td>
+<td><p>Jaro-Winkler distance class. Inherits from Jaro.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#setriq.modules.distances.LongestCommonSubstring" title="setriq.modules.distances.LongestCommonSubstring"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LongestCommonSubstring</span></code></a></p></td>
+<td><p>Longest common substring distance class. Inherits from Metric.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#setriq.modules.distances.OptimalStringAlignment" title="setriq.modules.distances.OptimalStringAlignment"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OptimalStringAlignment</span></code></a></p></td>
+<td><p>Optimal string alignment distance class. Inherits from Metric.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="setriq.modules.distances.CdrDist">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">setriq.modules.distances.</span></span><span class="sig-name descname"><span class="pre">CdrDist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">substitution_matrix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../substitution/index.html#setriq.modules.substitution.SubstitutionMatrix" title="setriq.modules.substitution.SubstitutionMatrix"><span class="pre">setriq.modules.substitution.SubstitutionMatrix</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">BLOSUM45</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gap_opening_penalty</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gap_extension_penalty</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_squareform</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#setriq.modules.distances.CdrDist" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">Metric</span></code>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>]</p>
+<p>The CdrDist <a href="#id20"><span class="problematic" id="id5">[1]_</span></a> class. Inherits from Metric.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sequences</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;CASSLKPNTEAFF&#39;</span><span class="p">,</span> <span class="s1">&#39;CASSAHIANYGYTF&#39;</span><span class="p">,</span> <span class="s1">&#39;CASRGATETQYF&#39;</span><span class="p">]</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">metric</span> <span class="o">=</span> <span class="n">CdrDist</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">distances</span> <span class="o">=</span> <span class="n">metric</span><span class="p">(</span><span class="n">sequences</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="rubric">References</p>
+<dl class="footnote brackets">
+<dt class="label" id="id6"><span class="brackets">1</span></dt>
+<dd><p>Thakkar, N. and Bailey-Kellogg, C., 2019. Balancing sensitivity and specificity in distinguishing TCR groups
+by CDR sequence similarity. BMC bioinformatics, 20(1), pp.1-14. (<a class="reference external" href="https://doi.org/10.1186/s12859-019-2864-8">https://doi.org/10.1186/s12859-019-2864-8</a>)</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="setriq.modules.distances.CdrDist.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sequences</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#setriq.modules.distances.CdrDist.forward" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="setriq.modules.distances.Levenshtein">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">setriq.modules.distances.</span></span><span class="sig-name descname"><span class="pre">Levenshtein</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">extra_cost</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_squareform</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#setriq.modules.distances.Levenshtein" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">Metric</span></code>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>]</p>
+<p>The Levenshtein <a href="#id21"><span class="problematic" id="id7">[1]_</span></a> class. Inherits from Metric. It uses a refactor of the <code class="docutils literal notranslate"><span class="pre">python-Levenshtein</span></code> <a class="footnote-reference brackets" href="#id10" id="id8">2</a>
+implementation in the backend.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sequences</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;CASSLKPNTEAFF&#39;</span><span class="p">,</span> <span class="s1">&#39;CASSAHIANYGYTF&#39;</span><span class="p">,</span> <span class="s1">&#39;CASRGATETQYF&#39;</span><span class="p">]</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">metric</span> <span class="o">=</span> <span class="n">Levenshtein</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">distances</span> <span class="o">=</span> <span class="n">metric</span><span class="p">(</span><span class="n">sequences</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="rubric">References</p>
+<dl class="footnote brackets">
+<dt class="label" id="id9"><span class="brackets">1</span></dt>
+<dd><p>Levenshtein, V.I., 1966, February. Binary codes capable of correcting deletions, insertions, and reversals.
+In Soviet physics doklady (Vol. 10, No. 8, pp. 707-710).</p>
+</dd>
+<dt class="label" id="id10"><span class="brackets">2</span><span class="fn-backref">(<a href="#id3">1</a>,<a href="#id8">2</a>)</span></dt>
+<dd><p>python-Levenshtein (<a class="reference external" href="https://github.com/ztane/python-Levenshtein">https://github.com/ztane/python-Levenshtein</a>)</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="setriq.modules.distances.Levenshtein.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sequences</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#setriq.modules.distances.Levenshtein.forward" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="setriq.modules.distances.TcrDistComponent">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">setriq.modules.distances.</span></span><span class="sig-name descname"><span class="pre">TcrDistComponent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">substitution_matrix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../substitution/index.html#setriq.modules.substitution.SubstitutionMatrix" title="setriq.modules.substitution.SubstitutionMatrix"><span class="pre">setriq.modules.substitution.SubstitutionMatrix</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">gap_penalty</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gap_symbol</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'-'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_squareform</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#setriq.modules.distances.TcrDistComponent" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">Metric</span></code>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>]</p>
+<p>The TcrDistComponent class. Inherits from Metric.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">setriq</span> <span class="kn">import</span> <span class="n">BLOSUM62</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sequences</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;CASSLKPNTE&#39;</span><span class="p">,</span> <span class="s1">&#39;CASS-HIANY&#39;</span><span class="p">,</span> <span class="s1">&#39;CASRGAT--Q&#39;</span><span class="p">]</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">metric</span> <span class="o">=</span> <span class="n">TcrDistComponent</span><span class="p">(</span><span class="n">substitution_matrix</span><span class="o">=</span><span class="n">BLOSUM62</span><span class="p">,</span> <span class="n">gap_penalty</span><span class="o">=</span><span class="mf">4.</span><span class="p">,</span> <span class="n">gap_symbol</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mf">1.</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">distances</span> <span class="o">=</span> <span class="n">metric</span><span class="p">(</span><span class="n">sequences</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="setriq.modules.distances.TcrDistComponent.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sequences</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#setriq.modules.distances.TcrDistComponent.forward" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="setriq.modules.distances.TcrDist">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">setriq.modules.distances.</span></span><span class="sig-name descname"><span class="pre">TcrDist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">return_squareform</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">components</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#setriq.modules.distances.TcrDistComponent" title="setriq.modules.distances.TcrDistComponent"><span class="pre">TcrDistComponent</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#setriq.modules.distances.TcrDist" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">Metric</span></code>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>]]</p>
+<p>TcrDist <a href="#id22"><span class="problematic" id="id11">[1]_</span></a> class. Inherits from Metric. It is a container class for individual TcrDistComponent instances.
+Components are executed sequentially and their results aggregated at the end (summation).</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="setriq.modules.distances.TcrDist.components">
+<span class="sig-name descname"><span class="pre">components</span></span><a class="headerlink" href="#setriq.modules.distances.TcrDist.components" title="Permalink to this definition">#</a></dt>
+<dd><p>holds the names of the components to be executed</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>List[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sequences</span> <span class="o">=</span> <span class="p">[</span>
+<span class="gp">... </span>    <span class="p">{</span><span class="s1">&#39;cdr_1&#39;</span><span class="p">:</span> <span class="s1">&#39;TSG------FNG&#39;</span><span class="p">,</span> <span class="s1">&#39;cdr_2&#39;</span><span class="p">:</span> <span class="s1">&#39;VVL----DGL&#39;</span><span class="p">,</span> <span class="s1">&#39;cdr_2_5&#39;</span><span class="p">:</span> <span class="s1">&#39;SRSN-GY&#39;</span><span class="p">,</span> <span class="s1">&#39;cdr_3&#39;</span><span class="p">:</span> <span class="s1">&#39;CAVR-----&#39;</span><span class="p">},</span>
+<span class="gp">... </span>    <span class="p">{</span><span class="s1">&#39;cdr_1&#39;</span><span class="p">:</span> <span class="s1">&#39;TSG------FYG&#39;</span><span class="p">,</span> <span class="s1">&#39;cdr_2&#39;</span><span class="p">:</span> <span class="s1">&#39;NGL----DGL&#39;</span><span class="p">,</span> <span class="s1">&#39;cdr_2_5&#39;</span><span class="p">:</span> <span class="s1">&#39;SRSD-SY&#39;</span><span class="p">,</span> <span class="s1">&#39;cdr_3&#39;</span><span class="p">:</span> <span class="s1">&#39;CA-------&#39;</span><span class="p">},</span>
+<span class="gp">... </span>    <span class="p">{</span><span class="s1">&#39;cdr_1&#39;</span><span class="p">:</span> <span class="s1">&#39;NSA------FQY&#39;</span><span class="p">,</span> <span class="s1">&#39;cdr_2&#39;</span><span class="p">:</span> <span class="s1">&#39;TYS----SGN&#39;</span><span class="p">,</span> <span class="s1">&#39;cdr_2_5&#39;</span><span class="p">:</span> <span class="s1">&#39;DKSSKY-&#39;</span><span class="p">,</span> <span class="s1">&#39;cdr_3&#39;</span><span class="p">:</span> <span class="s1">&#39;CAMS-----&#39;</span><span class="p">}</span>
+<span class="gp">... </span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">metric</span> <span class="o">=</span> <span class="n">TcrDist</span><span class="p">()</span>  <span class="c1"># will produce a warning stating default configuration (Dash et al)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">distances</span> <span class="o">=</span> <span class="n">metric</span><span class="p">(</span><span class="n">sequences</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="rubric">References</p>
+<dl class="footnote brackets">
+<dt class="label" id="id12"><span class="brackets">1</span></dt>
+<dd><p>Dash, P., Fiore-Gartland, A.J., Hertz, T., Wang, G.C., Sharma, S., Souquette, A., Crawford, J.C., Clemens,
+E.B., Nguyen, T.H., Kedzierska, K. and La Gruta, N.L., 2017. Quantifiable predictive features define
+epitope-specific T cell receptor repertoires. Nature, 547(7661), pp.89-93. (<a class="reference external" href="https://doi.org/10.1038/nature22383">https://doi.org/10.1038/nature22383</a>)</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="setriq.modules.distances.TcrDist.required_input_keys">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">required_input_keys</span></span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#setriq.modules.distances.TcrDist.required_input_keys" title="Permalink to this definition">#</a></dt>
+<dd><p>Get the keys (=fields) required in the input to TcrDist instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>required_input_keys</strong> – returns a list of strings signifying the keys required in the input</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>List[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="setriq.modules.distances.TcrDist.default_definition">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">default_definition</span></span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">setriq.modules.utils.TcrDistDef</span></span></span><a class="headerlink" href="#setriq.modules.distances.TcrDist.default_definition" title="Permalink to this definition">#</a></dt>
+<dd><p>Get the default TcrDistComponent schema as defined by Dash et al.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>default_schema</strong> – returns the schema for the TcrDistComponent instances held in the default configuration</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>List[tuple]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="setriq.modules.distances.TcrDist.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sequences</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#setriq.modules.distances.TcrDist.forward" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="setriq.modules.distances.Hamming">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">setriq.modules.distances.</span></span><span class="sig-name descname"><span class="pre">Hamming</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mismatch_score</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_squareform</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#setriq.modules.distances.Hamming" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">Metric</span></code>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>]</p>
+<p>Hamming distance class. Inherits from Metric. Sequences must be of equal length.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">metric</span> <span class="o">=</span> <span class="n">Hamming</span><span class="p">(</span><span class="n">mismatch_score</span><span class="o">=</span><span class="mf">2.0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sequences</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;CASSLKPNTEAFF&#39;</span><span class="p">,</span> <span class="s1">&#39;CASSAHIANYGYTF&#39;</span><span class="p">,</span> <span class="s1">&#39;CASRGATETQYF&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">distances</span> <span class="o">=</span> <span class="n">metric</span><span class="p">(</span><span class="n">sequences</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="rubric">References</p>
+<dl class="footnote brackets">
+<dt class="label" id="id13"><span class="brackets">1</span></dt>
+<dd><p><a class="reference external" href="https://en.wikipedia.org/wiki/Hamming_distance">https://en.wikipedia.org/wiki/Hamming_distance</a></p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="setriq.modules.distances.Hamming.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sequences</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#setriq.modules.distances.Hamming.forward" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="setriq.modules.distances.Jaro">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">setriq.modules.distances.</span></span><span class="sig-name descname"><span class="pre">Jaro</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">jaro_weights</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_squareform</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#setriq.modules.distances.Jaro" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">Metric</span></code>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>]</p>
+<p>Jaro distance class. Inherits from Metric. Adapted from [2].</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">metric</span> <span class="o">=</span> <span class="n">Jaro</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sequences</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;CASSLKPNTEAFF&#39;</span><span class="p">,</span> <span class="s1">&#39;CASSAHIANYGYTF&#39;</span><span class="p">,</span> <span class="s1">&#39;CASRGATETQYF&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">distances</span> <span class="o">=</span> <span class="n">metric</span><span class="p">(</span><span class="n">sequences</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="rubric">References</p>
+<dl class="simple">
+<dt>[1] Jaro, M.A., 1989. Advances in record-linkage methodology as applied to matching the 1985 census of Tampa,</dt><dd><p>Florida. Journal of the American Statistical Association, 84(406), pp.414-420.</p>
+</dd>
+</dl>
+<p>[2] Van der Loo, M.P., 2014. The stringdist package for approximate string matching. R J., 6(1), p.111.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="setriq.modules.distances.Jaro.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sequences</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#setriq.modules.distances.Jaro.forward" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="setriq.modules.distances.JaroWinkler">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">setriq.modules.distances.</span></span><span class="sig-name descname"><span class="pre">JaroWinkler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_l</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jaro_weights</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_squareform</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#setriq.modules.distances.JaroWinkler" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#setriq.modules.distances.Jaro" title="setriq.modules.distances.Jaro"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Jaro</span></code></a></p>
+<p>Jaro-Winkler distance class. Inherits from Jaro.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">metric</span> <span class="o">=</span> <span class="n">JaroWinkler</span><span class="p">(</span><span class="n">p</span><span class="o">=</span><span class="mf">0.10</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sequences</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;CASSLKPNTEAFF&#39;</span><span class="p">,</span> <span class="s1">&#39;CASSAHIANYGYTF&#39;</span><span class="p">,</span> <span class="s1">&#39;CASRGATETQYF&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">distances</span> <span class="o">=</span> <span class="n">metric</span><span class="p">(</span><span class="n">sequences</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="rubric">References</p>
+<dl class="footnote brackets">
+<dt class="label" id="id14"><span class="brackets">1</span></dt>
+<dd><p>Winkler, W.E., 1990. String comparator metrics and enhanced decision rules in the Fellegi-Sunter model of
+record linkage.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="setriq.modules.distances.LongestCommonSubstring">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">setriq.modules.distances.</span></span><span class="sig-name descname"><span class="pre">LongestCommonSubstring</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">return_squareform</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#setriq.modules.distances.LongestCommonSubstring" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">Metric</span></code>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>]</p>
+<p>Longest common substring distance class. Inherits from Metric.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">metric</span> <span class="o">=</span> <span class="n">LongestCommonSubstring</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sequences</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;CASSLKPNTEAFF&#39;</span><span class="p">,</span> <span class="s1">&#39;CASSAHIANYGYTF&#39;</span><span class="p">,</span> <span class="s1">&#39;CASRGATETQYF&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">distances</span> <span class="o">=</span> <span class="n">metric</span><span class="p">(</span><span class="n">sequences</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="rubric">References</p>
+<dl class="footnote brackets">
+<dt class="label" id="id15"><span class="brackets">1</span></dt>
+<dd><p><a class="reference external" href="https://en.wikipedia.org/wiki/Longest_common_substring_problem">https://en.wikipedia.org/wiki/Longest_common_substring_problem</a></p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="setriq.modules.distances.LongestCommonSubstring.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sequences</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#setriq.modules.distances.LongestCommonSubstring.forward" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="setriq.modules.distances.OptimalStringAlignment">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">setriq.modules.distances.</span></span><span class="sig-name descname"><span class="pre">OptimalStringAlignment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">return_squareform</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#setriq.modules.distances.OptimalStringAlignment" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">Metric</span></code>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>]</p>
+<p>Optimal string alignment distance class. Inherits from Metric.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">metric</span> <span class="o">=</span> <span class="n">OptimalStringAlignment</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sequences</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;CASSLKPNTEAFF&#39;</span><span class="p">,</span> <span class="s1">&#39;CASSAHIANYGYTF&#39;</span><span class="p">,</span> <span class="s1">&#39;CASRGATETQYF&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">distances</span> <span class="o">=</span> <span class="n">metric</span><span class="p">(</span><span class="n">sequences</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="rubric">References</p>
+<dl class="footnote brackets">
+<dt class="label" id="id16"><span class="brackets">1</span></dt>
+<dd><p><a class="reference external" href="https://en.wikipedia.org/wiki/Damerau%E2%80%93Levenshtein_distance">https://en.wikipedia.org/wiki/Damerau%E2%80%93Levenshtein_distance</a></p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="setriq.modules.distances.OptimalStringAlignment.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sequences</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#setriq.modules.distances.OptimalStringAlignment.forward" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+
+            </article>
+            
+            
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+            </footer>
+            
+          </div>
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
+  
+<div class="tocsection onthispage">
+    <i class="fas fa-list"></i> On this page
+</div>
+<nav id="bd-toc-nav" class="page-toc">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-contents">
+   Module Contents
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#classes">
+     Classes
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#setriq.modules.distances.CdrDist">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         CdrDist
+        </span>
+       </code>
+      </a>
+      <ul class="nav section-nav flex-column">
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#setriq.modules.distances.CdrDist.forward">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           CdrDist.forward()
+          </span>
+         </code>
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#setriq.modules.distances.Levenshtein">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         Levenshtein
+        </span>
+       </code>
+      </a>
+      <ul class="nav section-nav flex-column">
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#setriq.modules.distances.Levenshtein.forward">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           Levenshtein.forward()
+          </span>
+         </code>
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#setriq.modules.distances.TcrDistComponent">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         TcrDistComponent
+        </span>
+       </code>
+      </a>
+      <ul class="nav section-nav flex-column">
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#setriq.modules.distances.TcrDistComponent.forward">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           TcrDistComponent.forward()
+          </span>
+         </code>
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#setriq.modules.distances.TcrDist">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         TcrDist
+        </span>
+       </code>
+      </a>
+      <ul class="nav section-nav flex-column">
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#setriq.modules.distances.TcrDist.components">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           TcrDist.components
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#setriq.modules.distances.TcrDist.required_input_keys">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           TcrDist.required_input_keys()
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#setriq.modules.distances.TcrDist.default_definition">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           TcrDist.default_definition()
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#setriq.modules.distances.TcrDist.forward">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           TcrDist.forward()
+          </span>
+         </code>
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#setriq.modules.distances.Hamming">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         Hamming
+        </span>
+       </code>
+      </a>
+      <ul class="nav section-nav flex-column">
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#setriq.modules.distances.Hamming.forward">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           Hamming.forward()
+          </span>
+         </code>
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#setriq.modules.distances.Jaro">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         Jaro
+        </span>
+       </code>
+      </a>
+      <ul class="nav section-nav flex-column">
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#setriq.modules.distances.Jaro.forward">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           Jaro.forward()
+          </span>
+         </code>
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#setriq.modules.distances.JaroWinkler">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         JaroWinkler
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#setriq.modules.distances.LongestCommonSubstring">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         LongestCommonSubstring
+        </span>
+       </code>
+      </a>
+      <ul class="nav section-nav flex-column">
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#setriq.modules.distances.LongestCommonSubstring.forward">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           LongestCommonSubstring.forward()
+          </span>
+         </code>
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#setriq.modules.distances.OptimalStringAlignment">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         OptimalStringAlignment
+        </span>
+       </code>
+      </a>
+      <ul class="nav section-nav flex-column">
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#setriq.modules.distances.OptimalStringAlignment.forward">
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           OptimalStringAlignment.forward()
+          </span>
+         </code>
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#setriq.modules.distances.CdrDist">
+       CdrDist
+      </a>
+      <ul class="nav section-nav flex-column">
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#setriq.modules.distances.CdrDist.forward">
+         forward
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#setriq.modules.distances.Levenshtein">
+       Levenshtein
+      </a>
+      <ul class="nav section-nav flex-column">
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#setriq.modules.distances.Levenshtein.forward">
+         forward
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#setriq.modules.distances.TcrDistComponent">
+       TcrDistComponent
+      </a>
+      <ul class="nav section-nav flex-column">
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#setriq.modules.distances.TcrDistComponent.forward">
+         forward
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#setriq.modules.distances.TcrDist">
+       TcrDist
+      </a>
+      <ul class="nav section-nav flex-column">
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#setriq.modules.distances.TcrDist.components">
+         components
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#setriq.modules.distances.TcrDist.required_input_keys">
+         required_input_keys
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#setriq.modules.distances.TcrDist.default_definition">
+         default_definition
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#setriq.modules.distances.TcrDist.forward">
+         forward
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#setriq.modules.distances.Hamming">
+       Hamming
+      </a>
+      <ul class="nav section-nav flex-column">
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#setriq.modules.distances.Hamming.forward">
+         forward
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#setriq.modules.distances.Jaro">
+       Jaro
+      </a>
+      <ul class="nav section-nav flex-column">
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#setriq.modules.distances.Jaro.forward">
+         forward
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#setriq.modules.distances.JaroWinkler">
+       JaroWinkler
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#setriq.modules.distances.LongestCommonSubstring">
+       LongestCommonSubstring
+      </a>
+      <ul class="nav section-nav flex-column">
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#setriq.modules.distances.LongestCommonSubstring.forward">
+         forward
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#setriq.modules.distances.OptimalStringAlignment">
+       OptimalStringAlignment
+      </a>
+      <ul class="nav section-nav flex-column">
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#setriq.modules.distances.OptimalStringAlignment.forward">
+         forward
+        </a>
+       </li>
+      </ul>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+</nav>
+</div>
+
+<div class="toc-item">
+  
+</div>
+
+<div class="toc-item">
+  
+<div class="tocsection sourcelink">
+    <a href="../../../../_sources/autoapi/setriq/modules/distances/index.rst.txt">
+        <i class="fas fa-file-alt"></i> Show Source
+    </a>
+</div>
+
+</div>
+
+            </div>
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+          </div>
+        </footer>
+        
+      </main>
+    </div>
+  </div>
+
+  
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=9b1a4fa89bdd0e95b23b"></script>
+
+  <footer class="bd-footer"><div class="bd-footer__inner container">
+  
+  <div class="footer-item">
+    
+<p class="copyright">
+
+    &copy; Copyright 2021-2022, Benjamin Tenmann.<br>
+
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+<p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.3.0.<br>
+</p>
+
+  </div>
+  
+</div>
+  </footer>
+  </body>
+</html>

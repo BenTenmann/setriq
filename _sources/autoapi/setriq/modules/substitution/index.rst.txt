@@ -1,0 +1,150 @@
+:py:mod:`setriq.modules.substitution`
+=====================================
+
+.. py:module:: setriq.modules.substitution
+
+.. autoapi-nested-parse::
+
+   Substitution matrix convenience interface.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   setriq.modules.substitution.SubstitutionMatrix
+
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   setriq.modules.substitution.BLOSUM45
+   setriq.modules.substitution.BLOSUM62
+   setriq.modules.substitution.BLOSUM90
+
+
+.. py:class:: SubstitutionMatrix(index: Dict[str, int], substitution_matrix: List[List[float]], *args, **kwargs)
+
+   Bases: :py:obj:`abc.ABC`
+
+   The SubstitutionMatrix abstract base class. It holds convenience methods for loading and using the classic
+   biological sequence substitution matrices (e.g. ``BLOSUM``).
+
+   .. attribute:: index
+
+      a mapping of strings (amino acids) to integers (matrix index)
+
+      :type: Dict[str, int]
+
+   .. attribute:: substitution_matrix
+
+      the substitution scoring (:math:`N \times N`) matrix
+
+      :type: List[List[float]]
+
+   .. method:: from_json(self, file_path: Union[str, Path]) -> SubstitutionMatrix:
+
+      load a substitution matrix from a json file
+
+
+   .. rubric:: Examples
+
+   suppose we have a token index `idx` and a substitution matrix `scores`
+
+   >>> idx = {'hello': 0, 'world': 1}
+   >>> scores = [[1., -1.],
+   ...           [-1., 1.]]
+   >>> matrix = SubstitutionMatrix(index=idx, substitution_matrix=scores)
+
+   here we can see that we can provide any arbitrary substitution matrix, but in general it is advised to use the
+   pre-loaded BLOSUM matrices
+
+   >>> [BLOSUM45, BLOSUM62, BLOSUM90]  # choose one of the following
+
+   these are just instances of ``SubstitutionMatrix``, initialised through ``from_json``
+
+   .. py:attribute:: index
+      :annotation: :Dict[str, int]
+
+      
+
+   .. py:attribute:: substitution_matrix
+      :annotation: :List[List[float]]
+
+      
+
+   .. py:method:: from_json(file_path: Union[str, pathlib.Path]) -> SubstitutionMatrix
+      :classmethod:
+
+      Load a SubstitutionMatrix from a json file.
+
+      :param file_path: a path to a json file holding at least the token index and the substitution scoring matrix
+      :type file_path: Union[str, Path]
+
+      :returns: **substitution_matrix** -- returns an instance of the SubstitutionMatrix class, holding the values found at ``file_path``
+      :rtype: SubstitutionMatrix
+
+      .. rubric:: Examples
+
+      >>> sub_mat = SubstitutionMatrix.from_json('/path/to/file.json')
+
+
+   .. py:method:: keys() -> Tuple[str, str]
+
+
+   .. py:method:: add_token(token: str, values: Union[float, List[float]], inplace: bool = False) -> Union[SubstitutionMatrix, None]
+
+      Add a special token to the substitution matrix with a given value or list of values.
+
+      :param token: a special token to be added.
+      :type token: str
+      :param values: a value or list of values to which the token will correspond. If a list of floats is provided, the list must
+                     have a length of ``len(substitution_matrix) + 1``, i.e. there must be number of rows + 1 elements in the
+                     list.
+      :type values: Union[float, List[float]]
+      :param inplace: boolean whether to add token inplace.
+      :type inplace: bool
+
+      :returns: this is an inplace operation
+      :rtype: None
+
+      .. rubric:: Examples
+
+      Single value example. The value is repeated to fit the required shape
+
+      >>> sm = BLOSUM62
+      >>> sm.add_token('-', 4.)
+
+      List of floats example
+
+      >>> sm = BLOSUM62
+      >>> len(sm)
+      ... 24
+      >>> sm.add_token('setriq', [*range(26)])  # ints implicitly converted to floats
+
+
+
+.. py:data:: BLOSUM45
+   
+
+   
+
+.. py:data:: BLOSUM62
+   
+
+   
+
+.. py:data:: BLOSUM90
+   
+
+   
+

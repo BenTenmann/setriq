@@ -1,0 +1,135 @@
+:py:mod:`setriq.modules.utils`
+==============================
+
+.. py:module:: setriq.modules.utils
+
+.. autoapi-nested-parse::
+
+   Package utilities. Not meant for outside use.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   setriq.modules.utils.enforce_list
+   setriq.modules.utils.ensure_equal_sequence_length
+   setriq.modules.utils.ensure_equal_sequence_length_sd
+   setriq.modules.utils.single_dispatch
+   setriq.modules.utils.tcr_dist_sd_component_check
+   setriq.modules.utils.check_jaro_weights
+   setriq.modules.utils.check_jaro_winkler_params
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   setriq.modules.utils.TcrDistDef
+   setriq.modules.utils.TCR_DIST_DEFAULT
+
+
+.. py:data:: TcrDistDef
+   
+
+   
+
+.. py:data:: TCR_DIST_DEFAULT
+   :annotation: :TcrDistDef = [None, None, None, None]
+
+   
+
+.. py:function:: enforce_list(argnum: int = 0, convert_iterable: bool = True)
+
+   Enforce that a specified argument is always passed as a list to a given function. This is a decorator factory.
+
+   :param argnum: The positional (integer) index of the argument to be forced into list format. Works like regular positional
+                  indexing. (default=0)
+   :type argnum: int
+   :param convert_iterable: Boolean defining whether to force convert any iterable (except ``str``) into a list.
+   :type convert_iterable: bool
+
+   :returns: **decorator** -- A new decorator function, which can be used to decorate an arbitrary function / method.
+   :rtype: Callable
+
+   .. rubric:: Examples
+
+   A basic example:
+
+   >>> @enforce_list()
+   ... def f(x):
+   ...     return x * 3
+   >>>
+   >>> f([3])
+   ... [3, 3, 3]
+   >>> f(3)
+   ... [3, 3, 3]
+
+   Notice, that we ommit the ``argnum`` parameter here. This is because ``argnum`` is 0 by default, i.e. it looks at
+   the first argument passed to ``f``. Note, that ``enforce_list`` needs to be called before decorating a function.
+
+   Enforce list can also be composed arbitrarily, to enforce multiple arguments to be lists:
+
+   >>> @enforce_list(argnum=0)
+   ... @enforce_list(argnum=1)
+   ... def f(x, y):
+   ...     return x + y
+
+   Finally, ``enforce_list`` can also force convert other iterables (excluding str) into lists:
+
+   >>> @enforce_list(argnum=0, convert_iterable=True)
+   ... def f(x):
+   ...     return x * 3
+   >>>
+   >>> x = np.array([1.])
+   >>> f(x)
+   ... [1., 1., 1.]
+
+
+.. py:function:: ensure_equal_sequence_length(argnum: int)
+
+   Ensure that all input sequences are of equal length.
+
+   :param argnum: The positional (integer) index of the argument to be forced into list format. Works like regular positional
+                  indexing. (``default=0``)
+   :type argnum: int
+
+   :returns: **decorator** -- The decorator used to wrap the function where all sequences ought to be of equal length.
+   :rtype: Callable
+
+   .. rubric:: Examples
+
+   >>> @ensure_equal_sequence_length(argnum=0)
+   ... def f(sequences):
+   ...     return sequences
+   >>>
+   >>> a = ['AASQ', 'PWSQ']  # sequences of equal length
+   >>> b = ['GAT', 'AAFFD']  # sequences with varying length
+   >>>
+   >>> f(a)  # no error
+   >>> f(b)  # error!
+
+
+.. py:function:: ensure_equal_sequence_length_sd(fn: Callable) -> Callable
+
+
+.. py:function:: single_dispatch(fn: Callable) -> Callable
+
+
+.. py:function:: tcr_dist_sd_component_check(fn)
+
+
+.. py:function:: check_jaro_weights(weights: Optional[List[float]]) -> List[float]
+
+
+.. py:function:: check_jaro_winkler_params(fn: Callable)
+
+

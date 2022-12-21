@@ -1,0 +1,84 @@
+:orphan:
+
+:py:mod:`setriq._C`
+===================
+
+.. py:module:: setriq._C
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   setriq._C.cdr_dist
+   setriq._C.levenshtein
+   setriq._C.tcr_dist_component
+   setriq._C.hamming
+   setriq._C.jaro
+   setriq._C.jaro_winkler
+   setriq._C.longest_common_substring
+   setriq._C.optimal_string_alignment
+   setriq._C.cdr_dist_sd
+   setriq._C.levenshtein_sd
+   setriq._C.tcr_dist_component_sd
+   setriq._C.hamming_sd
+   setriq._C.jaro_sd
+   setriq._C.jaro_winkler_sd
+   setriq._C.longest_common_substring_sd
+   setriq._C.optimal_string_alignment_sd
+
+
+
+.. py:function:: cdr_dist(sequences: Sequence[str], substitution_matrix: List[List[float]], index: Dict[str, int], gap_opening_penalty: float, gap_extension_penalty: float) -> List[float]
+
+
+.. py:function:: levenshtein(sequences: Sequence[str], extra_cost: float) -> List[float]
+
+
+.. py:function:: tcr_dist_component(sequences: Sequence[str], substitution_matrix: List[List[float]], index: Dict[str, int], gap_penalty: float, gap_symbol: str, weight: float) -> List[float]
+
+
+.. py:function:: hamming(sequences: Sequence[str], mismatch_score: float) -> List[float]
+
+
+.. py:function:: jaro(sequences: Sequence[str], jaro_weights: List[float]) -> List[float]
+
+
+.. py:function:: jaro_winkler(sequences: Sequence[str], p: float, max_l: int, jaro_weights: List[float]) -> List[float]
+
+
+.. py:function:: longest_common_substring(sequences: Sequence[str]) -> List[float]
+
+
+.. py:function:: optimal_string_alignment(sequences: Sequence[str]) -> List[float]
+
+
+.. py:function:: cdr_dist_sd(a: str, b: str, substitution_matrix: List[List[float]], index: Dict[str, int], gap_opening_penalty: float, gap_extension_penalty: float) -> float
+
+
+.. py:function:: levenshtein_sd(a: str, b: str, extra_cost: float) -> float
+
+
+.. py:function:: tcr_dist_component_sd(a: str, b: str, substitution_matrix: List[List[float]], index: Dict[str, int], gap_penalty: float, gap_symbol: str, weight: float) -> float
+
+
+.. py:function:: hamming_sd(a: str, b: str, mismatch_score: float) -> float
+
+
+.. py:function:: jaro_sd(a: str, b: str, jaro_weights: List[float]) -> float
+
+
+.. py:function:: jaro_winkler_sd(a: str, b: str, p: float, max_l: int, jaro_weights: List[float]) -> float
+
+
+.. py:function:: longest_common_substring_sd(a: str, b: str) -> float
+
+
+.. py:function:: optimal_string_alignment_sd(a: str, b: str) -> float
+
+
