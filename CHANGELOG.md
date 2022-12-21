@@ -1,3 +1,10 @@
+## [1.6.3](https://github.com/BenTenmann/setriq/compare/deploy-1.6.2...deploy-1.6.3) (2022-12-21)
+
+
+### Bug Fixes
+
+* **ci:** try new filters + update gh-pages dependency ([a030b27](https://github.com/BenTenmann/setriq/commit/a030b27184c77e57a7be28f17043684a28d251e2))
+
 ## [1.6.2](https://github.com/BenTenmann/setriq/compare/deploy-1.6.1...deploy-1.6.2) (2022-12-19)
 
 
