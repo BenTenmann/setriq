@@ -50,6 +50,8 @@ extensions = [
     "sphinx.ext.autosectionlabel",  # allow auto section generation
 ]
 autosectionlabel_prefix_document = True
+napoleon_google_docstring = False
+napoleon_numpy_docstring = True
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.

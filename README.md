@@ -8,6 +8,8 @@
 
 A `Python` package written in `C++` for computing pairwise distances between (immunoglobulin) sequences.
 
+[**Documentation**](https://bentenmann.github.io/setriq/)
+
 ## Install
 This package is available on PyPI
 ```bash
