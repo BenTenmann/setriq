@@ -269,7 +269,7 @@ Attributes
    .. method:: from_json(self, file_path: Union[str, Path]) -> SubstitutionMatrix:
 
       load a substitution matrix from a json file
-
+      
 
    .. rubric:: Examples
 
