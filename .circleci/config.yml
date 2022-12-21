@@ -156,6 +156,7 @@ jobs:
           name: Install and configure dependencies
           command: |
             sudo npm install -g gh-pages@4.0.0
+            npm install react-scripts@^5.0.1
             git config user.email "${GITHUB_EMAIL}"
             git config user.name "${GITHUB_USERNAME}"
       - run:
@@ -200,10 +201,20 @@ workflows:
           filters:
             branches:
               only: "main"
-      - test-coverage
+      - test-coverage:
+          filters:
+            tags:
+              only: /.*/
+            branches:
+              ignore: main
       - test-tox:
           requires:
             - test-coverage
+          filters:
+            tags:
+              only: /.*/
+            branches:
+              ignore: main
       - linux-wheels:
           requires:
             - test-tox
