@@ -1,3 +1,10 @@
+## [1.6.4](https://github.com/BenTenmann/setriq/compare/deploy-1.6.3...deploy-1.6.4) (2022-12-21)
+
+
+### Bug Fixes
+
+* **ci:** add pybind dep to source dist ([#26](https://github.com/BenTenmann/setriq/issues/26)) ([e64979e](https://github.com/BenTenmann/setriq/commit/e64979ea6d60e64dbfcb37cea561d47993e9df5d))
+
 ## [1.6.3](https://github.com/BenTenmann/setriq/compare/deploy-1.6.2...deploy-1.6.3) (2022-12-21)
 
 
